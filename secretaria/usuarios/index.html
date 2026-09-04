@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduConnect - Gestão de Usuários</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+
+<body>
+
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="logo">
+            <span class="material-symbols-outlined">
+                school
+            </span>
+            <strong>EduConnect</strong>
+            <span class="tag">SECRETARIA</span>
+        </div>
+        <div class="user">
+            <span class="material-symbols-outlined">
+                notifications
+            </span>
+            <span>Secretaria Principal</span>
+            <div class="avatar"></div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Menu Lateral -->
+        <div class="sidebar">
+            <ul class="menu">
+                <li><a href="../index.html">Dashboard</a></li>
+                <li class="ativo"><a href="../usuarios/index.html">Usuários</a></li>
+                <li><a href="../turmas/index.html">Turmas e Salas</a></li>
+                <li><a href="../disciplinas/index.html">Disciplinas</a></li>
+                <li><a href="../notas/index.html">Notas e Frequência</a></li>
+                <li><a href="../ocorrencias/index.html">Ocorrências</a></li>
+                <li><a href="../comunicados/index.html">Comunicados</a></li>
+                <li><a href="../boletins/index.html">Boletins</a></li>
+                <li><a href="../auditoria/index.html">Auditoria</a></li>
+            </ul>
+            <div class="sair">
+                <a href="../../index.html"><span class="material-symbols-outlined">
+                        logout
+                    </span> sair</a>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="content">
+
+            <div class="cabecalho-pagina">
+                <h1>Gestão de Usuários</h1>
+                <button class="btn-novo">+ Novo Aluno</button>
+            </div>
+
+            <div class="grid">
+
+                <!-- Coluna da Esquerda (Principal) -->
+                <div class="col-esquerda">
+
+                    <div class="painel">
+
+                        <!-- Abas -->
+                        <div class="abas">
+                            <a href="index.html" class="aba ativa">Alunos</a>
+                            <a href="professor/index.html" class="aba">Professores</a>
+                            <a href="profissionais/index.html" class="aba">Profissionais</a>
+                        </div>
+
+                        <!-- Filtros e Busca -->
+                        <div class="filtros-container">
+                            <div class="barra-busca">
+                                <span class="material-symbols-outlined">
+                                    search
+                                </span>
+                                <input type="text" placeholder="Buscar aluno por nome, matrícula ou CPF...">
+                                <button class="btn-buscar">Buscar</button>
+                            </div>
+                            <div class="seletores">
+                                <select>
+                                    <option>Turma: Todas</option>
+                                </select>
+                                <select>
+                                    <option>Série: Todas</option>
+                                </select>
+                                <select>
+                                    <option>Status: Todos</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Tabela -->
+                        <table class="tabela">
+                            <thead>
+                                <tr>
+                                    <th>Matrícula</th>
+                                    <th>Nome Completo</th>
+                                    <th>Turma</th>
+                                    <th>Série</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>20240001</strong></td>
+                                    <td>Amanda Costa Nogueira</td>
+                                    <td>3º Ano A</td>
+                                    <td>Ensino Médio</td>
+                                    <td>
+                                        <div class="status-ativo">Ativo</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">
+                                                edit
+                                            </span></button>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">
+                                                visibility
+                                            </span></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>20240002</strong></td>
+                                    <td>Bruno Fernandes de Souza</td>
+                                    <td>3º Ano B</td>
+                                    <td>Ensino Médio</td>
+                                    <td>
+                                        <div class="status-ativo">Ativo</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">
+                                                edit
+                                            </span></button>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">
+                                                visibility
+                                            </span></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>20230142</strong></td>
+                                    <td>Camila Rodrigues Pinheiro</td>
+                                    <td>2º Ano A</td>
+                                    <td>Ensino Médio</td>
+                                    <td>
+                                        <div class="status-inativo">Inativo</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">
+                                                edit
+                                            </span></button>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">
+                                                visibility
+                                            </span></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>20240003</strong></td>
+                                    <td>Daniel Alves Mendes</td>
+                                    <td>1º Ano B</td>
+                                    <td>Ensino Médio</td>
+                                    <td>
+                                        <div class="status-ativo">Ativo</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">
+                                                edit
+                                            </span></button>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">
+                                                visibility
+                                            </span></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>20220311</strong></td>
+                                    <td>Eduardo Silva Pereira</td>
+                                    <td>3º Ano A</td>
+                                    <td>Ensino Médio</td>
+                                    <td>
+                                        <div class="status-ativo">Ativo</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">
+                                                edit
+                                            </span></button>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">
+                                                visibility
+                                            </span></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>20240004</strong></td>
+                                    <td>Fernanda Lima de Souza</td>
+                                    <td>2º Ano C</td>
+                                    <td>Ensino Médio</td>
+                                    <td>
+                                        <div class="status-inativo">Inativo</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">
+                                                edit
+                                            </span></button>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">
+                                                visibility
+                                            </span></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Paginação -->
+                        <div class="paginacao">
+                            <button class="btn-pag">&lt;</button>
+                            <button class="btn-pag ativa">1</button>
+                            <button class="btn-pag">2</button>
+                            <button class="btn-pag">3</button>
+                            <span>...</span>
+                            <button class="btn-pag">45</button>
+                            <button class="btn-pag">&gt;</button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

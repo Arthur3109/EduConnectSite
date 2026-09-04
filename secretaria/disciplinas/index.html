@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduConnect - Gestão de Disciplinas</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+
+<body>
+
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="logo">
+            <span class="material-symbols-outlined">
+                school
+            </span>
+            <strong>EduConnect</strong>
+            <span class="tag">SECRETARIA</span>
+        </div>
+        <div class="user">
+            <span class="material-symbols-outlined">
+                notifications
+            </span>
+            <span>Secretaria Principal</span>
+            <div class="avatar"></div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Menu Lateral -->
+        <div class="sidebar">
+            <ul class="menu">
+                <li><a href="../index.html">Dashboard</a></li>
+                <li><a href="../usuarios/index.html">Usuários</a></li>
+                <li><a href="../turmas/index.html">Turmas e Salas</a></li>
+                <li class="ativo"><a href="../disciplinas/index.html">Disciplinas</a></li>
+                <li><a href="../notas/index.html">Notas e Frequência</a></li>
+                <li><a href="../ocorrencias/index.html">Ocorrências</a></li>
+                <li><a href="../comunicados/index.html">Comunicados</a></li>
+                <li><a href="../boletins/index.html">Boletins</a></li>
+                <li><a href="../auditoria/index.html">Auditoria</a></li>
+            </ul>
+            <div class="sair">
+                <a href="../../index.html"><span class="material-symbols-outlined">
+                        logout
+                    </span> sair</a>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="content">
+
+            <div class="cabecalho-pagina">
+                <h1>Gestão de Disciplinas</h1>
+                <button class="btn-novo">+ Nova Disciplina</button>
+            </div>
+
+            <div class="painel">
+
+                <!-- Barra de Busca -->
+                <div class="filtros-container">
+                    <div class="barra-busca">
+                        <span class="material-symbols-outlined">
+                            search
+                        </span>
+                        <input type="text" placeholder="Buscar disciplina por nome, código ou turma vinculada...">
+                    </div>
+                </div>
+
+                <!-- Tabela -->
+                <table class="tabela">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nome da Disciplina</th>
+                            <th>Carga Horária</th>
+                            <th>Professores Vinculados</th>
+                            <th>Turmas</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>MAT-101</strong></td>
+                            <td>Matemática Aplicada</td>
+                            <td>100 h/a</td>
+                            <td><a href="#" class="link-vinculo">3 professores</a></td>
+                            <td>3º EM, 2º EM</td>
+                            <td>
+                                <button class="btn-acao">
+                                    <span class="material-symbols-outlined">
+                                        edit
+                                    </span>
+                                </button>
+                                <button class="btn-acao">
+                                    <span class="material-symbols-outlined">
+                                        delete
+                                    </span>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>PORT-202</strong></td>
+                            <td>Língua Portuguesa e Literatura</td>
+                            <td>150 h/a</td>
+                            <td><a href="#" class="link-vinculo">4 professores</a></td>
+                            <td>Todas</td>
+                            <td>
+                                <button class="btn-acao">
+                                    <span class="material-symbols-outlined">
+                                        edit
+                                    </span>
+                                </button>
+                                <button class="btn-acao">
+                                    <span class="material-symbols-outlined">
+                                        delete
+                                    </span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

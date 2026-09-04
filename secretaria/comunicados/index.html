@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduConnect - Comunicados</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+
+<body>
+
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="logo">
+            <span class="material-symbols-outlined">
+                school
+            </span>
+            <strong>EduConnect</strong>
+            <span class="tag">SECRETARIA</span>
+        </div>
+        <div class="user">
+            <span class="material-symbols-outlined">
+                notifications
+            </span>
+            <span>Secretaria Principal</span>
+            <div class="avatar"></div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Menu Lateral -->
+        <div class="sidebar">
+            <ul class="menu">
+                <li><a href="../index.html">Dashboard</a></li>
+                <li><a href="../usuarios/index.html">Usuários</a></li>
+                <li><a href="../turmas/index.html">Turmas e Salas</a></li>
+                <li><a href="../disciplinas/index.html">Disciplinas</a></li>
+                <li><a href="../notas/index.html">Notas e Frequência</a></li>
+                <li><a href="../ocorrencias/index.html">Ocorrências</a></li>
+                <li class="ativo"><a href="../comunicados/index.html">Comunicados</a></li>
+                <li><a href="../boletins/index.html">Boletins</a></li>
+                <li><a href="../auditoria/index.html">Auditoria</a></li>
+            </ul>
+            <div class="sair">
+                <a href="../../index.html"><span class="material-symbols-outlined">
+                        logout
+                    </span> sair</a>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="content">
+
+            <div class="cabecalho-pagina">
+                <h1>Comunicados</h1>
+                <button class="btn-novo">+ Novo Comunicado</button>
+            </div>
+
+            <div class="grid">
+
+                <!-- Coluna da Esquerda (Lista de Comunicados) -->
+                <div class="col-esquerda">
+
+                    <!-- Filtros -->
+                    <div class="painel-filtros">
+                        <div class="seletores">
+                            <select>
+                                <option>Destinatário: Todos</option>
+                            </select>
+                            <select>
+                                <option>Tipo: Todos</option>
+                            </select>
+                            <select>
+                                <option>Período: Últimos 30 dias</option>
+                            </select>
+                        </div>
+                        <button class="btn-filtrar">
+                            <span class="material-symbols-outlined">
+                                search
+                            </span> Filtrar</button>
+                    </div>
+
+                    <!-- Lista de Cards de Comunicados -->
+                    <div class="lista-comunicados">
+
+                        <!-- Card 1 -->
+                        <div class="comunicado-card">
+                            <div class="card-topo">
+                                <div class="card-titulo-area">
+                                    <span class="badge urgente">Urgente</span>
+                                    <h2>Reunião Geral de Pais e Mestres - 4º Bimestre</h2>
+                                </div>
+                                <div class="card-info-topo">
+                                    <span class="data-envio">Enviado em: 30/09/2026 às 14:00</span>
+                                    <span class="status-envio enviado">Enviado</span>
+                                </div>
+                            </div>
+                            <p class="card-texto">
+                                Prezados responsáveis, convidamos todos para a nossa última reunião de pais deste ano
+                                letivo. Apresentaremos as diretrizes para o encerramento do bimestre letivo e o
+                                calendário de matrículas de 2025.
+                            </p>
+                            <div class="card-rodape">
+                                <span class="destinatarios">Destinatários: <strong>Responsáveis</strong></span>
+                                <div class="acoes-card">
+                                    <a href="#">Editar</a>
+                                    <a href="#">Visualizar</a>
+                                    <a href="#">Reenviar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="comunicado-card">
+                            <div class="card-topo">
+                                <div class="card-titulo-area">
+                                    <span class="badge evento">Evento</span>
+                                    <h2>Feira de Ciências 2024 — Cronograma de Apresentação</h2>
+                                </div>
+                                <div class="card-info-topo">
+                                    <span class="data-envio">Enviado em: 29/09/2026 às 09:15</span>
+                                    <span class="status-envio enviado">Enviado</span>
+                                </div>
+                            </div>
+                            <p class="card-texto">
+                                Fique atento às salas e horários de montagem das maquetes e banners. A avaliação da
+                                banca examinadora iniciará impreterivelmente às 08h30 do dia 05/11 no ginásio esportivo.
+                            </p>
+                            <div class="card-rodape">
+                                <span class="destinatarios">Destinatários: <strong>Alunos, Professores</strong></span>
+                                <div class="acoes-card">
+                                    <a href="#">Editar</a>
+                                    <a href="#">Visualizar</a>
+                                    <a href="#">Reenviar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="comunicado-card">
+                            <div class="card-topo">
+                                <div class="card-titulo-area">
+                                    <span class="badge informativo">Informativo</span>
+                                    <h2>Boletim Informativo de Novembro - Campanhas de Vacinação</h2>
+                                </div>
+                                <div class="card-info-topo">
+                                    <span class="data-envio">Enviado em: 28/09/2026 às 11:30</span>
+                                    <span class="status-envio enviado">Enviado</span>
+                                </div>
+                            </div>
+                            <p class="card-texto">
+                                Lembramos a toda a comunidade escolar sobre a importância da atualização da carteira de
+                                vacinação vacinal. O posto de saúde móvel estará na escola no dia 12 de novembro.
+                            </p>
+                            <div class="card-rodape">
+                                <span class="destinatarios">Destinatários: <strong>Todos</strong></span>
+                                <div class="acoes-card">
+                                    <a href="#">Editar</a>
+                                    <a href="#">Visualizar</a>
+                                    <a href="#">Reenviar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 4 -->
+                        <div class="comunicado-card">
+                            <div class="card-topo">
+                                <div class="card-titulo-area">
+                                    <span class="badge informativo">Informativo</span>
+                                    <h2>Planejamento Pedagógico - Suspensão de Aulas 20/11</h2>
+                                </div>
+                                <div class="card-info-topo">
+                                    <span class="data-envio">Enviado em: Pendente</span>
+                                    <span class="status-envio rascunho">Rascunho</span>
+                                </div>
+                            </div>
+                            <p class="card-texto">
+                                Rascunho interno sobre a organização do dia nacional de Zumbi e Consciência Negra e
+                                orientações para as atividades programadas no contraturno escolar.
+                            </p>
+                            <div class="card-rodape">
+                                <span class="destinatarios">Destinatários: <strong>Professores</strong></span>
+                                <div class="acoes-card">
+                                    <a href="#">Editar</a>
+                                    <a href="#">Visualizar</a>
+                                    <a href="#">Reenviar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

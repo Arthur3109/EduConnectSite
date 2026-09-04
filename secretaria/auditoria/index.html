@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduConnect - Log de Auditoria</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+
+<body>
+
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="logo">
+            <span class="material-symbols-outlined">
+                school
+            </span>
+            <strong>EduConnect</strong>
+            <span class="tag">SECRETARIA</span>
+        </div>
+        <div class="user">
+            <span class="material-symbols-outlined">
+                notifications
+            </span>
+            <span>Secretaria Principal</span>
+            <div class="avatar"></div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Menu Lateral -->
+        <div class="sidebar">
+            <ul class="menu">
+                <li><a href="../dashboard/index.html">Dashboard</a></li>
+                <li><a href="../usuarios/index.html">Usuários</a></li>
+                <li><a href="../turmas/index.html">Turmas e Salas</a></li>
+                <li><a href="../disciplinas/index.html">Disciplinas</a></li>
+                <li><a href="../notas/index.html">Notas e Frequência</a></li>
+                <li><a href="../ocorrencias/index.html">Ocorrências</a></li>
+                <li><a href="../comunicados/index.html">Comunicados</a></li>
+                <li><a href="../boletins/index.html">Boletins</a></li>
+                <li class="ativo"><a href="../auditoria/index.html">Auditoria</a></li>
+            </ul>
+            <div class="sair">
+                <a href="../../index.html"><span class="material-symbols-outlined">
+                        logout
+                    </span> sair</a>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="content">
+
+            <div class="cabecalho-pagina">
+                <h1>Log de Auditoria</h1>
+                <button class="btn-novo">Exportar Relatório</button>
+            </div>
+
+            <div class="grid">
+
+                <!-- Coluna da Esquerda (Filtros e Tabela) -->
+                <div class="col-esquerda">
+
+                    <!-- Painel de Filtros -->
+                    <div class="painel-filtros">
+                        <div class="seletores">
+                            <select>
+                                <option>Usuário: Todos</option>
+                            </select>
+                            <select>
+                                <option>Módulo: Todos</option>
+                            </select>
+                            <select>
+                                <option>Ação: Todas</option>
+                            </select>
+                            <select>
+                                <option>Data Início: 01/07/2026</option>
+                            </select>
+                        </div>
+                        <div class="filtros-linha-2">
+                            <select>
+                                <option>Data Fim: 01/09/2026</option>
+                            </select>
+                            <button class="btn-filtrar">
+                                <span class="material-symbols-outlined">
+                                    search
+                                </span> Filtrar</button>
+                        </div>
+                    </div>
+
+                    <!-- Tabela de Auditoria -->
+                    <div class="painel">
+                        <table class="tabela">
+                            <thead>
+                                <tr>
+                                    <th>Data / Hora</th>
+                                    <th>Usuário</th>
+                                    <th>Módulo</th>
+                                    <th>Ação</th>
+                                    <th>Descrição</th>
+                                    <th>IP</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>29/08/2026 - 10:15</td>
+                                    <td><strong>Profa. Márcia</strong></td>
+                                    <td><span class="badge-mod">Notas</span></td>
+                                    <td>Edição</td>
+                                    <td>Alterou nota mat...</td>
+                                    <td>192.168.1.45</td>
+                                </tr>
+                                <tr>
+                                    <td>28/08/2026 - 10:02</td>
+                                    <td><strong>Sec. Cláudia</strong></td>
+                                    <td><span class="badge-mod">Alunos</span></td>
+                                    <td>Criação</td>
+                                    <td>Realizou matrícu...</td>
+                                    <td>192.168.1.12</td>
+                                </tr>
+                                <tr>
+                                    <td>27/08/2026 - 09:30</td>
+                                    <td><strong>Diretor Renato</strong></td>
+                                    <td><span class="badge-mod">Login</span></td>
+                                    <td>Login</td>
+                                    <td>Autenticação be...</td>
+                                    <td>201.85.44.112</td>
+                                </tr>
+                                <tr>
+                                    <td>25/08/2026 - 16:45</td>
+                                    <td><strong>Sec. Cláudia</strong></td>
+                                    <td><span class="badge-mod">Comunicados</span></td>
+                                    <td>Envio</td>
+                                    <td>Disparou comuni...</td>
+                                    <td>192.168.1.12</td>
+                                </tr>
+                                <tr>
+                                    <td>24/08/2026 - 15:20</td>
+                                    <td><strong>Prof. Marcos</strong></td>
+                                    <td><span class="badge-mod">Frequência</span></td>
+                                    <td>Edição</td>
+                                    <td>Registrou 2 falta...</td>
+                                    <td>192.168.1.88</td>
+                                </tr>
+                                <tr>
+                                    <td>18/08/2026 - 14:10</td>
+                                    <td><strong>Sec. Cláudia</strong></td>
+                                    <td><span class="badge-mod">Alunos</span></td>
+                                    <td>Edição</td>
+                                    <td>Alterou turma de...</td>
+                                    <td>192.168.1.12</td>
+                                </tr>
+                                <tr>
+                                    <td>17/08/2026 - 11:02</td>
+                                    <td><strong>Suporte TI</strong></td>
+                                    <td><span class="badge-mod">Auditoria</span></td>
+                                    <td>Exportação</td>
+                                    <td>Exportou relatóri...</td>
+                                    <td>10.0.0.4</td>
+                                </tr>
+                                <tr>
+                                    <td>10/07/2026 - 10:44</td>
+                                    <td><strong>Sec. Cláudia</strong></td>
+                                    <td><span class="badge-mod">Ocorrências</span></td>
+                                    <td>Criação</td>
+                                    <td>Cadastrou nova...</td>
+                                    <td>192.168.1.12</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Paginação -->
+                        <div class="paginacao">
+                            <button class="page-btn">&lt;</button>
+                            <button class="page-btn ativo">1</button>
+                            <button class="page-btn">2</button>
+                            <button class="page-btn">3</button>
+                            <span class="page-dots">...</span>
+                            <button class="page-btn">45</button>
+                            <button class="page-btn">&gt;</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,313 @@
+/* Importação da Fonte Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Variáveis de Cores e Estilos */
+:root {
+    --bg-body: #FFFDF7;
+    --cor-principal: #000;
+    --gradiente-escuro: radial-gradient(80% 80% at 100% 0%, #545456 0%, #3b3b3d 20%, #000 60%),
+                        radial-gradient(80% 80% at 0% 100%, #545456 0%, #3b3b3d 20%, #000 60%);
+    --texto-escuro: #000;
+    --texto-cinza: #666666;
+    --borda: #cccccc;
+    --branco: #FFFDF7;
+}
+
+/* Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    cursor: crosshair;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--texto-escuro);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden; /* Evita rolagem na página inteira, mantendo no conteúdo */
+}
+
+/* --- Cabeçalho (Header) --- */
+.header {
+    background: var(--gradiente-escuro);
+    color: var(--branco);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    height: 65px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+}
+
+.logo .tag {
+    background-color: rgba(255, 255, 255, 0.2);
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 0.9rem;
+}
+
+.user .avatar {
+    width: 35px;
+    height: 35px;
+    background-color: var(--texto-cinza);
+    border-radius: 50%;
+    border: 2px solid var(--branco);
+}
+
+/* --- Layout Principal --- */
+.container {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* --- Menu Lateral (Sidebar) --- */
+.sidebar {
+    background: var(--gradiente-escuro);
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+
+.menu {
+    list-style: none;
+}
+
+.menu li a {
+    display: block;
+    color: #d1d1d1;
+    text-decoration: none;
+    padding: 15px 25px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.menu li a:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--branco);
+}
+
+.menu li.ativo a {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--branco);
+    border-left: 4px solid var(--branco);
+    font-weight: 500;
+}
+
+.sair {
+    padding: 20px 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sair a {
+    color: #d1d1d1;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.sair a:hover {
+    color: var(--branco);
+    scale: 1.05;
+}
+
+/* --- Área de Conteúdo --- */
+.content {
+    flex: 1;
+    padding: 30px 40px;
+    overflow-y: auto;
+}
+
+.content h1 {
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+    color: var(--cor-principal);
+}
+
+.content h2 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    margin-top: 30px;
+    color: var(--cor-principal);
+}
+
+/* --- Grid Principal --- */
+.grid {
+    display: flex;
+    gap: 30px;
+}
+
+.col-esquerda {
+    flex: 3;
+}
+
+.col-direita {
+    flex: 1;
+    min-width: 280px;
+}
+
+/* --- Cards de Estatísticas --- */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background-color: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.card h2 {
+    font-size: 0.75rem;
+    color: var(--texto-cinza);
+    margin: 0 0 10px 0;
+    font-weight: 600;
+}
+
+.card h1 {
+    font-size: 2rem;
+    margin: 0;
+    color: var(--cor-principal);
+}
+
+.card span {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: var(--bg-body);
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 1.2rem;
+}
+
+/* --- Tabela --- */
+.tabela {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.tabela thead {
+    background-color: var(--cor-principal);
+    color: var(--branco);
+}
+
+.tabela th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.tabela td {
+    padding: 15px;
+    border-bottom: 1px solid var(--borda);
+    font-size: 0.9rem;
+    color: var(--texto-escuro);
+}
+
+.tabela tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Status Tags (Pílulas) */
+.concluido, .pendente {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.concluido {
+    background-color: #e0e0e0;
+    color: var(--texto-escuro);
+}
+
+.pendente {
+    background-color: var(--texto-escuro);
+    color: var(--branco);
+}
+
+/* --- Avisos do Sistema --- */
+.avisos {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.aviso {
+    display: flex;
+    gap: 15px;
+    background-color: var(--branco);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--borda);
+}
+
+.aviso span {
+    font-size: 1.5rem;
+}
+
+.aviso strong {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--cor-principal);
+    font-size: 0.95rem;
+}
+
+.aviso p {
+    font-size: 0.85rem;
+    color: var(--texto-cinza);
+}
+
+/* RN-03: Avisos críticos com borda grossa e fundo cinza escuro */
+.aviso.erro {
+    border: 2px solid var(--cor-principal);
+    background-color: #ebebeb;
+}
+
+
+/* --- Responsividade Básica --- */
+@media (max-width: 1200px) {
+    .cards { grid-template-columns: repeat(2, 1fr); }
+    .grid { flex-direction: column; }
+}

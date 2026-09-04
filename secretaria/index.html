@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduConnect - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+
+<body>
+
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="logo">
+            <span class="material-symbols-outlined">
+                school
+            </span>
+            <strong>EduConnect</strong>
+            <span class="tag">SECRETARIA</span>
+        </div>
+        <div class="user">
+            <span class="material-symbols-outlined">
+                notifications
+            </span>
+            <span>Secretaria Principal</span>
+            <div class="avatar"></div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Menu Lateral -->
+        <div class="sidebar">
+            <ul class="menu">
+                <li class="ativo"><a href="index.html">Dashboard</a></li>
+                <li><a href="usuarios/index.html">Usuários</a></li>
+                <li><a href="turmas/index.html">Turmas e Salas</a></li>
+                <li><a href="disciplinas/index.html">Disciplinas</a></li>
+                <li><a href="notas/index.html">Notas e Frequência</a></li>
+                <li><a href="ocorrencias/index.html">Ocorrências</a></li>
+                <li><a href="comunicados/index.html">Comunicados</a></li>
+                <li><a href="boletins/index.html">Boletins</a></li>
+                <li><a href="auditoria/index.html">Auditoria</a></li>
+            </ul>
+            <div class="sair">
+                <a href="../../index.html"><span class="material-symbols-outlined">
+                        logout
+                    </span> sair
+                </a>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="content">
+            <h1>Dashboard — Visão Geral</h1>
+
+            <div class="grid">
+
+                <!-- Coluna da Esquerda -->
+                <div class="col-esquerda">
+
+                    <!-- Cards -->
+                    <div class="cards">
+                        <div class="card">
+                            <h2>TOTAL DE ALUNOS</h2>
+                            <h1>1.247</h1>
+                            <span class="material-symbols-outlined">
+                                group
+                            </span>
+                        </div>
+                        <div class="card">
+                            <h2>PROFESSORES ATIVOS</h2>
+                            <h1>86</h1>
+                            <span class="material-symbols-outlined">
+                                person_check
+                            </span>
+                        </div>
+                        <div class="card">
+                            <h2>TURMAS ABERTAS</h2>
+                            <h1>42</h1>
+                            <span class="material-symbols-outlined">
+                                door_front
+                            </span>
+                        </div>
+                        <div class="card">
+                            <h2>OCORRÊNCIAS PENDENTES</h2>
+                            <h1>15</h1>
+                            <span class="material-symbols-outlined">
+                                warning
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Tabela -->
+                    <h2>Atividades Recentes (Últimos 30 dias)</h2>
+                    <table class="tabela">
+                        <thead>
+                            <tr>
+                                <th>Data / Hora</th>
+                                <th>Descrição da Atividade</th>
+                                <th>Responsável</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>30/09/2026 - 10:15</td>
+                                <td>Matrícula realizada - Aluno: Bruno Silva</td>
+                                <td>Secretária Ana</td>
+                                <td>
+                                    <div class="concluido">Concluído</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>30/09/2026 - 09:30</td>
+                                <td>Alteração de Turma - Aluna: Mariana Costa</td>
+                                <td>Secretária Ana</td>
+                                <td>
+                                    <div class="concluido">Concluído</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>29/08/2026 - 16:45</td>
+                                <td>Emissão de Boletim Oficial - 3º Ano B</td>
+                                <td>Secretário Marcos</td>
+                                <td>
+                                    <div class="concluido">Concluído</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>29/08/2026 - 14:20</td>
+                                <td>Ocorrência Registrada - Aluno: Felipe Oliveira</td>
+                                <td>Inspetora Sandra</td>
+                                <td>
+                                    <div class="pendente">Pendente</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>28/09/2026 - 11:00</td>
+                                <td>Abertura de Nova Turma - Informática Básica</td>
+                                <td>Diretor Renato</td>
+                                <td>
+                                    <div class="concluido">Concluído</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Avisos -->
+                    <h2>Avisos do Sistema</h2>
+                    <div class="avisos">
+                        <div class="aviso erro">
+                            <span class="material-symbols-outlined">
+                                warning
+                            </span>
+                            <div>
+                                <strong>[MANUTENÇÃO CRÍTICA] Atualização programada para hoje à noite às 23:00.</strong>
+                                <p>O módulo de matrículas ficará indisponível por aproximadamente 30 minutos.</p>
+                            </div>
+                        </div>
+                        <div class="aviso info">
+                            <span class="material-symbols-outlined">
+                                priority_high
+                            </span>
+                            <div>
+                                <strong>Fechamento do Diário de Classe - Bimestre 3</strong>
+                                <p>Prazo final para os professores lançarem as notas é 01/09. Lembrete enviado por
+                                    e-mail.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

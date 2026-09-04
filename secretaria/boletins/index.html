@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduConnect - Emissão de Boletins</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body>
+    
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="logo">
+            <span class="material-symbols-outlined">
+                school
+            </span>
+            <strong>EduConnect</strong>
+            <span class="tag">SECRETARIA</span>
+        </div>
+        <div class="user">
+            <span class="material-symbols-outlined">
+                notifications
+            </span>
+            <span>Secretaria Principal</span>
+            <div class="avatar"></div>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- Menu Lateral -->
+        <div class="sidebar">
+            <ul class="menu">
+                <li><a href="../dashboard/index.html">Dashboard</a></li>
+                <li><a href="../usuarios/index.html">Usuários</a></li>
+                <li><a href="../turmas/index.html">Turmas e Salas</a></li>
+                <li><a href="../disciplinas/index.html">Disciplinas</a></li>
+                <li><a href="../notas/index.html">Notas e Frequência</a></li>
+                <li><a href="../ocorrencias/index.html">Ocorrências</a></li>
+                <li><a href="../comunicados/index.html">Comunicados</a></li>
+                <li class="ativo"><a href="../boletins/index.html">Boletins</a></li>
+                <li><a href="../auditoria/index.html">Auditoria</a></li>
+            </ul>
+            <div class="sair">
+                <a href="../../index.html"><span class="material-symbols-outlined">
+                        logout
+                    </span> sair</a>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="content">
+            
+            <div class="cabecalho-pagina">
+                <h1>Emissão de Boletins</h1>
+            </div>
+
+            <!-- Filtros Superiores -->
+            <div class="painel-filtros">
+                <div class="seletores">
+                    <select><option>Turma: 3º Ano A</option></select>
+                    <select><option>Série: Ensino Médio</option></select>
+                    <select><option>Bimestre: 3º Bimestre</option></select>
+                </div>
+                <button class="btn-gerar">Gerar Boletins</button>
+            </div>
+
+            <div class="grid">
+                
+                <!-- Coluna da Esquerda (Visualização Prévia) -->
+                <div class="col-esquerda">
+                    
+                    <div class="painel">
+                        
+                        <h2 class="subtitulo-secao">Visualização Prévia (Amanda Costa Nogueira)</h2>
+                        
+                        <!-- Mini-Boletim Preview -->
+                        <div class="boletim-preview">
+                            <div class="preview-topo">
+                                <div>
+                                    <strong>EduConnect High School</strong>
+                                    <p>Boletim Escolar Oficial — Ano Letivo 2024</p>
+                                </div>
+                                <div class="preview-info-aluno">
+                                    <span>Matrícula: 20260001</span>
+                                    <span>Turma: 3º Ano A - EM</span>
+                                </div>
+                            </div>
+
+                            <table class="tabela-preview">
+                                <thead>
+                                    <tr>
+                                        <th>Disciplina</th>
+                                        <th>B1</th>
+                                        <th>B2</th>
+                                        <th>B3</th>
+                                        <th>Média</th>
+                                        <th>Situação</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Matemática</strong></td>
+                                        <td>8.5</td>
+                                        <td>9.0</td>
+                                        <td>8.0</td>
+                                        <td><strong>8.5</strong></td>
+                                        <td><span class="badge-sit">Aprovado</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Português</strong></td>
+                                        <td>7.0</td>
+                                        <td>8.0</td>
+                                        <td>7.5</td>
+                                        <td><strong>7.5</strong></td>
+                                        <td><span class="badge-sit">Aprovado</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Física</strong></td>
+                                        <td>6.0</td>
+                                        <td>6.5</td>
+                                        <td>7.0</td>
+                                        <td><strong>6.5</strong></td>
+                                        <td><span class="badge-sit">Aprovado</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Química</strong></td>
+                                        <td>5.5</td>
+                                        <td>7.0</td>
+                                        <td>6.0</td>
+                                        <td><strong>6.2</strong></td>
+                                        <td><span class="badge-sit">Aprovado</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>História</strong></td>
+                                        <td>9.0</td>
+                                        <td>8.5</td>
+                                        <td>9.5</td>
+                                        <td><strong>9.0</strong></td>
+                                        <td><span class="badge-sit">Aprovado</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="preview-rodape">
+                                <span>Total de Faltas: <strong>4 Faltas</strong></span>
+                                <span>Frequência Acumulada: <strong>97.5%</strong></span>
+                            </div>
+                        </div>
+
+                        <!-- Ações do Boletim -->
+                        <div class="acoes-boletim">
+                            <button class="btn-acao primario">Imprimir Lote</button>
+                            <button class="btn-acao">Exportar PDF</button>
+                            <button class="btn-acao">Enviar por E-mail</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Coluna da Direita (Histórico Recente) -->
+                <div class="col-direita">
+                    <div class="titulo-historico">Histórico Recente</div>
+                    <div class="lista-historico">
+                        
+                        <div class="historico-card">
+                            <div class="card-hist-topo">
+                                <strong>3º Ano A</strong>
+                                <span class="status-hist gerado">Gerado</span>
+                            </div>
+                            <p>3º Bimestre</p>
+                            <div class="card-hist-rodape">
+                                <span>35 Alunos</span>
+                                <span class="data-hist">Gerado em: 31/10/2024</span>
+                            </div>
+                        </div>
+
+                        <div class="historico-card">
+                            <div class="card-hist-topo">
+                                <strong>3º Ano B</strong>
+                                <span class="status-hist gerado">Gerado</span>
+                            </div>
+                            <p>3º Bimestre</p>
+                            <div class="card-hist-rodape">
+                                <span>38 Alunos</span>
+                                <span class="data-hist">Gerado em: 30/10/2024</span>
+                            </div>
+                        </div>
+
+                        <div class="historico-card">
+                            <div class="card-hist-topo">
+                                <strong>2º Ano A</strong>
+                                <span class="status-hist gerado">Gerado</span>
+                            </div>
+                            <p>3º Bimestre</p>
+                            <div class="card-hist-rodape">
+                                <span>32 Alunos</span>
+                                <span class="data-hist">Gerado em: 29/10/2024</span>
+                            </div>
+                        </div>
+
+                        <div class="historico-card">
+                            <div class="card-hist-topo">
+                                <strong>1º Ano A</strong>
+                                <span class="status-hist pendente">Pendente</span>
+                            </div>
+                            <p>3º Bimestre</p>
+                            <div class="card-hist-rodape">
+                                <span>28 Alunos</span>
+                                <span class="data-hist">Gerado em: 29/10/2024</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

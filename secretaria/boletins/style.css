@@ -1,0 +1,413 @@
+/* Importação da Fonte Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Variáveis de Cores e Estilos */
+:root {
+    --bg-body: #FFFDF7;
+    --cor-principal: #000;
+    --gradiente-escuro: radial-gradient(80% 80% at 100% 0%, #545456 0%, #3b3b3d 20%, #000 60%),
+                        radial-gradient(80% 80% at 0% 100%, #545456 0%, #3b3b3d 20%, #000 60%);
+    --texto-escuro: #000;
+    --texto-cinza: #666666;
+    --borda: #cccccc;
+    --branco: #FFFDF7;
+}
+
+/* Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    cursor: crosshair;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--texto-escuro);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* --- Cabeçalho (Header) --- */
+.header {
+    background: var(--gradiente-escuro);
+    color: var(--branco);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    height: 65px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+}
+
+.logo .tag {
+    background-color: rgba(255, 255, 255, 0.2);
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 0.9rem;
+}
+
+.user .avatar {
+    width: 35px;
+    height: 35px;
+    background-color: var(--texto-cinza);
+    border-radius: 50%;
+    border: 2px solid var(--branco);
+}
+
+/* --- Layout Principal --- */
+.container {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* --- Menu Lateral (Sidebar) --- */
+.sidebar {
+    background: var(--gradiente-escuro);
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+
+.menu {
+    list-style: none;
+}
+
+.menu li a {
+    display: block;
+    color: #d1d1d1;
+    text-decoration: none;
+    padding: 15px 25px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.menu li a:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--branco);
+}
+
+.menu li.ativo a {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--branco);
+    border-left: 4px solid var(--branco);
+    font-weight: 500;
+}
+
+.sair {
+    padding: 20px 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sair a {
+    color: #d1d1d1;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.sair a:hover {
+    color: var(--branco);
+    scale: 1.05;
+}
+
+/* --- Área de Conteúdo --- */
+.content {
+    flex: 1;
+    padding: 30px 40px;
+    overflow-y: auto;
+}
+
+.cabecalho-pagina {
+    margin-bottom: 20px;
+}
+
+.content h1 {
+    font-size: 1.6rem;
+    color: var(--cor-principal);
+}
+
+/* --- Painel de Filtros Superior --- */
+.painel-filtros {
+    background-color: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    padding: 15px 20px;
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    align-items: center;
+}
+
+.seletores {
+    display: flex;
+    gap: 15px;
+    flex: 1;
+}
+
+.seletores select {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--borda);
+    border-radius: 6px;
+    background-color: var(--branco);
+    color: var(--texto-escuro);
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.btn-gerar {
+    background-color: var(--cor-principal);
+    color: var(--branco);
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+/* --- Grid Principal --- */
+.grid {
+    display: flex;
+    gap: 30px;
+}
+
+.col-esquerda {
+    flex: 2.5;
+}
+
+.col-direita {
+    flex: 1.2;
+    min-width: 300px;
+}
+
+/* --- Painel Geral Esquerdo --- */
+.painel {
+    background-color: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.subtitulo-secao {
+    font-size: 1rem;
+    color: var(--cor-principal);
+    margin-bottom: 15px;
+}
+
+/* --- Mini-Boletim Preview --- */
+.boletim-preview {
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    padding: 15px;
+    background-color: var(--branco);
+    margin-bottom: 20px;
+}
+
+.preview-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--borda);
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+}
+
+.preview-topo strong {
+    font-size: 0.95rem;
+    color: var(--cor-principal);
+    display: block;
+}
+
+.preview-topo p {
+    font-size: 0.75rem;
+    color: var(--texto-cinza);
+}
+
+.preview-info-aluno {
+    text-align: right;
+    font-size: 0.75rem;
+    color: var(--texto-cinza);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Tabela Preview */
+.tabela-preview {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+    font-size: 0.8rem;
+}
+
+.tabela-preview th {
+    background-color: var(--cor-principal);
+    color: var(--branco);
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 500;
+}
+
+.tabela-preview td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--borda);
+    color: var(--texto-escuro);
+}
+
+.tabela-preview tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.badge-sit {
+    background-color: #e0e0e0;
+    color: var(--texto-escuro);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.preview-rodape {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--texto-cinza);
+    border-top: 1px solid var(--borda);
+    padding-top: 10px;
+}
+
+/* Ações do Boletim */
+.acoes-boletim {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-acao {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--borda);
+    border-radius: 6px;
+    background-color: var(--branco);
+    color: var(--texto-escuro);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-acao.primario {
+    background-color: var(--cor-principal);
+    color: var(--branco);
+    border: none;
+}
+
+.btn-acao:hover {
+    opacity: 0.9;
+}
+
+/* --- Coluna da Direita (Histórico Recente) --- */
+.titulo-historico {
+    background-color: var(--cor-principal);
+    color: var(--branco);
+    padding: 15px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 8px 8px 0 0;
+}
+
+.lista-historico {
+    background-color: var(--branco);
+    border: 1px solid var(--borda);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.historico-card {
+    border: 1px solid var(--borda);
+    border-radius: 6px;
+    padding: 12px;
+    background-color: var(--branco);
+}
+
+.card-hist-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.card-hist-topo strong {
+    font-size: 0.9rem;
+    color: var(--cor-principal);
+}
+
+.status-hist {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.status-hist.gerado {
+    background-color: #e5f8ed;
+    color: #27ae60;
+}
+
+.status-hist.pendente {
+    background-color: #fdf5e6;
+    color: #e67e22;
+}
+
+.historico-card p {
+    font-size: 0.8rem;
+    color: var(--texto-cinza);
+    margin-bottom: 8px;
+}
+
+.card-hist-rodape {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--texto-cinza);
+    border-top: 1px solid #eee;
+    padding-top: 6px;
+}
+
+/* --- Responsividade Básica --- */
+@media (max-width: 1200px) {
+    .grid { flex-direction: column; }
+    .painel-filtros { flex-direction: column; align-items: stretch; }
+    .seletores { flex-direction: column; }
+    .acoes-boletim { flex-direction: column; }
+}

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduConnect - Registro de Ocorrências</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body>
+    
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="logo">
+            <span class="material-symbols-outlined">
+                school
+            </span>
+            <strong>EduConnect</strong>
+            <span class="tag">SECRETARIA</span>
+        </div>
+        <div class="user">
+            <span class="material-symbols-outlined">
+                notifications
+            </span>
+            <span>Secretaria Principal</span>
+            <div class="avatar"></div>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- Menu Lateral -->
+        <div class="sidebar">
+            <ul class="menu">
+                <li><a href="../index.html">Dashboard</a></li>
+                <li><a href="../usuarios/index.html">Usuários</a></li>
+                <li><a href="../turmas/index.html">Turmas e Salas</a></li>
+                <li><a href="../disciplinas/index.html">Disciplinas</a></li>
+                <li><a href="../notas/index.html">Notas e Frequência</a></li>
+                <li class="ativo"><a href="../ocorrencias/index.html">Ocorrências</a></li>
+                <li><a href="../comunicados/index.html">Comunicados</a></li>
+                <li><a href="../boletins/index.html">Boletins</a></li>
+                <li><a href="../auditoria/index.html">Auditoria</a></li>
+            </ul>
+            <div class="sair">
+                <a href="../../index.html"><span class="material-symbols-outlined">
+                        logout
+                    </span> sair</a>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="content">
+            
+            <div class="cabecalho-pagina">
+                <h1>Registro de Ocorrências</h1>
+                <button class="btn-novo">+ Nova Ocorrência</button>
+            </div>
+
+            <div class="grid">
+                
+                <!-- Coluna da Esquerda (Principal) -->
+                <div class="col-esquerda">
+                    
+                    <div class="painel">
+                        
+                        <!-- Filtros -->
+                        <div class="filtros-linha">
+                            <div class="seletores">
+                                <select><option>Tipo: Todos</option></select>
+                                <select><option>Gravidade: Todas</option></select>
+                                <select><option>Status: Todos</option></select>
+                            </div>
+                        </div>
+
+                        <!-- Tabela -->
+                        <table class="tabela">
+                            <thead>
+                                <tr>
+                                    <th>Protocolo</th>
+                                    <th>Data</th>
+                                    <th>Aluno</th>
+                                    <th>Tipo</th>
+                                    <th>Gravidade</th>
+                                    <th>Descrição</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>OC-2026-0001</strong></td>
+                                    <td>30/08/2026</td>
+                                    <td>Felipe Oliveira Silva</td>
+                                    <td>Disciplinar</td>
+                                    <td>Média</td>
+                                    <td>...</td>
+                                    <td><span class="status aberta">Aberta</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>OC-2026-0002</strong></td>
+                                    <td>29/08/2026</td>
+                                    <td>Mariana Costa Souza</td>
+                                    <td>Pedagógica</td>
+                                    <td>Leve</td>
+                                    <td>...</td>
+                                    <td><span class="status resolvida">Resolvida</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>OC-2026-0003</strong></td>
+                                    <td>28/08/2026</td>
+                                    <td><strong>Bruno Silva Santos</strong></td>
+                                    <td>Disciplinar</td>
+                                    <td><strong>Grave</strong></td>
+                                    <td>...</td>
+                                    <td><span class="status aberta">Aberta</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>OC-2026-0004</strong></td>
+                                    <td>25/08/2026</td>
+                                    <td>Amanda Nogueira</td>
+                                    <td>Administrativa</td>
+                                    <td>Leve</td>
+                                    <td>...</td>
+                                    <td><span class="status resolvida">Resolvida</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>OC-2026-0005</strong></td>
+                                    <td>24/08/2026</td>
+                                    <td><strong>Lucas Ferraz Mendes</strong></td>
+                                    <td>Disciplinar</td>
+                                    <td><strong>Grave</strong></td>
+                                    <td>...</td>
+                                    <td><span class="status aberta">Aberta</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

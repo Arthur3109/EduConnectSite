@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduConnect - Gestão de Usuários</title>
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+
+<body>
+
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="logo">
+            <span class="material-symbols-outlined">
+                school
+            </span>
+            <strong>EduConnect</strong>
+            <span class="tag">SECRETARIA</span>
+        </div>
+        <div class="user">
+            <span class="material-symbols-outlined">
+                notifications
+            </span>
+            <span>Secretaria Principal</span>
+            <div class="avatar"></div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Menu Lateral -->
+        <div class="sidebar">
+            <ul class="menu">
+                <li><a href="../../index.html">Dashboard</a></li>
+                <li class="ativo"><a href="../../usuarios/index.html">Usuários</a></li>
+                <li><a href="../../turmas/index.html">Turmas e Salas</a></li>
+                <li><a href="../../disciplinas/index.html">Disciplinas</a></li>
+                <li><a href="../../notas/index.html">Notas e Frequência</a></li>
+                <li><a href="../../ocorrencias/index.html">Ocorrências</a></li>
+                <li><a href="../../comunicados/index.html">Comunicados</a></li>
+                <li><a href="../../boletins/index.html">Boletins</a></li>
+                <li><a href="../../auditoria/index.html">Auditoria</a></li>
+            </ul>
+            <div class="sair">
+                <a href="../../../index.html"><span class="material-symbols-outlined">
+                        logout
+                    </span> sair</a>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="content">
+
+            <div class="cabecalho-pagina">
+                <h1>Gestão de Usuários</h1>
+                <button class="btn-novo">+ Novo Profissional</button>
+            </div>
+
+            <div class="grid">
+
+                <!-- Coluna da Esquerda (Principal) -->
+                <div class="col-esquerda">
+
+                    <div class="painel">
+
+                        <!-- Abas com Menu de Navegação -->
+                        <div class="abas">
+                            <a href="../index.html" class="aba">Alunos</a>
+                            <a href="../professor/index.html" class="aba">Professores</a>
+                            <a href="../profissionais/index.html" class="aba ativa">Profissionais</a>
+                        </div>
+
+                        <!-- Filtros e Busca -->
+                        <div class="filtros-container">
+                            <div class="barra-busca">
+                                <span class="material-symbols-outlined">
+                                    search
+                                </span>
+                                <input type="text" placeholder="Buscar profissional por nome, ID ou cargo...">
+                                <button class="btn-buscar">Buscar</button>
+                            </div>
+                            <div class="seletores">
+                                <select>
+                                    <option>Cargo: Todos</option>
+                                </select>
+                                <select>
+                                    <option>Departamento: Todos</option>
+                                </select>
+                                <select>
+                                    <option>Status: Todos</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Tabela de Profissionais -->
+                        <table class="tabela">
+                            <thead>
+                                <tr>
+                                    <th>ID / Registro</th>
+                                    <th>Nome Completo</th>
+                                    <th>Cargo</th>
+                                    <th>Departamento</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>EMP202005</strong></td>
+                                    <td>Patricia Oliveira Martins</td>
+                                    <td>Coordenadora Pedagógica</td>
+                                    <td>Coordenação</td>
+                                    <td>
+                                        <div class="status-ativo">Ativo</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">visibility</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>EMP202112</strong></td>
+                                    <td>Marcos Vinicius Rocha</td>
+                                    <td>Orientador Educacional</td>
+                                    <td>Orientação</td>
+                                    <td>
+                                        <div class="status-ativo">Ativo</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">visibility</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>EMP201903</strong></td>
+                                    <td>Ana Beatriz Souza</td>
+                                    <td>Secretária Escolar</td>
+                                    <td>Administrativo</td>
+                                    <td>
+                                        <div class="status-ativo">Ativo</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">visibility</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>EMP202245</strong></td>
+                                    <td>Lucas Gabriel Mendes</td>
+                                    <td>Psicólogo Escolar</td>
+                                    <td>Atendimento Psico-pedagógico</td>
+                                    <td>
+                                        <div class="status-inativo">Inativo</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">visibility</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Paginação -->
+                        <div class="paginacao">
+                            <button class="btn-pag">&lt;</button>
+                            <button class="btn-pag ativa">1</button>
+                            <button class="btn-pag">2</button>
+                            <span>...</span>
+                            <button class="btn-pag">5</button>
+                            <button class="btn-pag">&gt;</button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
