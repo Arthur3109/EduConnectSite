@@ -8,8 +8,8 @@
 
 body {
   background:
-    radial-gradient(80% 80% at 100% 0%, #545456 0%, #3b3b3d 20%, #1f1f21 60%),
-    radial-gradient(80% 80% at 0% 100%, #545456 0%, #3b3b3d 20%, #1f1f21 60%);
+    radial-gradient(80% 80% at 100% 0%, #545456 0%, #3b3b3d 20%, #000 60%),
+    radial-gradient(80% 80% at 0% 100%, #545456 0%, #3b3b3d 20%, #000 60%);
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -35,7 +35,7 @@ body {
   flex-direction: column;
   gap: 20px;
   width: 450px;
-  background: rgba(31, 31, 33, 0.7);
+  background: transparent;
   padding: 35px;
   border-radius: 10px;
   border: 1px solid #3b3b3d;

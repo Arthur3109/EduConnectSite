@@ -1,35 +1,467 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduConnect</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 
 <body>
-    <div class="container">
-        <div class="logo"></div>
-        <div class="form">
-            <h1>Bem-vindo de volta!</h1>
-            <h2><span>Faça login</span> para continuar</h2>
-            <form action="professor/menu.html"id="loginForm">
-                <input type="email" id="email" name="email" placeholder="Seu email" required>
 
-                <input type="password" id="password" name="password" placeholder="*********" required>
-                
-                <button type="submit">Entrar</button>
-            
-                <p>esqueceu sua senha? <a href="forgot-password">Clique aqui</a></p>
-            </form>
+    <!-- ========================================= -->
+    <!-- 1. NAVBAR (Pílula Flutuante Centralizada) -->
+    <!-- ========================================= -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar__pill">
+
+                <!-- Esquerda: Logo (SVG placeholder + texto) -->
+                <div class="navbar__logo">
+                    <svg class="navbar__logo-icon" width="32" height="32" viewBox="0 0 32 32" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="28" height="28" rx="6" stroke="currentColor" stroke-width="2" />
+                        <path d="M10 22V10H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        <path d="M22 22L10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                    <span class="navbar__brand">EduConnect</span>
+                </div>
+
+                <!-- Centro: Links de navegação -->
+                <ul class="navbar__links">
+                    <li class="navbar__item"><a href="#" class="navbar__link">Soluções</a></li>
+                    <li class="navbar__item"><a href="#" class="navbar__link">Sobre</a></li>
+                    <li class="navbar__item"><a href="#" class="navbar__link">Recursos</a></li>
+                </ul>
+
+                <!-- Direita: Ação (Login) -->
+                <div class="navbar__actions">
+                    <a href="login/index.html" class="navbar__login">Login</a>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+    <!-- ========================================= -->
+    <!-- 2. HERO SECTION (Fundo escuro + Vídeo)    -->
+    <!-- ========================================= -->
+    <main>
+        <section class="hero">
+
+            <!-- Vídeo de fundo (autoplay, loop, muted) -->
+            <!-- O atributo src fica vazio/placeholder para você inserir o link real depois -->
+            <video class="hero__background" autoplay loop muted playsinline src="#">
+                <!-- Fallback / Mensagem caso o vídeo não carregue -->
+                Seu navegador não suporta vídeos HTML5.
+            </video>
+
+            <!-- Conteúdo centralizado -->
+            <div class="hero__content">
+                <h1 class="hero__title">Simplifique a Gestão da sua Escola com Inteligência</h1>
+                <p class="hero__subtitle">
+                    Automatize processos pedagógicos, financeiros e administrativos em um único sistema intuitivo e de
+                    alta performance.
+                </p>
+                <a href="login/index.html" class="hero__cta">Começar Agora</a>
+            </div>
+
+            <!-- Rodapé do Hero: Parceiros / Integrações (texto placeholder) -->
+            <div class="hero__partners">
+                <span class="hero__partner">Google</span>
+                <span class="hero__partner">Twitter</span>
+                <span class="hero__partner">Facebook</span>
+                <span class="hero__partner">Alibaba</span>
+                <span class="hero__partner">LinkedIn</span>
+                <span class="hero__partner">Google</span>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- =================================================
+                        Section 1 
+         ================================================= -->
+
+    <section class="educonnect-introduction-section" aria-labelledby="educonnect-introduction-title">
+        <div class="educonnect-introduction-container">
+
+            <span class="educonnect-introduction-badge">
+                // INTRODUÇÃO
+            </span>
+
+            <h2 id="educonnect-introduction-title" class="educonnect-introduction-title">
+                O que é o EduConnect?
+            </h2>
+
+            <p class="educonnect-introduction-description">
+                O EduConnect é uma plataforma de gestão escolar criada para centralizar e automatizar rotinas acadêmicas
+                e administrativas. Um ambiente digital seguro e intuitivo que conecta de forma eficiente a direção, os
+                professores, os alunos e os responsáveis.
+            </p>
+
+            <div class="educonnect-features-grid">
+
+                <article class="educonnect-feature-card">
+                    <div class="educonnect-feature-card-content">
+                        <h3 class="educonnect-feature-card-title">
+                            Gestão Acadêmica Integrada
+                        </h3>
+
+                        <p class="educonnect-feature-card-description">
+                            Controle completo de turmas, matrículas, notas e frequências em tempo real.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="educonnect-feature-card">
+                    <div class="educonnect-feature-card-content">
+                        <h3 class="educonnect-feature-card-title">
+                            Diário de Classe Digital
+                        </h3>
+
+                        <p class="educonnect-feature-card-description">
+                            Mais agilidade para professores lançarem notas e gerenciarem o desempenho dos alunos.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="educonnect-feature-card">
+                    <div class="educonnect-feature-card-content">
+                        <h3 class="educonnect-feature-card-title">
+                            Conexão Escola e Família
+                        </h3>
+
+                        <p class="educonnect-feature-card-description">
+                            Portal exclusivo para responsáveis acompanharem o boletim, faltas e avisos escolares de
+                            forma transparente.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+
         </div>
-    </div>
+    </section>
 
-    <script src="assets/js/script.js"></script>
+    <!-- =================================================
+                        Section 2 
+         ================================================= -->
+
+    <section class="educonnect-how-it-works-section" aria-labelledby="educonnect-how-it-works-title">
+        <div class="educonnect-how-it-works-container">
+
+            <!-- Badge de introdução -->
+            <span class="educonnect-how-it-works-badge">
+                // PASSO A PASSO
+            </span>
+
+            <!-- Título principal -->
+            <h2 id="educonnect-how-it-works-title" class="educonnect-how-it-works-title">
+                Como Funciona
+            </h2>
+
+            <!-- Descrição da seção -->
+            <p class="educonnect-how-it-works-description">
+                Simples, modular e integrado para otimizar toda a rotina escolar de ponta a ponta.
+            </p>
+
+            <!-- Grid com os 4 passos -->
+            <div class="educonnect-how-it-works-grid">
+
+                <!-- ==========================================
+                 CARD 01 - ACESSO SEGURO
+                 Substitua o caminho da imagem pelo
+                 protótipo real da tela de login.
+                 ========================================== -->
+                <article class="educonnect-how-it-works-card">
+
+                    <div class="educonnect-how-it-works-card-image-preview">
+                        <img src="img/login.png" alt="Prévia da tela de acesso seguro do EduConnect"
+                            class="educonnect-how-it-works-card-image">
+                    </div>
+
+                    <div class="educonnect-how-it-works-card-content">
+                        <h3 class="educonnect-how-it-works-card-title">
+                            1. Acesso Seguro
+                        </h3>
+
+                        <p class="educonnect-how-it-works-card-description">
+                            Faça login com seu perfil específico (aluno, professor, responsável ou admin) com total
+                            segurança e criptografia.
+                        </p>
+                    </div>
+
+                </article>
+
+
+                <!-- ==========================================
+                 CARD 02 - GESTÃO DE TURMAS
+                 Substitua o caminho da imagem pelo
+                 protótipo real da tela de turmas.
+                 ========================================== -->
+                <article class="educonnect-how-it-works-card">
+
+                    <div class="educonnect-how-it-works-card-image-preview">
+                        <img src="img/secretaria.png" alt="Prévia da tela de gestão de turmas do EduConnect"
+                            class="educonnect-how-it-works-card-image">
+                    </div>
+
+                    <div class="educonnect-how-it-works-card-content">
+                        <h3 class="educonnect-how-it-works-card-title">
+                            2. Gestão de Turmas
+                        </h3>
+
+                        <p class="educonnect-how-it-works-card-description">
+                            A secretaria e coordenação organizam turmas, disciplinas e alocam professores rapidamente.
+                        </p>
+                    </div>
+
+                </article>
+
+
+                <!-- ==========================================
+                 CARD 03 - DIÁRIO DIGITAL
+                 Substitua o caminho da imagem pelo
+                 protótipo real do Diário Digital.
+                 ========================================== -->
+                <article class="educonnect-how-it-works-card">
+
+                    <div class="educonnect-how-it-works-card-image-preview">
+                        <img src="img/professor.png" alt="Prévia do Diário Digital do EduConnect"
+                            class="educonnect-how-it-works-card-image">
+                    </div>
+
+                    <div class="educonnect-how-it-works-card-content">
+                        <h3 class="educonnect-how-it-works-card-title">
+                            3. Diário Digital
+                        </h3>
+
+                        <p class="educonnect-how-it-works-card-description">
+                            Professores lançam notas e frequências de forma ágil com cálculo automático de médias.
+                        </p>
+                    </div>
+
+                </article>
+
+
+                <!-- ==========================================
+                 CARD 04 - ACOMPANHAMENTO REAL
+                 Substitua o caminho da imagem pelo
+                 protótipo real do portal do aluno/responsável.
+                 ========================================== -->
+                <article class="educonnect-how-it-works-card">
+
+                    <div class="educonnect-how-it-works-card-image-preview">
+                        <img src="img/aluno.png" alt="Prévia do portal de acompanhamento do EduConnect"
+                            class="educonnect-how-it-works-card-image">
+                    </div>
+
+                    <div class="educonnect-how-it-works-card-content">
+                        <h3 class="educonnect-how-it-works-card-title">
+                            4. Acompanhamento Real
+                        </h3>
+
+                        <p class="educonnect-how-it-works-card-description">
+                            Alunos e responsáveis acompanham boletins, faltas e avisos em tempo real pelo portal.
+                        </p>
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- =================================================
+                        Section 2 
+         ================================================= -->
+
+    <section class="educonnect-coverage-section" aria-labelledby="educonnect-coverage-title">
+
+        <div class="educonnect-coverage-container">
+
+            <!--
+            Badge de identificação da seção.
+            Indica que esta área apresenta a cobertura
+            e a presença do EduConnect.
+        -->
+            <span class="educonnect-coverage-badge">
+                // NOSSA COBERTURA
+            </span>
+
+            <!--
+            Título principal da seção.
+            O h2 mantém a hierarquia semântica da Landing Page.
+        -->
+            <h2 id="educonnect-coverage-title" class="educonnect-coverage-title">
+                Onde o EduConnect está?
+            </h2>
+
+            <!--
+            Descrição introdutória da seção.
+            Apresenta ao visitante a ideia de alcance
+            e conexão entre escolas e municípios.
+        -->
+            <p class="educonnect-coverage-description">
+                Conectando escolas, professores, alunos e famílias
+                em uma única plataforma de gestão escolar.
+            </p>
+
+            <!--
+            Área principal responsável pela exibição do mapa.
+        -->
+            <div class="educonnect-coverage-map-wrapper">
+
+                <!--
+                Container para inicialização do Leaflet.js
+                (L.map('map')) com tiles de tema escuro.
+            -->
+                <div id="map" class="leaflet-map-container" aria-label="Mapa interativo de cobertura do EduConnect">
+                </div>
+
+            </div>
+
+            <!--
+            Estatísticas de cobertura.
+            Estes cards podem apresentar números reais
+            posteriormente, conforme os dados do projeto.
+        -->
+            <div class="educonnect-coverage-statistics">
+
+                <!-- Estatística: escolas conectadas -->
+                <article class="educonnect-coverage-stat-card">
+
+                    <span class="educonnect-coverage-stat-value">
+                        1
+                    </span>
+
+                    <h3 class="educonnect-coverage-stat-title">
+                        Escolas Conectadas
+                    </h3>
+
+                    <p class="educonnect-coverage-stat-description">
+                        Instituições utilizando o EduConnect.
+                    </p>
+
+                </article>
+
+                <!-- Estatística: municípios atendidos -->
+                <article class="educonnect-coverage-stat-card">
+
+                    <span class="educonnect-coverage-stat-value">
+                        01
+                    </span>
+
+                    <h3 class="educonnect-coverage-stat-title">
+                        Municípios Atendidos
+                    </h3>
+
+                    <p class="educonnect-coverage-stat-description">
+                        Municípios alcançados pela plataforma.
+                    </p>
+
+                </article>
+
+                <!-- Estatística: usuários conectados -->
+                <article class="educonnect-coverage-stat-card">
+
+                    <span class="educonnect-coverage-stat-value">
+                        800+
+                    </span>
+
+                    <h3 class="educonnect-coverage-stat-title">
+                        Usuários Conectados
+                    </h3>
+
+                    <p class="educonnect-coverage-stat-description">
+                        Alunos, professores e responsáveis.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- FOOTER / RODAPÉ DA LANDING PAGE            -->
+    <!-- ========================================== -->
+    <footer class="footer-section">
+        <div class="footer-container">
+
+            <!-- Linha Superior: Informações, Links e Ações -->
+            <div class="footer-top">
+
+                <!-- Coluna 1: Descrição da Marca -->
+                <div class="footer-col footer-brand-info">
+                    <p>EduConnect é a plataforma modular e inteligente para otimizar toda a rotina escolar de ponta a
+                        ponta.</p>
+                </div>
+
+                <!-- Coluna 2: Links de Navegação (Explore) -->
+                <div class="footer-col">
+                    <h4>Explore</h4>
+                    <ul class="footer-links">
+                        <li><a href="#inicio">Início</a></li>
+                        <li><a href="#recursos">Recursos</a></li>
+                        <li><a href="#como-funciona">Como Funciona</a></li>
+                        <li><a href="#cobertura">Unidades</a></li>
+                    </ul>
+                </div>
+
+                <!-- Coluna 3: Redes Sociais (Follow Us) -->
+                <div class="footer-col">
+                    <h4>Siga-nos</h4>
+                    <ul class="footer-socials">
+                        <li><a href="#" target="_blank">X (Twitter)</a></li>
+                        <li><a href="#" target="_blank">Instagram</a></li>
+                        <li><a href="#" target="_blank">LinkedIn</a></li>
+                        <li><a href="#" target="_blank">YouTube</a></li>
+                    </ul>
+                </div>
+
+                <!-- Coluna 4: Botões de Ação Rápida (CTAs) -->
+                <div class="footer-col footer-actions">
+                    <a href="#contato" class="footer-btn primary-btn">
+                        Fale Conosco <span>↗</span>
+                    </a>
+                    <a href="#portal" class="footer-btn secondary-btn">
+                        Portal do Aluno <span>↗</span>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Linha Central: Tipografia Gigante da Marca (Estilo da Referência) -->
+            <div class="footer-giant-text">
+                <h2>EDUCONNECT</h2>
+            </div>
+
+            <!-- Linha Inferior: Copyright e Informações Legais / Hora / Clima -->
+            <div class="footer-bottom">
+                <p>EduConnect © 2026</p>
+                <p><a href="#">Política de Privacidade</a></p>
+                <div class="footer-system-info">
+                    <span>Praia Grande</span>
+                    <span>•</span>
+                    <span>12:45 PM</span>
+                    <span>•</span>
+                    <span>28°C ☀️</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="assets/js/map.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>

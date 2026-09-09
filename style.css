@@ -1,0 +1,1708 @@
+/* ========================================== */
+/* 1. IMPORTAÇÃO DE FONTE E RESET BASE        */
+/* ========================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-primary: #000000;
+    --surface-color: #3b3b3d;
+    --text-main: #FFFDF7;
+    --text-muted: #545456;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-main);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ========================================== */
+/* 2. NAVBAR (Pílula Flutuante com Glass)     */
+/* ========================================== */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    padding: 20px 16px 0 16px;
+    pointer-events: none; /* Permite cliques passarem, exceto na pílula */
+}
+
+.navbar {
+    pointer-events: auto; /* Reativa os cliques dentro da pílula */
+    width: auto;
+    max-width: 90%;
+}
+
+.navbar__pill {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 12px 28px;
+
+    /* Efeito Glassmorphism principal */
+    background: rgba(59, 59, 61, 0.4);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+
+    /* Formato pílula e borda sutil */
+    border-radius: 100px;
+    border: 1px solid rgba(84, 84, 86, 0.25);
+
+    /* Sombra para flutuação */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+/* ---- Logo ---- */
+.navbar__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.navbar__logo-icon {
+    color: var(--text-main);
+    width: 32px;
+    height: 32px;
+}
+
+.navbar__brand {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+}
+
+/* ---- Links centrais ---- */
+.navbar__links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar__link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.25s ease;
+    white-space: nowrap;
+}
+
+.navbar__link:hover {
+    color: var(--text-main);
+}
+
+/* ---- Ação (Login) ---- */
+.navbar__actions {
+    flex-shrink: 0;
+}
+
+.navbar__login {
+    display: inline-block;
+    background: var(--text-main);
+    color: var(--bg-primary);
+    padding: 8px 28px;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 0 1px transparent;
+}
+
+.navbar__login:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 30px rgba(255, 253, 247, 0.15);
+}
+
+/* ========================================== */
+/* 3. HERO SECTION (Vídeo + Overlay + Texto)  */
+/* ========================================== */
+.hero {
+    position: relative;
+    min-height: 100dvh; /* Altura dinâmica da viewport */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    padding: 100px 24px 60px 24px; /* Espaço para a navbar fixa */
+    background: var(--bg-primary);
+}
+
+/* ---- Vídeo de fundo ---- */
+.hero__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    display: block;
+}
+
+/* ---- Overlay escuro sobre o vídeo ---- */
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.65);
+    /* Gradiente sutil para suavizar as bordas, se quiser */
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.75) 0%,
+        rgba(0, 0, 0, 0.50) 50%,
+        rgba(0, 0, 0, 0.80) 100%
+    );
+}
+
+/* ---- Conteúdo centralizado (acima do overlay) ---- */
+.hero__content {
+    position: relative;
+    z-index: 2;
+    max-width: 820px;
+    margin: 0 auto;
+}
+
+.hero__title {
+    color: var(--text-main);
+    font-size: clamp(2.4rem, 7vw, 4.8rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 2px 40px rgba(0, 0, 0, 0.5);
+}
+
+.hero__subtitle {
+    color: var(--text-muted);
+    font-size: clamp(1rem, 1.5vw, 1.3rem);
+    font-weight: 400;
+    line-height: 1.7;
+    max-width: 620px;
+    margin: 0 auto 2.8rem auto;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+}
+
+.hero__cta {
+    display: inline-block;
+    background: var(--text-main);
+    color: var(--bg-primary);
+    padding: 16px 52px;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 30px rgba(255, 253, 247, 0.12);
+}
+
+.hero__cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 48px rgba(255, 253, 247, 0.20);
+}
+
+/* ---- Rodapé do Hero (Parceiros / Integrações) ---- */
+.hero__partners {
+    position: relative;
+    z-index: 2;
+    margin-top: 5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2.2rem 3.5rem;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.hero__partners:hover {
+    opacity: 0.8;
+}
+
+.hero__partner {
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    white-space: nowrap;
+}
+
+/* ========================================== */
+/* 4. RESPONSIVIDADE BÁSICA                   */
+/* ========================================== */
+
+/* Tablets e telas médias */
+@media (max-width: 820px) {
+    .navbar__pill {
+        gap: 16px;
+        padding: 10px 20px;
+        border-radius: 60px;
+    }
+
+    .navbar__links {
+        gap: 18px;
+    }
+
+    .navbar__link {
+        font-size: 0.85rem;
+    }
+
+    .navbar__brand {
+        font-size: 0.95rem;
+    }
+
+    .navbar__login {
+        padding: 6px 20px;
+        font-size: 0.8rem;
+    }
+
+    .hero__partners {
+        gap: 1.5rem 2rem;
+    }
+
+    .hero__partner {
+        font-size: 0.7rem;
+    }
+}
+
+/* Smartphones e telas pequenas */
+@media (max-width: 600px) {
+    .header {
+        padding-top: 12px;
+    }
+
+    .navbar__pill {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px 20px;
+        padding: 12px 18px;
+        border-radius: 40px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .navbar__links {
+        order: 3; /* Joga os links para a linha de baixo */
+        gap: 20px;
+        flex-basis: 100%;
+        justify-content: center;
+    }
+
+    .navbar__link {
+        font-size: 0.8rem;
+    }
+
+    .navbar__login {
+        padding: 6px 18px;
+        font-size: 0.75rem;
+    }
+
+    .navbar__logo-icon {
+        width: 26px;
+        height: 26px;
+    }
+
+    .hero {
+        padding: 90px 16px 40px 16px;
+        min-height: 100dvh;
+    }
+
+    .hero__title {
+        font-size: clamp(2rem, 10vw, 2.8rem);
+    }
+
+    .hero__subtitle {
+        font-size: 0.95rem;
+        padding: 0 4px;
+    }
+
+    .hero__cta {
+        padding: 14px 40px;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .hero__partners {
+        margin-top: 3rem;
+        gap: 1rem 1.8rem;
+    }
+
+    .hero__partner {
+        font-size: 0.65rem;
+        letter-spacing: 0.5px;
+    }
+}
+
+/* ========================================
+   SEÇÃO: O QUE É O EDUCONNECT?
+   ======================================== */
+
+.educonnect-introduction-section {
+    width: 100%;
+    background: #000000;
+    color: #FFFDF7;
+    padding: 120px 24px;
+}
+
+.educonnect-introduction-container {
+    width: min(1200px, 100%);
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Badge de introdução */
+
+.educonnect-introduction-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 7px 14px;
+    margin-bottom: 24px;
+
+    background: rgba(59, 59, 61, 0.25);
+    border: 1px solid rgba(84, 84, 86, 0.4);
+    border-radius: 999px;
+
+    color: #FFFDF7;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+/* Título */
+
+.educonnect-introduction-title {
+    margin: 0;
+
+    color: #FFFDF7;
+    font-size: clamp(2.25rem, 5vw, 4rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+}
+
+/* Descrição */
+
+.educonnect-introduction-description {
+    max-width: 760px;
+    margin: 24px auto 64px;
+
+    color: #545456;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.7;
+}
+
+/* Grid dos cards */
+
+.educonnect-features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+
+    width: 100%;
+    text-align: left;
+}
+
+/* Cards */
+
+.educonnect-feature-card {
+    min-height: 220px;
+    padding: 32px;
+
+    background: rgba(59, 59, 61, 0.25);
+    border: 1px solid rgba(84, 84, 86, 0.4);
+    border-radius: 16px;
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    transition:
+        border-color 0.3s ease,
+        background 0.3s ease,
+        transform 0.3s ease;
+}
+
+/* Conteúdo dos cards */
+
+.educonnect-feature-card-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.educonnect-feature-card-title {
+    margin: 0 0 16px;
+
+    color: #FFFDF7;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+}
+
+.educonnect-feature-card-description {
+    margin: 0;
+
+    color: #545456;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+/* Interação dos cards */
+
+.educonnect-feature-card:hover {
+    background: rgba(59, 59, 61, 0.35);
+    border-color: rgba(84, 84, 86, 0.65);
+    transform: translateY(-4px);
+}
+
+/* ========================================
+   RESPONSIVIDADE
+   ======================================== */
+
+@media (max-width: 900px) {
+    .educonnect-introduction-section {
+        padding: 96px 24px;
+    }
+
+    .educonnect-features-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .educonnect-feature-card {
+        min-height: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .educonnect-introduction-section {
+        padding: 80px 20px;
+    }
+
+    .educonnect-introduction-description {
+        margin-bottom: 48px;
+        font-size: 15px;
+    }
+
+    .educonnect-feature-card {
+        padding: 26px;
+    }
+
+    .educonnect-feature-card-title {
+        font-size: 18px;
+    }
+
+    .educonnect-feature-card-description {
+        font-size: 14px;
+    }
+}
+
+
+/* =========================================================
+   SEÇÃO: COMO FUNCIONA
+   ========================================================= */
+
+.educonnect-how-it-works-section {
+    width: 100%;
+    background: #000000;
+    color: #FFFDF7;
+    padding: 140px 24px;
+}
+
+.educonnect-how-it-works-container {
+    width: min(1360px, 100%);
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+/* =========================================================
+   BADGE
+   ========================================================= */
+
+.educonnect-how-it-works-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 7px 14px;
+    margin-bottom: 26px;
+
+    background: rgba(59, 59, 61, 0.25);
+    border: 1px solid rgba(84, 84, 86, 0.4);
+    border-radius: 999px;
+
+    color: #FFFDF7;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+
+/* =========================================================
+   TÍTULO PRINCIPAL
+   ========================================================= */
+
+.educonnect-how-it-works-title {
+    margin: 0;
+
+    color: #FFFDF7;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.045em;
+}
+
+
+/* =========================================================
+   DESCRIÇÃO DA SEÇÃO
+   ========================================================= */
+
+.educonnect-how-it-works-description {
+    max-width: 780px;
+    margin: 24px auto 72px;
+
+    color: #545456;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   GRID DOS CARDS
+   ========================================================= */
+
+.educonnect-how-it-works-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 24px;
+
+    width: 100%;
+    text-align: left;
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.educonnect-how-it-works-card {
+    min-width: 0;
+    min-height: 420px;
+
+    padding: 24px;
+
+    background: #000000;
+
+    border: 1px solid rgba(84, 84, 86, 0.4);
+    border-radius: 16px;
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    overflow: hidden;
+
+    /*
+     * O conteúdo do card é organizado em coluna.
+     * A ordem natural do HTML continua sendo:
+     * imagem → conteúdo.
+     *
+     * O order abaixo inverte essa ordem visualmente,
+     * colocando o texto primeiro e a imagem depois.
+     */
+    display: flex;
+    flex-direction: column;
+
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.3s ease;
+}
+
+
+/* =========================================================
+   CONTEÚDO TEXTUAL
+   ---------------------------------------------------------
+   Faz o texto aparecer PRIMEIRO no card.
+   ========================================================= */
+
+.educonnect-how-it-works-card-content {
+    order: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    height: auto;
+}
+
+
+/* =========================================================
+   PREVIEW DA IMAGEM
+   ---------------------------------------------------------
+   A imagem agora aparece ABAIXO do título e da descrição.
+   ========================================================= */
+
+.educonnect-how-it-works-card-image-preview {
+    order: 2;
+
+    width: 100%;
+    height: 300px;
+
+    /*
+     * Espaçamento entre o texto e a imagem.
+     */
+    margin-top: 28px;
+    margin-bottom: 0;
+
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   IMAGEM DO MOCKUP
+   ========================================================= */
+
+.educonnect-how-it-works-card-image {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+
+    object-fit: cover;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   TÍTULO DOS CARDS
+   ---------------------------------------------------------
+   Remove os números "1.", "2.", "3." e "4." visualmente,
+   mantendo os títulos limpos.
+   ========================================================= */
+
+.educonnect-how-it-works-card-title {
+    margin: 0 0 14px;
+
+    font-size: 0;
+    line-height: 1.3;
+}
+
+
+/* Card 1 */
+
+.educonnect-how-it-works-card:nth-child(1)
+.educonnect-how-it-works-card-title::after {
+    content: "Acesso Seguro";
+
+    color: #FFFDF7;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+}
+
+
+/* Card 2 */
+
+.educonnect-how-it-works-card:nth-child(2)
+.educonnect-how-it-works-card-title::after {
+    content: "Gestão de Turmas";
+
+    color: #FFFDF7;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+}
+
+
+/* Card 3 */
+
+.educonnect-how-it-works-card:nth-child(3)
+.educonnect-how-it-works-card-title::after {
+    content: "Diário Digital";
+
+    color: #FFFDF7;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+}
+
+
+/* Card 4 */
+
+.educonnect-how-it-works-card:nth-child(4)
+.educonnect-how-it-works-card-title::after {
+    content: "Acompanhamento Real";
+
+    color: #FFFDF7;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+}
+
+
+/* =========================================================
+   DESCRIÇÃO DOS CARDS
+   ========================================================= */
+
+.educonnect-how-it-works-card-description {
+    margin: 0;
+
+    color: #545456;
+
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   HOVER
+   ========================================================= */
+
+.educonnect-how-it-works-card:hover {
+    background: rgba(59, 59, 61, 0.35);
+
+    border-color: rgba(84, 84, 86, 0.65);
+
+    transform: translateY(-5px);
+}
+
+
+/* =========================================================
+   TABLETS
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .educonnect-how-it-works-container {
+        width: min(900px, 100%);
+    }
+
+    .educonnect-how-it-works-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .educonnect-how-it-works-card {
+        min-height: 400px;
+    }
+}
+
+
+/* =========================================================
+   CELULARES
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .educonnect-how-it-works-section {
+        padding: 90px 20px;
+    }
+
+    .educonnect-how-it-works-description {
+        margin-bottom: 52px;
+        font-size: 15px;
+    }
+
+    .educonnect-how-it-works-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .educonnect-how-it-works-card {
+        min-height: auto;
+        padding: 20px;
+    }
+
+    .educonnect-how-it-works-card-image-preview {
+        height: 210px;
+        margin-top: 24px;
+    }
+
+    .educonnect-how-it-works-card-description {
+        font-size: 14px;
+    }
+}
+
+
+/* =========================================================
+   CELULARES PEQUENOS
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .educonnect-how-it-works-section {
+        padding: 70px 16px;
+    }
+
+    .educonnect-how-it-works-card {
+        padding: 18px;
+    }
+
+    .educonnect-how-it-works-card-image-preview {
+        height: 180px;
+    }
+}
+
+/* =========================================================
+   SEÇÃO: MAPA INTERATIVO / COBERTURA EDUCONNECT
+   =========================================================
+   Esta seção utiliza:
+   - Fundo: #000000
+   - Texto principal: #FFFDF7
+   - Texto secundário: #545456
+   - Superfície: #3b3b3d
+
+   O mapa utiliza o Leaflet.js e seus elementos nativos.
+   ========================================================= */
+
+
+/* =========================================================
+   SEÇÃO PRINCIPAL
+   ========================================================= */
+
+.educonnect-coverage-section {
+    /*
+     * Ocupa toda a largura disponível da página.
+     */
+    width: 100%;
+
+    /*
+     * Mantém o fundo alinhado à identidade visual
+     * escura da Landing Page.
+     */
+    background: #000000;
+
+    /*
+     * Define a cor padrão dos elementos textuais.
+     */
+    color: #FFFDF7;
+
+    /*
+     * Espaçamento vertical generoso para separar
+     * esta seção das demais partes da Landing Page.
+     */
+    padding: 140px 24px;
+}
+
+
+/* =========================================================
+   CONTAINER PRINCIPAL
+   ========================================================= */
+
+.educonnect-coverage-container {
+    /*
+     * Limita a largura máxima para evitar que o mapa
+     * fique excessivamente largo em monitores grandes.
+     */
+    width: min(1200px, 100%);
+
+    /*
+     * Centraliza todo o conteúdo horizontalmente.
+     */
+    margin: 0 auto;
+
+    /*
+     * Centraliza o badge, título e descrição.
+     */
+    text-align: center;
+}
+
+
+/* =========================================================
+   BADGE "// NOSSA COBERTURA"
+   ========================================================= */
+
+.educonnect-coverage-badge {
+    /*
+     * Permite controlar alinhamento e espaçamento
+     * interno do pequeno elemento.
+     */
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    /*
+     * Espaçamento interno compacto.
+     */
+    padding: 7px 14px;
+
+    /*
+     * Cria distância entre o badge e o título.
+     */
+    margin-bottom: 26px;
+
+    /*
+     * Superfície translúcida baseada na cor #3b3b3d.
+     */
+    background: rgba(59, 59, 61, 0.25);
+
+    /*
+     * Borda discreta para destacar o badge do fundo preto.
+     */
+    border: 1px solid rgba(84, 84, 86, 0.4);
+
+    /*
+     * Cria o formato de pílula.
+     */
+    border-radius: 999px;
+
+    /*
+     * Cor principal da tipografia.
+     */
+    color: #FFFDF7;
+
+    /*
+     * Tamanho pequeno e discreto.
+     */
+    font-size: 12px;
+
+    /*
+     * Peso intermediário.
+     */
+    font-weight: 500;
+
+    /*
+     * Espaçamento entre caracteres.
+     */
+    letter-spacing: 0.08em;
+
+    /*
+     * Desfoque do conteúdo localizado atrás do badge.
+     */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+
+/* =========================================================
+   TÍTULO PRINCIPAL
+   ========================================================= */
+
+.educonnect-coverage-title {
+    /*
+     * Remove a margem padrão do navegador.
+     */
+    margin: 0;
+
+    /*
+     * Utiliza a cor principal da identidade visual.
+     */
+    color: #FFFDF7;
+
+    /*
+     * O clamp permite adaptar o tamanho do título
+     * entre celulares e telas grandes.
+     */
+    font-size: clamp(2.5rem, 5vw, 4rem);
+
+    /*
+     * Peso semibold para um visual moderno.
+     */
+    font-weight: 600;
+
+    /*
+     * Mantém o título visualmente compacto.
+     */
+    line-height: 1.1;
+
+    /*
+     * Aproxima discretamente os caracteres.
+     */
+    letter-spacing: -0.045em;
+}
+
+
+/* =========================================================
+   DESCRIÇÃO
+   ========================================================= */
+
+.educonnect-coverage-description {
+    /*
+     * Limita a largura para manter linhas confortáveis
+     * para leitura.
+     */
+    max-width: 720px;
+
+    /*
+     * Centraliza a descrição e cria espaço antes do mapa.
+     */
+    margin: 24px auto 56px;
+
+    /*
+     * Utiliza a cor secundária da paleta.
+     */
+    color: #545456;
+
+    /*
+     * Tamanho confortável para texto introdutório.
+     */
+    font-size: 17px;
+
+    /*
+     * Peso normal.
+     */
+    font-weight: 400;
+
+    /*
+     * Espaçamento entre linhas.
+     */
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   WRAPPER DO MAPA
+   ========================================================= */
+
+.educonnect-coverage-map-wrapper {
+    /*
+     * Ocupa toda a largura disponível do container.
+     */
+    width: 100%;
+
+    /*
+     * Mantém o mapa separado dos elementos externos.
+     */
+    position: relative;
+
+    /*
+     * Arredonda o conjunto visual do mapa.
+     */
+    border-radius: 20px;
+
+    /*
+     * Mantém qualquer elemento do Leaflet dentro
+     * dos limites arredondados.
+     */
+    overflow: hidden;
+
+    /*
+     * Borda sutil seguindo o estilo glassmorphism.
+     */
+    border: 1px solid rgba(84, 84, 86, 0.4);
+
+    /*
+     * Fundo utilizado caso os tiles demorem para carregar.
+     */
+    background: #000000;
+}
+
+
+/* =========================================================
+   CONTAINER DO LEAFLET
+   ========================================================= */
+
+.leaflet-map-container {
+    /*
+     * Altura principal do mapa em desktops.
+     */
+    height: 450px;
+
+    /*
+     * Garante que o mapa ocupe toda a largura.
+     */
+    width: 100%;
+
+    /*
+     * Remove qualquer comportamento inesperado
+     * de elementos inline.
+     */
+    display: block;
+
+    /*
+     * Fundo preto para combinar com a Landing Page.
+     */
+    background: #000000;
+}
+
+
+/* =========================================================
+   TILES DO LEAFLET
+   =========================================================
+   O filtro abaixo pode ser usado quando os tiles escolhidos
+   forem claros e você quiser aproximá-los visualmente
+   do tema escuro.
+
+   Caso esteja usando um tile provider que já seja escuro,
+   você pode remover esta regra.
+   ========================================================= */
+
+.leaflet-map-container .leaflet-tile {
+    /*
+     * Escurece levemente os tiles sem inverter totalmente
+     * suas cores.
+     */
+    filter: brightness(0.65) contrast(1.05);
+}
+
+
+/* =========================================================
+   CONTROLES DO LEAFLET
+   ========================================================= */
+
+.leaflet-map-container .leaflet-control {
+    /*
+     * Faz os controles combinarem com a interface escura.
+     */
+    background: rgba(59, 59, 61, 0.25);
+
+    /*
+     * Borda discreta.
+     */
+    border: 1px solid rgba(84, 84, 86, 0.4);
+
+    /*
+     * Desfoque semelhante aos cards da Landing Page.
+     */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+
+/* =========================================================
+   BOTÕES DOS CONTROLES DO LEAFLET
+   ========================================================= */
+
+.leaflet-map-container .leaflet-control-zoom a {
+    /*
+     * Remove o fundo branco padrão do Leaflet.
+     */
+    background: rgba(59, 59, 61, 0.25);
+
+    /*
+     * Utiliza a cor principal para os símbolos + e -.
+     */
+    color: #FFFDF7;
+
+    /*
+     * Remove a borda padrão clara.
+     */
+    border: 0;
+
+    /*
+     * Garante boa visibilidade dos controles.
+     */
+    transition: background 0.2s ease;
+}
+
+
+/* =========================================================
+   HOVER DOS CONTROLES
+   ========================================================= */
+
+.leaflet-map-container .leaflet-control-zoom a:hover {
+    /*
+     * Aumenta discretamente a presença do elemento
+     * quando o usuário passa o mouse.
+     */
+    background: rgba(59, 59, 61, 0.35);
+
+    /*
+     * Mantém o texto branco.
+     */
+    color: #FFFDF7;
+}
+
+
+/* =========================================================
+   ESTATÍSTICAS
+   ========================================================= */
+
+.educonnect-coverage-statistics {
+    /*
+     * Organiza os três cards lado a lado.
+     */
+    display: grid;
+
+    /*
+     * Três colunas iguais em telas grandes.
+     */
+    grid-template-columns: repeat(3, 1fr);
+
+    /*
+     * Espaçamento entre os cards.
+     */
+    gap: 24px;
+
+    /*
+     * Espaço entre o mapa e as estatísticas.
+     */
+    margin-top: 24px;
+
+    /*
+     * Alinha o conteúdo textual ao centro.
+     */
+    text-align: center;
+}
+
+
+/* =========================================================
+   CARD DE ESTATÍSTICA
+   ========================================================= */
+
+.educonnect-coverage-stat-card {
+    /*
+     * Espaçamento interno confortável.
+     */
+    padding: 28px 24px;
+
+    /*
+     * Superfície translúcida.
+     */
+    background: rgba(59, 59, 61, 0.25);
+
+    /*
+     * Borda sutil.
+     */
+    border: 1px solid rgba(84, 84, 86, 0.4);
+
+    /*
+     * Cantos arredondados.
+     */
+    border-radius: 16px;
+
+    /*
+     * Efeito glassmorphism.
+     */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    /*
+     * Transição para o hover.
+     */
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.3s ease;
+}
+
+
+/* =========================================================
+   NÚMERO DA ESTATÍSTICA
+   ========================================================= */
+
+.educonnect-coverage-stat-value {
+    /*
+     * Faz o número ocupar sua própria linha.
+     */
+    display: block;
+
+    /*
+     * Destaque visual para o número.
+     */
+    color: #FFFDF7;
+
+    /*
+     * Tamanho grande, mas responsivo.
+     */
+    font-size: clamp(2rem, 4vw, 3rem);
+
+    /*
+     * Peso forte para criar hierarquia.
+     */
+    font-weight: 600;
+
+    /*
+     * Espaçamento compacto.
+     */
+    line-height: 1.1;
+
+    /*
+     * Pequeno espaço antes do título.
+     */
+    margin-bottom: 10px;
+}
+
+
+/* =========================================================
+   TÍTULO DA ESTATÍSTICA
+   ========================================================= */
+
+.educonnect-coverage-stat-title {
+    /*
+     * Remove margem padrão.
+     */
+    margin: 0 0 8px;
+
+    /*
+     * Cor principal.
+     */
+    color: #FFFDF7;
+
+    /*
+     * Tamanho intermediário.
+     */
+    font-size: 16px;
+
+    /*
+     * Peso semibold.
+     */
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   DESCRIÇÃO DA ESTATÍSTICA
+   ========================================================= */
+
+.educonnect-coverage-stat-description {
+    /*
+     * Remove margem padrão.
+     */
+    margin: 0;
+
+    /*
+     * Cor secundária.
+     */
+    color: #545456;
+
+    /*
+     * Texto menor para informação auxiliar.
+     */
+    font-size: 14px;
+
+    /*
+     * Melhora a leitura das linhas.
+     */
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   HOVER DOS CARDS DE ESTATÍSTICA
+   ========================================================= */
+
+.educonnect-coverage-stat-card:hover {
+    /*
+     * Aumenta discretamente a opacidade da superfície.
+     */
+    background: rgba(59, 59, 61, 0.35);
+
+    /*
+     * Torna a borda um pouco mais perceptível.
+     */
+    border-color: rgba(84, 84, 86, 0.65);
+
+    /*
+     * Pequena elevação do card.
+     */
+    transform: translateY(-4px);
+}
+
+
+/* =========================================================
+   TABLETS
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    /*
+     * Reduz a altura do mapa para ocupar menos espaço
+     * em telas médias.
+     */
+    .leaflet-map-container {
+        height: 400px;
+    }
+
+    /*
+     * Mantém duas estatísticas por linha.
+     */
+    .educonnect-coverage-statistics {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* =========================================================
+   CELULARES
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    /*
+     * Reduz o espaçamento vertical geral.
+     */
+    .educonnect-coverage-section {
+        padding: 90px 20px;
+    }
+
+    /*
+     * Reduz o tamanho do mapa para se adaptar
+     * melhor à tela vertical do celular.
+     */
+    .leaflet-map-container {
+        height: 360px;
+    }
+
+    /*
+     * Diminui o espaço entre descrição e mapa.
+     */
+    .educonnect-coverage-description {
+        margin-bottom: 44px;
+        font-size: 15px;
+    }
+
+    /*
+     * Empilha os cards de estatística verticalmente.
+     */
+    .educonnect-coverage-statistics {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    /*
+     * Reduz o padding dos cards em telas estreitas.
+     */
+    .educonnect-coverage-stat-card {
+        padding: 24px 20px;
+    }
+}
+
+
+/* =========================================================
+   CELULARES PEQUENOS
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    /*
+     * Diminui ainda mais o mapa para evitar que ele
+     * ocupe espaço excessivo em telas muito pequenas.
+     */
+    .leaflet-map-container {
+        height: 320px;
+    }
+
+    /*
+     * Reduz o padding lateral da seção.
+     */
+    .educonnect-coverage-section {
+        padding: 70px 16px;
+    }
+}
+
+/* ========================================== */
+/* ESTILOS DO FOOTER / RODAPÉ     */
+/* ========================================== */
+
+/* Garante que o footer ocupe toda a largura e oculta qualquer conteúdo que vaze (resolve o scroll horizontal) */
+.footer-section {
+    background-color: #000000;
+    color: #FFFDF7;
+    padding: 80px 0 30px 0; /* Removido o padding lateral daqui para centralizar melhor pelo container */
+    border-top: 1px solid rgba(84, 84, 86, 0.3);
+    position: relative;
+    width: 100%;
+    overflow: hidden; /* Elimina o vazamento da tipografia gigante (scroll horizontal) */
+    font-family: sans-serif;
+}
+
+/* Alinha o rodapé com a largura máxima do site e empilha as linhas mantendo a hierarquia */
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px; /* Padding lateral garantido para não colar nas bordas em telas menores */
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+/* Grid superior com colunas de informações e links */
+.footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+    .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 600px) {
+    .footer-top {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Textos e links gerais do footer */
+.footer-brand-info p {
+    color: #545456;
+    font-size: 15px;
+    line-height: 1.5;
+    max-width: 300px;
+}
+
+.footer-col h4 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #545456;
+    margin-bottom: 20px;
+}
+
+.footer-links, .footer-socials {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-links a, .footer-socials a {
+    color: #FFFDF7;
+    text-decoration: none;
+    font-size: 15px;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover, .footer-socials a:hover {
+    color: #545456;
+}
+
+/* Botões de Ação Rápida (CTAs) */
+.footer-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-btn {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.footer-btn.primary-btn {
+    background-color: #3b3b3d;
+    color: #FFFDF7;
+    border: 1px solid rgba(84, 84, 86, 0.4);
+}
+
+.footer-btn.primary-btn:hover {
+    background-color: #FFFDF7;
+    color: #000000;
+}
+
+.footer-btn.secondary-btn {
+    background-color: transparent;
+    color: #FFFDF7;
+    border: 1px solid rgba(84, 84, 86, 0.4);
+}
+
+.footer-btn.secondary-btn:hover {
+    border-color: #FFFDF7;
+}
+
+/* Container e comportamento do Texto Gigante */
+.footer-giant-text {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-giant-text h2 {
+    font-size: 16vw; /* Escala de acordo com a largura da tela */
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    color: rgba(84, 84, 86, 0.15); /* Tom escuro, atuando como marca d'água sutil */
+    line-height: 0.72; /* Menor que 1 para remover o espaçamento acima e abaixo, criando o efeito de corte */
+    white-space: nowrap; /* Impede a quebra de texto (o que causava o bug do height excessivo) */
+    margin: 0 0 -10px 0; /* Margem negativa para fazer a base da fonte encostar visualmente na linha divisória abaixo */
+    user-select: none;
+}
+
+/* Linha Inferior (Copyright e Sistema) */
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 25px;
+    border-top: 1px solid rgba(84, 84, 86, 0.2);
+    font-size: 13px;
+    color: #545456;
+    flex-wrap: wrap;
+    gap: 15px;
+    position: relative; /* Z-index para garantir que a linha sobreponha a base da fonte se ela encostar */
+    z-index: 2;
+}
+
+.footer-bottom a {
+    color: #545456;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-bottom a:hover {
+    color: #FFFDF7;
+}
+
+.footer-system-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
