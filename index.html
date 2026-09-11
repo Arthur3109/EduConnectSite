@@ -7,6 +7,7 @@
     <title>EduConnect</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
 <body>
@@ -41,8 +42,20 @@
                     <a href="login/index.html" class="navbar__login">Login</a>
                 </div>
 
+                <div class="darkmode">
+                    <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+                        <span class="material-symbols-outlined toggle-icon moon">
+                            light_mode
+                        </span>
+                        <span class="material-symbols-outlined toggle-icon sun">
+                            dark_mode
+                        </span>
+                        <span class="toggle-ball"></span>
+                    </button>
+                </div>
             </div>
         </nav>
+
     </header>
 
     <!-- ========================================= -->
@@ -53,14 +66,14 @@
 
             <!-- Vídeo de fundo (autoplay, loop, muted) -->
             <!-- O atributo src fica vazio/placeholder para você inserir o link real depois -->
-            <video class="hero__background" autoplay loop muted playsinline src="#">
+            <video class="hero__background" autoplay loop muted playsinline src="img/background.mp4">
                 <!-- Fallback / Mensagem caso o vídeo não carregue -->
                 Seu navegador não suporta vídeos HTML5.
             </video>
 
             <!-- Conteúdo centralizado -->
             <div class="hero__content">
-                <h1 class="hero__title">Simplifique a Gestão da sua Escola com Inteligência</h1>
+                <h1 class="hero__title">Simplifique a Gestão da sua Escola</h1>
                 <p class="hero__subtitle">
                     Automatize processos pedagógicos, financeiros e administrativos em um único sistema intuitivo e de
                     alta performance.
@@ -70,12 +83,12 @@
 
             <!-- Rodapé do Hero: Parceiros / Integrações (texto placeholder) -->
             <div class="hero__partners">
-                <span class="hero__partner">Google</span>
-                <span class="hero__partner">Twitter</span>
-                <span class="hero__partner">Facebook</span>
-                <span class="hero__partner">Alibaba</span>
-                <span class="hero__partner">LinkedIn</span>
-                <span class="hero__partner">Google</span>
+                <span class="hero__partner">EduConnect</span>
+                <span class="hero__partner">EduConnect</span>
+                <span class="hero__partner">EduConnect</span>
+                <span class="hero__partner">EduConnect</span>
+                <span class="hero__partner">EduConnect</span>
+                <span class="hero__partner">EduConnect</span>
             </div>
 
         </section>

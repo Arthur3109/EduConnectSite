@@ -13,16 +13,34 @@
         rel="stylesheet">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_back_ios" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
 <body>
 
     <div class="container">
-        <a href="../menu.html">
-            <span class="material-symbols-outlined">
-                arrow_back_ios VOLTAR
-            </span>
-        </a>
+        <div class="top">    
+            <div class="logout">
+                <a href="../menu.html">
+                    <span class="material-symbols-outlined">
+                        arrow_back_ios
+                    </span>
+                    Sair
+                </a>
+            </div>
+            
+            <div class="darkmode">
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+                    <span class="material-symbols-outlined toggle-icon moon">
+                        light_mode
+                    </span>
+                    <span class="material-symbols-outlined toggle-icon sun">
+                        dark_mode
+                    </span>
+                    <span class="toggle-ball"></span>
+                </button>
+            </div>
+        </div>
         <h1>Lançamento de Notas - 3° Bimestre - Turma 6B</h1>
 
         <div class="warning">
@@ -133,8 +151,13 @@
                 </tr>
             </tbody>
         </table>
-        <a href="#"><button class="btn">Fechar Bimestre</button></a>
+
+        <div>
+            <a href="#"><button class="btn">Fechar Bimestre</button></a>
+        </div>
     </div>
+
+    <script src="main.js"></script>
 </body>
 
 </html>

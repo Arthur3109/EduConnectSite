@@ -18,6 +18,13 @@
     --text-muted: #545456;
 }
 
+.dark-mode {
+    --bg-primary: #FFFDF7; 
+    --surface-color: #F1F1F3; 
+    --text-main: #18181A; 
+    --text-muted: #6B6B6D;
+}
+
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--bg-primary);
@@ -76,7 +83,7 @@ body {
 }
 
 .navbar__logo-icon {
-    color: var(--text-main);
+    color: #fff;
     width: 32px;
     height: 32px;
 }
@@ -84,7 +91,7 @@ body {
 .navbar__brand {
     font-size: 1.1rem;
     font-weight: 700;
-    color: var(--text-main);
+    color: #fff;
     letter-spacing: -0.02em;
     white-space: nowrap;
 }
@@ -188,7 +195,7 @@ body {
 }
 
 .hero__title {
-    color: var(--text-main);
+    color: #fff;
     font-size: clamp(2.4rem, 7vw, 4.8rem);
     font-weight: 800;
     line-height: 1.08;
@@ -229,7 +236,7 @@ body {
 .hero__partners {
     position: relative;
     z-index: 2;
-    margin-top: 5rem;
+    margin-top: 12rem;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -365,8 +372,8 @@ body {
 
 .educonnect-introduction-section {
     width: 100%;
-    background: #000000;
-    color: #FFFDF7;
+    background: var(--bg-primary);
+    color: var(--text-main);
     padding: 120px 24px;
 }
 
@@ -390,7 +397,7 @@ body {
     border: 1px solid rgba(84, 84, 86, 0.4);
     border-radius: 999px;
 
-    color: #FFFDF7;
+    color: var(--text-main);
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.08em;
@@ -405,7 +412,7 @@ body {
 .educonnect-introduction-title {
     margin: 0;
 
-    color: #FFFDF7;
+    color: var(--text-main);
     font-size: clamp(2.25rem, 5vw, 4rem);
     font-weight: 600;
     line-height: 1.1;
@@ -418,7 +425,7 @@ body {
     max-width: 760px;
     margin: 24px auto 64px;
 
-    color: #545456;
+    color: var(--text-muted);
     font-size: 17px;
     font-weight: 400;
     line-height: 1.7;
@@ -442,7 +449,7 @@ body {
     padding: 32px;
 
     background: rgba(59, 59, 61, 0.25);
-    border: 1px solid rgba(84, 84, 86, 0.4);
+    border: 1px solid var(--text-muted);
     border-radius: 16px;
 
     backdrop-filter: blur(16px);
@@ -465,7 +472,7 @@ body {
 .educonnect-feature-card-title {
     margin: 0 0 16px;
 
-    color: #FFFDF7;
+    color: var(--text-main);
     font-size: 20px;
     font-weight: 600;
     line-height: 1.3;
@@ -475,7 +482,7 @@ body {
 .educonnect-feature-card-description {
     margin: 0;
 
-    color: #545456;
+    color: var(--text-muted);
     font-size: 15px;
     font-weight: 400;
     line-height: 1.6;
@@ -538,8 +545,8 @@ body {
 
 .educonnect-how-it-works-section {
     width: 100%;
-    background: #000000;
-    color: #FFFDF7;
+    background: var(--bg-primary);
+    color: var(--text-main);
     padding: 140px 24px;
 }
 
@@ -562,11 +569,11 @@ body {
     padding: 7px 14px;
     margin-bottom: 26px;
 
-    background: rgba(59, 59, 61, 0.25);
-    border: 1px solid rgba(84, 84, 86, 0.4);
+    background: #3b3b3d40;
+    border: 1px solid var(--text-muted);
     border-radius: 999px;
 
-    color: #FFFDF7;
+    color: var(--text-main);
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.08em;
@@ -583,7 +590,7 @@ body {
 .educonnect-how-it-works-title {
     margin: 0;
 
-    color: #FFFDF7;
+    color: var(--text-main);
     font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 600;
     line-height: 1.1;
@@ -599,7 +606,7 @@ body {
     max-width: 780px;
     margin: 24px auto 72px;
 
-    color: #545456;
+    color: var(--text-muted);
     font-size: 17px;
     font-weight: 400;
     line-height: 1.7;
@@ -632,7 +639,7 @@ body {
 
     padding: 24px;
 
-    background: #000000;
+    background: var(--bg-primary);
 
     border: 1px solid rgba(84, 84, 86, 0.4);
     border-radius: 16px;
@@ -741,7 +748,7 @@ body {
 .educonnect-how-it-works-card-title::after {
     content: "Acesso Seguro";
 
-    color: #FFFDF7;
+    color: var(--text-main);
     font-size: 20px;
     font-weight: 600;
     line-height: 1.3;
@@ -755,7 +762,7 @@ body {
 .educonnect-how-it-works-card-title::after {
     content: "Gestão de Turmas";
 
-    color: #FFFDF7;
+    color: var(--text-main);
     font-size: 20px;
     font-weight: 600;
     line-height: 1.3;
@@ -769,7 +776,7 @@ body {
 .educonnect-how-it-works-card-title::after {
     content: "Diário Digital";
 
-    color: #FFFDF7;
+    color: var(--text-main);
     font-size: 20px;
     font-weight: 600;
     line-height: 1.3;
@@ -783,7 +790,7 @@ body {
 .educonnect-how-it-works-card-title::after {
     content: "Acompanhamento Real";
 
-    color: #FFFDF7;
+    color: var(--text-main);
     font-size: 20px;
     font-weight: 600;
     line-height: 1.3;
@@ -798,7 +805,7 @@ body {
 .educonnect-how-it-works-card-description {
     margin: 0;
 
-    color: #545456;
+    color: var(--text-main);
 
     font-size: 15px;
     font-weight: 400;
@@ -811,9 +818,9 @@ body {
    ========================================================= */
 
 .educonnect-how-it-works-card:hover {
-    background: rgba(59, 59, 61, 0.35);
+    background: #3b3b3d59;
 
-    border-color: rgba(84, 84, 86, 0.65);
+    border-color: var(--text-muted);
 
     transform: translateY(-5px);
 }
@@ -921,12 +928,12 @@ body {
      * Mantém o fundo alinhado à identidade visual
      * escura da Landing Page.
      */
-    background: #000000;
+    background: var(--bg-primary);
 
     /*
      * Define a cor padrão dos elementos textuais.
      */
-    color: #FFFDF7;
+    color: var(--text-main);
 
     /*
      * Espaçamento vertical generoso para separar
@@ -986,12 +993,12 @@ body {
     /*
      * Superfície translúcida baseada na cor #3b3b3d.
      */
-    background: rgba(59, 59, 61, 0.25);
+    background: var(--surface-color);
 
     /*
      * Borda discreta para destacar o badge do fundo preto.
      */
-    border: 1px solid rgba(84, 84, 86, 0.4);
+    border: 1px solid var(--text-muted);
 
     /*
      * Cria o formato de pílula.
@@ -1001,7 +1008,7 @@ body {
     /*
      * Cor principal da tipografia.
      */
-    color: #FFFDF7;
+    color: var(--text-main);
 
     /*
      * Tamanho pequeno e discreto.
@@ -1039,7 +1046,7 @@ body {
     /*
      * Utiliza a cor principal da identidade visual.
      */
-    color: #FFFDF7;
+    color: var(--text-main);
 
     /*
      * O clamp permite adaptar o tamanho do título
@@ -1083,7 +1090,7 @@ body {
     /*
      * Utiliza a cor secundária da paleta.
      */
-    color: #545456;
+    color: var(--text-muted);
 
     /*
      * Tamanho confortável para texto introdutório.
@@ -1131,12 +1138,12 @@ body {
     /*
      * Borda sutil seguindo o estilo glassmorphism.
      */
-    border: 1px solid rgba(84, 84, 86, 0.4);
+    border: 1px solid var(--text-muted);
 
     /*
      * Fundo utilizado caso os tiles demorem para carregar.
      */
-    background: #000000;
+    background: var(--bg-primary);
 }
 
 
@@ -1164,7 +1171,7 @@ body {
     /*
      * Fundo preto para combinar com a Landing Page.
      */
-    background: #000000;
+    background: var(--bg-primary);
 }
 
 
@@ -1196,12 +1203,12 @@ body {
     /*
      * Faz os controles combinarem com a interface escura.
      */
-    background: rgba(59, 59, 61, 0.25);
+    background: var(--surface-color);
 
     /*
      * Borda discreta.
      */
-    border: 1px solid rgba(84, 84, 86, 0.4);
+    border: 1px solid var(--text-muted);
 
     /*
      * Desfoque semelhante aos cards da Landing Page.
@@ -1219,12 +1226,12 @@ body {
     /*
      * Remove o fundo branco padrão do Leaflet.
      */
-    background: rgba(59, 59, 61, 0.25);
+    background: var(--surface-color);
 
     /*
      * Utiliza a cor principal para os símbolos + e -.
      */
-    color: #FFFDF7;
+    color: var(--text-main);
 
     /*
      * Remove a borda padrão clara.
@@ -1247,12 +1254,12 @@ body {
      * Aumenta discretamente a presença do elemento
      * quando o usuário passa o mouse.
      */
-    background: rgba(59, 59, 61, 0.35);
+    background: var(--surface-color);
 
     /*
      * Mantém o texto branco.
      */
-    color: #FFFDF7;
+    color: var(--text-main);
 }
 
 
@@ -1301,12 +1308,12 @@ body {
     /*
      * Superfície translúcida.
      */
-    background: rgba(59, 59, 61, 0.25);
+    background: var(--surface-color);
 
     /*
      * Borda sutil.
      */
-    border: 1px solid rgba(84, 84, 86, 0.4);
+    border: 1px solid var(--text-muted);
 
     /*
      * Cantos arredondados.
@@ -1342,7 +1349,7 @@ body {
     /*
      * Destaque visual para o número.
      */
-    color: #FFFDF7;
+    color: var(--text-main);
 
     /*
      * Tamanho grande, mas responsivo.
@@ -1379,7 +1386,7 @@ body {
     /*
      * Cor principal.
      */
-    color: #FFFDF7;
+    color: var(--text-main);
 
     /*
      * Tamanho intermediário.
@@ -1406,7 +1413,7 @@ body {
     /*
      * Cor secundária.
      */
-    color: #545456;
+    color: var(--text-muted);
 
     /*
      * Texto menor para informação auxiliar.
@@ -1428,12 +1435,12 @@ body {
     /*
      * Aumenta discretamente a opacidade da superfície.
      */
-    background: rgba(59, 59, 61, 0.35);
+    background: var(--surface-color);
 
     /*
      * Torna a borda um pouco mais perceptível.
      */
-    border-color: rgba(84, 84, 86, 0.65);
+    border-color: var(--text-muted);
 
     /*
      * Pequena elevação do card.
@@ -1539,10 +1546,10 @@ body {
 
 /* Garante que o footer ocupe toda a largura e oculta qualquer conteúdo que vaze (resolve o scroll horizontal) */
 .footer-section {
-    background-color: #000000;
-    color: #FFFDF7;
+    background-color: var(--bg-primary);
+    color: var(--text-main);
     padding: 80px 0 30px 0; /* Removido o padding lateral daqui para centralizar melhor pelo container */
-    border-top: 1px solid rgba(84, 84, 86, 0.3);
+    border-top: 1px solid var(--text-muted);
     position: relative;
     width: 100%;
     overflow: hidden; /* Elimina o vazamento da tipografia gigante (scroll horizontal) */
@@ -1582,7 +1589,7 @@ body {
 
 /* Textos e links gerais do footer */
 .footer-brand-info p {
-    color: #545456;
+    color: var(--text-muted);
     font-size: 15px;
     line-height: 1.5;
     max-width: 300px;
@@ -1592,7 +1599,7 @@ body {
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #545456;
+    color: var(--text-muted);
     margin-bottom: 20px;
 }
 
@@ -1606,14 +1613,14 @@ body {
 }
 
 .footer-links a, .footer-socials a {
-    color: #FFFDF7;
+    color: var(--text-main);
     text-decoration: none;
     font-size: 15px;
     transition: color 0.2s ease;
 }
 
 .footer-links a:hover, .footer-socials a:hover {
-    color: #545456;
+    color: var(--text-muted);
 }
 
 /* Botões de Ação Rápida (CTAs) */
@@ -1636,24 +1643,24 @@ body {
 }
 
 .footer-btn.primary-btn {
-    background-color: #3b3b3d;
-    color: #FFFDF7;
-    border: 1px solid rgba(84, 84, 86, 0.4);
+    background-color: var(--surface-color);
+    color: var(--text-main);
+    border: 1px solid var(--text-muted);
 }
 
 .footer-btn.primary-btn:hover {
-    background-color: #FFFDF7;
-    color: #000000;
+    background-color: var(--text-main);
+    color: var(--bg-primary);
 }
 
 .footer-btn.secondary-btn {
     background-color: transparent;
-    color: #FFFDF7;
-    border: 1px solid rgba(84, 84, 86, 0.4);
+    color: var(--text-main);
+    border: 1px solid var(--text-muted);
 }
 
 .footer-btn.secondary-btn:hover {
-    border-color: #FFFDF7;
+    border-color: var(--text-main);
 }
 
 /* Container e comportamento do Texto Gigante */
@@ -1665,11 +1672,11 @@ body {
 }
 
 .footer-giant-text h2 {
-    font-size: 16vw; /* Escala de acordo com a largura da tela */
+    font-size: 12vw; /* Escala de acordo com a largura da tela */
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: -2px;
-    color: rgba(84, 84, 86, 0.15); /* Tom escuro, atuando como marca d'água sutil */
+    color: var(--text-muted); /* Tom escuro, atuando como marca d'água sutil */
     line-height: 0.72; /* Menor que 1 para remover o espaçamento acima e abaixo, criando o efeito de corte */
     white-space: nowrap; /* Impede a quebra de texto (o que causava o bug do height excessivo) */
     margin: 0 0 -10px 0; /* Margem negativa para fazer a base da fonte encostar visualmente na linha divisória abaixo */
@@ -1682,9 +1689,9 @@ body {
     justify-content: space-between;
     align-items: center;
     padding-top: 25px;
-    border-top: 1px solid rgba(84, 84, 86, 0.2);
+    border-top: 1px solid var(--text-muted);
     font-size: 13px;
-    color: #545456;
+    color: var(--text-muted);
     flex-wrap: wrap;
     gap: 15px;
     position: relative; /* Z-index para garantir que a linha sobreponha a base da fonte se ela encostar */
@@ -1692,17 +1699,82 @@ body {
 }
 
 .footer-bottom a {
-    color: #545456;
+    color: var(--text-muted);
     text-decoration: none;
     transition: color 0.2s;
 }
 
 .footer-bottom a:hover {
-    color: #FFFDF7;
+    color: var(--text-main);
 }
 
 .footer-system-info {
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+.theme-toggle {
+    position: relative;
+    width: 90px;
+    height: 40px;
+    border: none;
+    border-radius: 50px;
+    background: var(--text-main);
+    cursor: pointer;
+    padding: 0;
+    overflow: hidden;
+    transition: background 0.3s ease;
+}
+
+.toggle-ball {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--bg-primary);
+    transition: transform 0.3s ease;
+}
+
+/* Ícones */
+.toggle-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    font-size: 20px;
+    line-height: 1;
+    transition: opacity 0.3s ease;
+}
+
+.sun {
+    left: 10px;
+    color: #fff;
+}
+
+.moon {
+    right: 10px;
+    color: var(--text-main);
+    opacity: 0;
+}
+
+
+/* DARK MODE */
+body.dark-mode .theme-toggle {
+    background: var(--text-muted);
+}
+
+body.dark-mode .toggle-ball {
+    transform: translateX(50px);
+    background: var(--bg-primary);
+}
+
+body.dark-mode .sun {
+    opacity: 0;
+}
+
+body.dark-mode .moon {
+    opacity: 1;
 }

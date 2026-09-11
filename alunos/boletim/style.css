@@ -6,30 +6,121 @@
   font-family: "Poppins", sans-serif;
 }
 
+:root {
+  --bg-primary: #000000;
+  --surface-color: #3b3b3d;
+  --text-main: #fffdf7;
+  --text-muted: #545456;
+  --gradient:
+    radial-gradient(80% 80% at 100% 0%, #545456 0%, #3b3b3d 20%, #000 60%),
+    radial-gradient(80% 80% at 0% 100%, #545456 0%, #3b3b3d 20%, #000 60%);
+  --border-color: #6b6b6d;
+}
+
+.dark-mode {
+  --bg-primary: #fffdf7;
+  --surface-color: #f1f1f3;
+  --text-main: #18181a;
+  --text-muted: #6b6b6d;
+  --gradient:
+    radial-gradient(80% 80% at 100% 0%, #6b6b6d 0%, #f1f1f3 20%, #fffdf7 60%),
+    radial-gradient(80% 80% at 0% 100%, #6b6b6d 0%, #f1f1f3 20%, #f1f1f3 60%);
+  --border-color: #3b3b3d
+}
+
+.theme-toggle {
+  position: relative;
+  width: 90px;
+  height: 40px;
+  border: none;
+  border-radius: 50px;
+  background: var(--text-main);
+  cursor: pointer;
+  padding: 0;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+.toggle-ball {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--bg-primary);
+  transition: transform 0.3s ease;
+}
+
+/* Ícones */
+.toggle-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  font-size: 20px;
+  line-height: 1;
+  transition: opacity 0.3s ease;
+}
+
+.sun {
+  left: 10px;
+  color: #fff;
+}
+
+.moon {
+  right: 10px;
+  color: var(--text-main);
+  opacity: 0;
+}
+
+/* DARK MODE */
+body.dark-mode .theme-toggle {
+  background: var(--text-muted);
+}
+
+body.dark-mode .toggle-ball {
+  transform: translateX(50px);
+  background: var(--bg-primary);
+}
+
+body.dark-mode .sun {
+  opacity: 0;
+}
+
+body.dark-mode .moon {
+  opacity: 1;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
 body {
-  background:
-    radial-gradient(80% 80% at 100% 0%, #545456 0%, #3b3b3d 20%, #1f1f21 60%),
-    radial-gradient(80% 80% at 0% 100%, #545456 0%, #3b3b3d 20%, #1f1f21 60%);
+  background: var(--gradient);
   width: 100%;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  color: white;
+  color: var(--text-main);
   padding: 30px 0;
 }
 
 h1 {
   font-size: 28px;
   font-weight: 600;
-  color: #f5f5f5;
+  color: var(--text-main);
   margin-bottom: 10px;
 }
 
 a {
   text-decoration: none;
-  color: #f5f5f5;
+  color: var(--text-main);
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -42,36 +133,36 @@ a {
   flex-direction: column;
   gap: 15px;
   width: 70%;
-  background: rgba(31, 31, 33, 0.7);
+  background: var(--surface-color);
   padding: 30px;
   border-radius: 10px;
-  border: 1px solid #3b3b3d;
+  border: 1px solid var(--border-color);
 }
 
 .info-header {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
-  background: #2a2a2c;
+  background: var(--surface-color);
   padding: 15px 20px;
   border-radius: 5px;
-  border: 1px solid #3b3b3d;
+  border: 1px solid var(--border-color);
   font-size: 14px;
-  color: #d1d1d6;
+  color: var(--text-main);
 }
 
 .info-header p strong {
-  color: #f5f5f5;
+  color: var(--text-main);
 }
 
 table {
   width: 100%;
-  background: #29292b;
-  color: #f5f5f5;
+  background: var(--surface-color);
+  color: var(--text-main);
   border-collapse: collapse;
   border-width: 2px;
   border-style: solid;
-  border-color: #2a2a2c;
+  border-color: var(--border-color);
   border-radius: 5px;
   overflow: hidden;
 }
@@ -79,15 +170,15 @@ table {
 table td,
 table th {
   border-width: 1px;
-  border-color: #3b3b3d;
+  border-color: var(--border-color);
   border-style: solid;
   padding: 12px 15px;
   text-align: left;
 }
 
 table thead {
-  background-color: #2a2a2c;
-  color: #f5f5f5;
+  background-color: var(--surface-color);
+  color: var(--text-main);
   text-align: left;
   font-size: 14px;
 }
@@ -128,22 +219,22 @@ table tbody tr:hover {
 
 .faltas {
   font-size: 15px;
-  color: #f5f5f5;
+  color: var(--text-main);
 }
 
 .btn {
-  background-color: #2a2a2c;
-  color: #ffffff;
+  background-color: var(--surface-color);
+  color: var(--text-main);
   padding: 10px 25px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  border: 1px solid #f5f5f5;
+  border: 1px solid var(--border-color);
   font-weight: 500;
 }
 
 .btn:hover {
-  background-color: #f5f5f5;
-  color: #2a2a2c;
+  background-color: var(--bg-primary);
+  color: var(--text-main);
   transition: all 0.3s ease-in-out;
 }

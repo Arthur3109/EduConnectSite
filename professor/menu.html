@@ -12,20 +12,36 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_back_ios" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
 <body>
 
     
     <div class="container">
-        <div class="logout">
-            <a href="../index.html">
-                <span class="material-symbols-outlined">
-                    arrow_back_ios
-                </span>
-                Sair
-            </a>
+        <div class="top">    
+            <div class="logout">
+                <a href="../index.html">
+                    <span class="material-symbols-outlined">
+                        arrow_back_ios
+                    </span>
+                    Sair
+                </a>
+            </div>
+            
+            <div class="darkmode">
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+                    <span class="material-symbols-outlined toggle-icon moon">
+                        light_mode
+                    </span>
+                    <span class="material-symbols-outlined toggle-icon sun">
+                        dark_mode
+                    </span>
+                    <span class="toggle-ball"></span>
+                </button>
+            </div>
         </div>
+
         <h1>Olá, Professor!</h1>
         <h2>Resumo das Turmas</h2>
 
@@ -118,6 +134,8 @@
             </tbody>
         </table>
     </div>
+
+    <script src="menu.js"></script>
 </body>
 
 </html>
