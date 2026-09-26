@@ -1778,3 +1778,275 @@ body.dark-mode .sun {
 body.dark-mode .moon {
     opacity: 1;
 }
+
+/* ========================================== */
+/* SEÇÃO: QUATRO EXPERIÊNCIAS (PERFIS)        */
+/* ========================================== */
+
+.experiencias-section {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    padding: 100px 20px;
+    position: relative;
+    font-family: sans-serif;
+    border-top: 1px solid rgba(84, 84, 86, 0.3);
+}
+
+.experiencias-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+/* Cabeçalho da Seção */
+.experiencias-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.experiencias-header h2 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--text-main);
+    margin-bottom: 15px;
+    line-height: 1.1;
+}
+
+.experiencias-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* Grid de Perfis */
+.perfis-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+}
+
+@media (max-width: 1024px) {
+    .perfis-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .perfis-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Cards Individuais de Cada Perfil (Glassmorphism baseado nas variáveis) */
+.perfil-card {
+    background: rgba(59, 59, 61, 0.2); /* Derivado de --surface-color */
+    border: 1px solid rgba(84, 84, 86, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 20px;
+    padding: 35px 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* Efeito Hover nos Cards */
+.perfil-card:hover {
+    background: rgba(59, 59, 61, 0.4);
+    border-color: rgba(255, 253, 247, 0.4);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Ícone do Perfil */
+.perfil-icon {
+    font-size: 2.5rem;
+    background: rgba(84, 84, 86, 0.25);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    border: 1px solid rgba(84, 84, 86, 0.3);
+}
+
+/* Título do Card (Ex: Aluno, Professor...) */
+.perfil-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin: 0;
+}
+
+/* Lista de Funcionalidades (Features) */
+.perfil-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-top: 1px solid rgba(84, 84, 86, 0.3);
+    padding-top: 15px;
+}
+
+.perfil-features li {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Marcador visual nos itens da lista */
+.perfil-features li::before {
+    content: "•";
+    color: var(--text-muted);
+    font-weight: bold;
+    transition: color 0.2s ease;
+}
+
+.perfil-card:hover .perfil-features li {
+    color: var(--text-main);
+}
+
+.perfil-card:hover .perfil-features li::before {
+    color: var(--text-main);
+}
+
+/* ========================================== */
+/* SEÇÃO: DEMONSTRAÇÃO MULTI-DISPOSITIVO      */
+/* ========================================== */
+
+.demo-section {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    padding: 120px 20px;
+    position: relative;
+    overflow: hidden;
+    font-family: sans-serif;
+    border-top: 1px solid rgba(84, 84, 86, 0.3);
+}
+
+.demo-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+}
+
+.demo-header {
+    text-align: center;
+    max-width: 650px;
+}
+
+.demo-header h2 {
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--text-main);
+    margin-bottom: 15px;
+}
+
+.demo-header p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* Palco dos Mockups */
+.mockup-stage {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Notebook Mockup (Glassmorphism) */
+.mockup-notebook {
+    width: 100%;
+    background: var(--surface-color);
+    border: 1px solid rgba(84, 84, 86, 0.5);
+    border-radius: 16px;
+    padding: 12px 12px 0 12px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.notebook-screen {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background-color: #000000;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.notebook-screen img, 
+.notebook-screen video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.notebook-base {
+    height: 14px;
+    background: rgba(84, 84, 86, 0.3);
+    margin: 0 -12px;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
+/* Celular Mockup (Flutuante em vidro) */
+.mockup-phone {
+    position: absolute;
+    bottom: -30px;
+    right: -20px;
+    width: 22%;
+    max-width: 180px;
+    background: var(--surface-color);
+    border: 2px solid rgba(84, 84, 86, 0.6);
+    border-radius: 28px;
+    padding: 8px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 10;
+}
+
+.phone-screen {
+    width: 100%;
+    aspect-ratio: 9 / 19;
+    background-color: #000000;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.phone-screen img, 
+.phone-screen video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .mockup-phone {
+        right: 10px;
+        bottom: -20px;
+        width: 30%;
+    }
+}

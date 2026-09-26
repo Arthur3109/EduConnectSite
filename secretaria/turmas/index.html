@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduConnect - Turmas e Salas</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../menu-mobile.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
@@ -67,7 +68,7 @@
 
                         <div class="painel-topo">
                             <h2>Turmas Ativas</h2>
-                            <button class="btn-novo">+ Nova Turma</button>
+                            <button class="btn-novo" type="button">+ Nova Turma</button>
                         </div>
 
                         <!-- Tabela -->
@@ -83,7 +84,7 @@
                                     <th>Ações</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="turmasTabelaBody" aria-live="polite">
                                 <tr>
                                     <td><strong>3A-EM</strong></td>
                                     <td>3º Ano A - Matutino</td>
@@ -115,7 +116,7 @@
                 <!-- Coluna da Direita (Salas Disponíveis) -->
                 <div class="col-direita">
                     <div class="titulo-salas">Salas Disponíveis</div>
-                    <div class="lista-salas">
+                    <div class="lista-salas" id="salasCards" aria-live="polite">
 
                         <div class="sala-card">
                             <span class="material-symbols-outlined sala-icone">
@@ -200,6 +201,8 @@
             </div>
         </div>
     </div>
+    <script src="turmas-salas.js" defer></script>
+    <script src="../menu-mobile.js" defer></script>
 </body>
 
 </html>

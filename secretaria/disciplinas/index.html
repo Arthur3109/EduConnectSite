@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduConnect - Gestão de Disciplinas</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../menu-mobile.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
@@ -56,7 +57,7 @@
 
             <div class="cabecalho-pagina">
                 <h1>Gestão de Disciplinas</h1>
-                <button class="btn-novo">+ Nova Disciplina</button>
+                <button class="btn-novo" id="btnNovaDisciplina" type="button">+ Nova Disciplina</button>
             </div>
 
             <div class="painel">
@@ -67,12 +68,12 @@
                         <span class="material-symbols-outlined">
                             search
                         </span>
-                        <input type="text" placeholder="Buscar disciplina por nome, código ou turma vinculada...">
+                        <input id="searchDisciplina" type="search" aria-label="Buscar disciplina" placeholder="Buscar disciplina por nome, código ou turma vinculada...">
                     </div>
                 </div>
 
                 <!-- Tabela -->
-                <table class="tabela">
+                <table class="tabela" id="disciplinasTabela">
                     <thead>
                         <tr>
                             <th>Código</th>
@@ -83,7 +84,7 @@
                             <th>Ações</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="disciplinasTabelaBody" aria-live="polite">
                         <tr>
                             <td><strong>MAT-101</strong></td>
                             <td>Matemática Aplicada</td>
@@ -129,6 +130,8 @@
 
         </div>
     </div>
+    <script src="disciplinas.js" defer></script>
+    <script src="../menu-mobile.js" defer></script>
 </body>
 
 </html>

@@ -317,3 +317,180 @@ body {
 @media (max-width: 1200px) {
     .grid { flex-direction: column; }
 }
+
+@media (max-width: 900px) {
+    body { height: auto; min-height: 100vh; overflow: auto; }
+    .header { height: auto; min-height: 65px; padding: 12px 20px; gap: 12px; }
+    .container { flex-direction: column; overflow: visible; }
+    .sidebar { width: 100%; padding-top: 0; }
+    .menu { display: flex; overflow-x: auto; scrollbar-width: thin; }
+    .menu li { flex: 0 0 auto; }
+    .menu li a { padding: 12px 16px; }
+    .menu li.ativo a { border-left: 0; border-bottom: 3px solid var(--branco); }
+    .sair { padding: 12px 16px; }
+    .content { min-width: 0; padding: 24px; overflow: visible; }
+    .grid { min-width: 0; gap: 20px; }
+    .col-esquerda, .col-direita { width: 100%; min-width: 0; }
+    .tabela { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .tabela th, .tabela td { white-space: nowrap; }
+}
+
+@media (max-width: 600px) {
+    .header { align-items: flex-start; padding: 12px 14px; }
+    .logo { flex-wrap: wrap; gap: 6px; font-size: 1rem; }
+    .user { flex-wrap: wrap; justify-content: flex-end; gap: 8px; font-size: 0.8rem; }
+    .content { padding: 20px 14px; }
+    .content h1 { font-size: 1.35rem; }
+    .cabecalho-pagina, .card-topo, .card-rodape { flex-wrap: wrap; gap: 12px; }
+    .sala-card { min-width: 0; }
+    .tabela th, .tabela td { padding: 10px; }
+}
+
+.sem-turmas {
+    padding: 24px !important;
+    color: var(--texto-cinza) !important;
+    text-align: center;
+}
+
+.modal-turma {
+    width: min(620px, calc(100vw - 28px));
+    max-width: 620px;
+    max-height: calc(100vh - 32px);
+    margin: auto;
+    padding: 0;
+    overflow: auto;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    background: var(--branco);
+    color: var(--texto-escuro);
+    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.25);
+}
+
+.modal-turma::backdrop {
+    background: rgba(0, 0, 0, 0.62);
+}
+
+.turma-modal-content { padding: 24px; }
+
+.turma-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--borda);
+}
+
+.turma-modal-eyebrow {
+    margin-bottom: 4px;
+    color: var(--texto-cinza);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.turma-modal-header h2 { font-size: 1.25rem; }
+
+.turma-modal-close {
+    display: grid;
+    flex: 0 0 40px;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--borda);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--texto-escuro);
+    cursor: pointer;
+}
+
+.turma-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    padding: 20px 0;
+}
+
+.turma-field {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+.turma-field small {
+    color: var(--texto-cinza);
+    font-size: 0.72rem;
+    font-weight: 400;
+}
+
+.turma-field input,
+.turma-field select {
+    width: 100%;
+    min-height: 42px;
+    padding: 9px 11px;
+    border: 1px solid var(--borda);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--texto-escuro);
+    font-size: 0.9rem;
+}
+
+.turma-field input:focus,
+.turma-field select:focus,
+.turma-modal-close:focus-visible,
+.btn-modal-cancel:focus-visible,
+.btn-modal-save:focus-visible,
+.btn-novo:focus-visible,
+.btn:focus-visible {
+    outline: 2px solid #555;
+    outline-offset: 2px;
+}
+
+.turma-field input[readonly] {
+    background: #f1f1f1;
+    color: #555;
+}
+
+.turma-form-message {
+    min-height: 1.3em;
+    margin-bottom: 12px;
+    color: #a52a2a;
+    font-size: 0.85rem;
+}
+
+.turma-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 16px;
+    border-top: 1px solid var(--borda);
+}
+
+.btn-modal-cancel,
+.btn-modal-save {
+    min-height: 40px;
+    padding: 8px 16px;
+    border: 1px solid var(--cor-principal);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.btn-modal-cancel {
+    background: transparent;
+    color: var(--cor-principal);
+}
+
+.btn-modal-save {
+    background: var(--cor-principal);
+    color: var(--branco);
+}
+
+@media (max-width: 600px) {
+    .turma-modal-content { padding: 18px; }
+    .turma-form-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+}

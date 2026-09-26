@@ -74,8 +74,8 @@ document.addEventListener('DOMContentLoaded', function () {
        As coordenadas abaixo representam a localização
        aproximada da unidade no bairro Balneário Maracanã.
 
-       Latitude:  -24.0200
-       Longitude: -46.4550
+       Latitude:  -24.032454958426655
+       Longitude: -46.506657082660844
 
        Essas coordenadas serão utilizadas tanto para
        centralizar o mapa quanto para posicionar o único
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
        ===================================================== */
 
     L.tileLayer(
-        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
         {
             /* Créditos obrigatórios do OpenStreetMap. */
             attribution:

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduConnect - Gestão de Usuários</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../menu-mobile.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
@@ -56,7 +57,7 @@
 
             <div class="cabecalho-pagina">
                 <h1>Gestão de Usuários</h1>
-                <button class="btn-novo">+ Novo Aluno</button>
+                <button class="btn-novo" type="button">+ Novo Aluno</button>
             </div>
 
             <div class="grid">
@@ -68,9 +69,9 @@
 
                         <!-- Abas -->
                         <div class="abas">
-                            <a href="index.html" class="aba ativa">Alunos</a>
-                            <a href="professor/index.html" class="aba">Professores</a>
-                            <a href="profissionais/index.html" class="aba">Profissionais</a>
+                            <a href="index.html" class="aba ativa" data-category="alunos" aria-current="page">Alunos</a>
+                            <a href="professor/index.html" class="aba" data-category="professores">Professores</a>
+                            <a href="profissionais/index.html" class="aba" data-category="profissionais">Profissionais</a>
                         </div>
 
                         <!-- Filtros e Busca -->
@@ -79,24 +80,24 @@
                                 <span class="material-symbols-outlined">
                                     search
                                 </span>
-                                <input type="text" placeholder="Buscar aluno por nome, matrícula ou CPF...">
-                                <button class="btn-buscar">Buscar</button>
+                                <input id="busca-usuarios" type="search" placeholder="Buscar aluno por nome, matrícula ou CPF...">
+                                <button class="btn-buscar" type="button">Buscar</button>
                             </div>
                             <div class="seletores">
-                                <select>
+                                <select id="filtro-turma" aria-label="Filtrar por turma">
                                     <option>Turma: Todas</option>
                                 </select>
-                                <select>
+                                <select id="filtro-serie" aria-label="Filtrar por série">
                                     <option>Série: Todas</option>
                                 </select>
-                                <select>
+                                <select id="filtro-status" aria-label="Filtrar por status">
                                     <option>Status: Todos</option>
                                 </select>
                             </div>
                         </div>
 
                         <!-- Tabela -->
-                        <table class="tabela">
+                        <table class="tabela" id="tabela-usuarios">
                             <thead>
                                 <tr>
                                     <th>Matrícula</th>
@@ -107,7 +108,7 @@
                                     <th>Ações</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="corpo-tabela-usuarios" aria-live="polite">
                                 <tr>
                                     <td><strong>20240001</strong></td>
                                     <td>Amanda Costa Nogueira</td>
@@ -226,7 +227,7 @@
                         </table>
 
                         <!-- Paginação -->
-                        <div class="paginacao">
+                        <div class="paginacao" id="paginacao-usuarios" aria-label="Paginação de usuários">
                             <button class="btn-pag">&lt;</button>
                             <button class="btn-pag ativa">1</button>
                             <button class="btn-pag">2</button>
@@ -242,6 +243,8 @@
             </div>
         </div>
     </div>
+    <script src="../menu-mobile.js" defer></script>
+    <script src="usuarios.js" defer></script>
 </body>
 
 </html>
