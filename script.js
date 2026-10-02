@@ -8,205 +8,225 @@
 /* =========================================================
    1. AGUARDA O CARREGAMENTO DO HTML
    ---------------------------------------------------------
-   O código será executado somente depois que o documento
-   HTML estiver carregado.
+   A inicialização do mapa só acontece depois que o documento
+   estiver pronto para que seus elementos possam ser localizados.
    ========================================================= */
 
 document.addEventListener('DOMContentLoaded', function () {
 
-
     /* =====================================================
        2. VERIFICA SE O LEAFLET.JS FOI CARREGADO
        -----------------------------------------------------
-       A biblioteca Leaflet disponibiliza a variável "L".
-       Caso ela não exista, o mapa não poderá ser criado.
+       A biblioteca Leaflet disponibiliza o objeto global L.
+       Sem ele, não é possível criar nem controlar o mapa.
        ===================================================== */
 
     if (typeof L === 'undefined') {
-
-        console.error(
-            'EduConnect: Leaflet.js não foi carregado.'
-        );
-
+        console.error('EduConnect: Leaflet.js não foi carregado.');
         return;
     }
 
-
     /* =====================================================
-       3. LOCALIZA O CONTAINER DO MAPA
+       3. LOCALIZA E VALIDA O CONTAINER DO MAPA
        -----------------------------------------------------
-       O Leaflet será inicializado dentro do elemento HTML:
-
-           <div id="map"></div>
-
+       O mapa precisa de um elemento HTML com id="map".
+       Se ele não existir nesta página, encerramos somente a
+       inicialização do mapa.
        ===================================================== */
 
     const mapElement = document.getElementById('map');
 
-
-    /* =====================================================
-       4. VERIFICA SE O CONTAINER EXISTE
-       -----------------------------------------------------
-       Caso o elemento #map não esteja presente na página,
-       interrompemos a execução para evitar erros.
-       ===================================================== */
-
     if (!mapElement) {
-
-        console.error(
-            'EduConnect: o elemento #map não foi encontrado.'
-        );
-
+        console.error('EduConnect: o elemento #map não foi encontrado.');
         return;
     }
 
-
     /* =====================================================
-       5. LOCALIZAÇÃO DA ETEC DE PRAIA GRANDE - EXTENSÃO
+       4. COORDENADAS FIXAS DA ETEC DE PRAIA GRANDE - EXTENSÃO
        -----------------------------------------------------
-       Endereço utilizado:
-
-       Av. Dr. Roberto de Almeida Vinhas, 10.119
-       Balneário Maracanã
-       Praia Grande - SP
-       CEP 11705-320
-
-       As coordenadas abaixo representam a localização
-       aproximada da unidade no bairro Balneário Maracanã.
-
        Latitude:  -24.032454958426655
        Longitude: -46.506657082660844
 
-       Essas coordenadas serão utilizadas tanto para
-       centralizar o mapa quanto para posicionar o único
-       marcador.
+       Este ponto representa a unidade e permanece no mapa
+       independentemente da disponibilidade do GPS do cliente.
        ===================================================== */
 
     const etecExtensaoLocation = [
-        -24.032454958426655, 
+        -24.032454958426655,
         -46.506657082660844
     ];
 
-
     /* =====================================================
-       6. INICIALIZAÇÃO DO MAPA
+       5. CRIA O MAPA E A CAMADA DE TILES
        -----------------------------------------------------
-       O mapa é criado dentro do elemento #map.
-
-       O método setView() recebe:
-
-       - As coordenadas da ETEC de Praia Grande - Extensão
-       - O nível de zoom 17
-
-       O zoom 17 proporciona uma visualização próxima
-       ao nível de rua, mantendo o marcador como ponto
-       principal da visualização.
+       O mapa começa focado na ETEC. Quando a posição do cliente
+       for recebida, o enquadramento será ajustado para mostrar
+       os dois locais simultaneamente.
        ===================================================== */
 
-    const map = L.map('map').setView(
-        etecExtensaoLocation,
-        17
-    );
-
-
-    /* =====================================================
-       7. CAMADA DE TILES DO OPENSTREETMAP
-       -----------------------------------------------------
-       Utilizamos os tiles públicos do OpenStreetMap.
-
-       URL:
-
-       https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
-
-       Essa camada não utiliza API Key.
-
-       O Leaflet substitui automaticamente:
-
-       {s} = servidor dos tiles
-       {z} = nível de zoom
-       {x} = posição horizontal
-       {y} = posição vertical
-
-       ===================================================== */
+    const map = L.map('map').setView(etecExtensaoLocation, 17);
 
     L.tileLayer(
         'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
         {
-            /* Créditos obrigatórios do OpenStreetMap. */
-            attribution:
-                '&copy; OpenStreetMap contributors',
-
-            /* Limite máximo de aproximação do mapa. */
+            attribution: '&copy; OpenStreetMap contributors',
             maxZoom: 19
-
         }
     ).addTo(map);
 
-
     /* =====================================================
-       8. CRIAÇÃO DO ÚNICO MARCADOR
+       6. ADICIONA O MARCADOR FIXO DA ETEC
        -----------------------------------------------------
-       Aqui é criado somente UM marcador.
-
-       O marcador utiliza exatamente a mesma variável de
-       coordenadas utilizada na centralização do mapa.
-
-       Não existem outros pins ou marcadores neste script.
+       O popup identifica claramente a unidade. Ele permanece
+       disponível mesmo se o navegador não fornecer o GPS.
        ===================================================== */
 
-    const etecMarker = L.marker(
-        etecExtensaoLocation
-    );
-
-
-    /* =====================================================
-       9. ADICIONA O MARCADOR AO MAPA
-       -----------------------------------------------------
-       O marcador é inserido na camada principal do mapa.
-       ===================================================== */
-
-    etecMarker.addTo(map);
-
-
-    /* =====================================================
-       10. POPUP DO MARCADOR
-       -----------------------------------------------------
-       Ao clicar no único marcador, será exibido um popup
-       identificando a unidade do EduConnect.
-
-       O popup contém somente o nome da unidade.
-       ===================================================== */
-
-    etecMarker.bindPopup(
-        '<strong>EduConnect - ETEC de Praia Grande Extensão</strong>'
-    );
-
-
-    /* =====================================================
-       11. ABRE O POPUP AUTOMATICAMENTE
-       -----------------------------------------------------
-       O popup será aberto automaticamente após o marcador
-       ser adicionado ao mapa.
-       ===================================================== */
+    const etecMarker = L.marker(etecExtensaoLocation)
+        .addTo(map)
+        .bindPopup('<strong>EduConnect - ETEC de Praia Grande Extensão</strong>');
 
     etecMarker.openPopup();
 
+    /* =====================================================
+       7. VERIFICA A DISPONIBILIDADE DA GEOLOCALIZAÇÃO
+       -----------------------------------------------------
+       A API pode não estar disponível em alguns navegadores.
+       Ela também pode exigir uma conexão segura (HTTPS) e a
+       autorização explícita do usuário.
+       ===================================================== */
+
+    if (!navigator.geolocation) {
+        alert('A geolocalização não está disponível neste navegador. Você ainda pode consultar a localização da ETEC no mapa.');
+        return;
+    }
 
     /* =====================================================
-       12. ATUALIZA O TAMANHO DO MAPA
+       8. TRATA ERROS AO OBTER A POSIÇÃO DO CLIENTE
        -----------------------------------------------------
-       O Leaflet pode precisar recalcular o tamanho do mapa
-       depois que todos os elementos da página forem
-       renderizados.
+       Os códigos padronizados da API representam:
+       1 = permissão negada; 2 = posição indisponível;
+       3 = tempo limite excedido.
+       ===================================================== */
 
-       invalidateSize() força essa atualização e ajuda a
-       evitar problemas de renderização dos tiles.
+    function handleGeolocationError(error) {
+        let message;
+
+        switch (error.code) {
+            case 1:
+                message = 'A permissão para acessar sua localização foi negada. A localização da ETEC continuará disponível no mapa.';
+                break;
+            case 2:
+                message = 'Não foi possível determinar sua localização neste momento. Verifique o GPS ou a conexão e tente novamente.';
+                break;
+            case 3:
+                message = 'A solicitação da sua localização excedeu o tempo limite. Tente novamente em alguns instantes.';
+                break;
+            default:
+                message = 'Ocorreu um erro ao tentar obter sua localização. A localização da ETEC continuará disponível no mapa.';
+        }
+
+        alert(message);
+    }
+
+    /* =====================================================
+       9. OBTÉM A POSIÇÃO ATUAL DO CLIENTE
+       -----------------------------------------------------
+       getCurrentPosition() solicita uma leitura única. O
+       navegador pode apresentar uma confirmação de permissão;
+       a posição só será desenhada após o retorno de sucesso.
+       ===================================================== */
+
+    navigator.geolocation.getCurrentPosition(
+        function (position) {
+            const clientLocation = [
+                position.coords.latitude,
+                position.coords.longitude
+            ];
+
+            /* =============================================
+               10. CALCULA E FORMATA A DISTÂNCIA
+               ---------------------------------------------
+               map.distance() retorna a distância geodésica
+               aproximada em metros entre os dois pontos.
+               ============================================= */
+
+            const distanceInMeters = map.distance(
+                etecExtensaoLocation,
+                clientLocation
+            );
+            const formattedDistance = distanceInMeters >= 1000
+                ? `${(distanceInMeters / 1000).toFixed(2)} km`
+                : `${Math.round(distanceInMeters)} m`;
+
+            /* =============================================
+               11. MARCADOR VISUAL DA POSIÇÃO DO CLIENTE
+               ---------------------------------------------
+               O círculo azul com contorno branco se diferencia
+               do marcador padrão da ETEC.
+               ============================================= */
+
+            L.circleMarker(clientLocation, {
+                radius: 9,
+                color: '#ffffff',
+                weight: 3,
+                fillColor: '#1687e8',
+                fillOpacity: 1
+            })
+                .addTo(map)
+                .bindPopup(
+                    `<strong>Sua localização</strong><br>Distância até a ETEC: ${formattedDistance}`
+                );
+
+            /* =============================================
+               12. DESENHA A CONEXÃO ENTRE OS LOCAIS
+               ---------------------------------------------
+               A linha tracejada evidencia a relação espacial
+               entre o cliente e a unidade da ETEC.
+               ============================================= */
+
+            L.polyline(
+                [clientLocation, etecExtensaoLocation],
+                {
+                    color: '#1687e8',
+                    weight: 3,
+                    opacity: 0.8,
+                    dashArray: '8, 8'
+                }
+            ).addTo(map);
+
+            /* =============================================
+               13. ENQUADRA OS DOIS PONTOS NO MAPA
+               ---------------------------------------------
+               O padding mantém os marcadores afastados das
+               bordas, enquanto maxZoom evita uma aproximação
+               excessiva quando os pontos estão muito próximos.
+               ============================================= */
+
+            map.fitBounds(
+                L.latLngBounds(etecExtensaoLocation, clientLocation),
+                {
+                    padding: [40, 40],
+                    maxZoom: 17
+                }
+            );
+        },
+        handleGeolocationError,
+        {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+        }
+    );
+
+    /* =====================================================
+       14. ATUALIZA AS DIMENSÕES DO MAPA
+       -----------------------------------------------------
+       O recálculo após a renderização inicial evita problemas
+       de tiles quando o container é exibido ou dimensionado.
        ===================================================== */
 
     setTimeout(function () {
-
         map.invalidateSize();
-
     }, 200);
 
 });

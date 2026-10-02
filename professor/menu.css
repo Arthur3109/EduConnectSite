@@ -2,7 +2,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  cursor: crosshair;
   font-family: "Poppins", sans-serif;
 }
 
@@ -32,8 +31,8 @@
 
 .theme-toggle {
   position: relative;
-  width: 90px;
-  height: 40px;
+  width: 5.625rem;
+  height: 2.5rem;
   border: none;
   border-radius: 50px;
   background: var(--text-main);
@@ -45,10 +44,10 @@
 
 .toggle-ball {
   position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 34px;
-  height: 34px;
+  top: 0.1875rem;
+  left: 0.1875rem;
+  width: 2.125rem;
+  height: 2.125rem;
   border-radius: 50%;
   background: var(--bg-primary);
   transition: transform 0.3s ease;
@@ -82,7 +81,7 @@ body.dark-mode .theme-toggle {
 }
 
 body.dark-mode .toggle-ball {
-  transform: translateX(50px);
+  transform: translateX(3.125rem);
   background: var(--bg-primary);
 }
 
@@ -98,29 +97,30 @@ body.dark-mode .moon {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 body {
   background: var(--gradient);
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   color: var(--text-main);
+  padding: clamp(1rem, 3vw, 2rem);
 }
 
 h1 {
-  font-size: 30px;
+  font-size: 1.875rem;
   font-weight: 600;
   color: var(--text-main);
-  margin-bottom: -15px;
 }
 
 h2 {
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 400;
   color: var(--text-muted);
 }
@@ -135,36 +135,44 @@ a {
   color: var(--text-main);
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  margin-bottom: 15px;
-  font-size: 14px;
+  gap: 0.3125rem;
+  font-size: 0.875rem;
 }
 
 .container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  width: 70%;
-  padding: 30px;
-  border-radius: 10px;
+  gap: 0.625rem;
+  width: min(100%, 76rem);
+  padding: clamp(1rem, 3vw, 2rem);
+  border-radius: 0.625rem;
   border: 1px solid var(--border-color);
 }
 
+.container > h1 {
+  margin-bottom: 0;
+}
+
 .cards {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(13.75rem, 100%), 1fr));
+  gap: 0.625rem;
 }
 
 .card {
-  padding: 20px;
-  width: 700px;
-  height: 150px;
+  min-width: 0;
+  min-height: 9.375rem;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   border: 1px solid var(--border-color);
-  border-radius: 16px;
+  border-radius: 1rem;
+}
+
+.card h1 {
+  font-size: clamp(1.5rem, 4vw, 1.875rem);
+  line-height: 1.25;
 }
 
 .card:hover {
@@ -174,6 +182,7 @@ a {
 
 table {
   width: 100%;
+  min-width: 42rem;
   border: 1px solid var(--border-color);
   color: var(--text-main);
   border-collapse: collapse;
@@ -186,8 +195,15 @@ table th {
   border-width: 2px;
   border-color: var(--border-color);
   border-style: solid;
-  padding: 15px;
+  padding: 0.9375rem;
   text-align: left;
+}
+
+.table-responsive {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 table thead {
@@ -198,34 +214,80 @@ table thead {
 
 .aberto {
   border: 2px solid #00ff4c;
-  padding: 5px;
-  max-width: 100px;
-  border-radius: 5px;
+  padding: 0.3125rem;
+  max-width: 6.25rem;
+  border-radius: 0.3125rem;
   text-align: center;
 }
 
 .fechado {
   background-color: #ff0000;
   color: var(--text-main);
-  padding: 5px;
-  max-width: 100px;
-  border-radius: 5px;
+  padding: 0.3125rem;
+  max-width: 6.25rem;
+  border-radius: 0.3125rem;
   text-align: center;
 }
 
 .btn {
   background-color: transparent;
   color: var(--text-main);
-  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   cursor: pointer;
-  margin-right: 10px;
+  margin-right: 0;
   border: 1px solid var(--border-color);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.actions > a {
+  display: flex;
 }
 
 .btn:hover {
   background-color: var(--bg-secondary);
   color: var(--text-main);
   transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  body {
+    align-items: stretch;
+  }
+
+  .container {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .container > h1 {
+    font-size: clamp(1.5rem, 7vw, 1.875rem);
+  }
+
+  .container > h2 {
+    font-size: clamp(1rem, 4.5vw, 1.25rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actions > a,
+  .actions .btn {
+    width: 100%;
+  }
+
+  .actions .btn {
+    padding-inline: 0.75rem;
+  }
 }
