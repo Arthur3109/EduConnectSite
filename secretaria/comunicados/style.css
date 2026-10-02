@@ -304,6 +304,128 @@ body {
     color: #e67e22;
 }
 
+.status-envio.concluido {
+    color: #4b5563;
+}
+
+.comunicado-card--concluido {
+    border-color: #9ca3af;
+    background-color: #f3f4f6;
+}
+
+.comunicado-dialog {
+    width: min(650px, calc(100vw - 32px));
+    max-height: min(88vh, 800px);
+    margin: auto;
+    padding: 0;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    color: var(--texto-escuro);
+}
+
+.comunicado-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.55);
+}
+
+.comunicado-form {
+    display: grid;
+    gap: 14px;
+    padding: 24px;
+}
+
+.comunicado-form h2 {
+    font-size: 1.25rem;
+}
+
+.comunicado-form > label {
+    display: grid;
+    gap: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.comunicado-form input[type="text"],
+.comunicado-form select,
+.comunicado-form textarea {
+    width: 100%;
+    border: 1px solid var(--borda);
+    border-radius: 4px;
+    background: #fff;
+    color: var(--texto-escuro);
+    padding: 10px;
+    font: inherit;
+}
+
+.destinatarios-opcoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+    border: 1px solid var(--borda);
+    border-radius: 4px;
+    padding: 10px 12px 12px;
+}
+
+.destinatarios-opcoes legend {
+    padding: 0 5px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.destinatarios-opcoes label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.85rem;
+}
+
+.comunicado-dialog__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 9px;
+    margin-top: 4px;
+}
+
+.comunicado-dialog__acoes button {
+    border: 0;
+    border-radius: 4px;
+    background: var(--cor-principal);
+    color: var(--branco);
+    padding: 9px 14px;
+    cursor: pointer;
+}
+
+.comunicado-dialog__acoes .btn-secundario {
+    border: 1px solid var(--borda);
+    background: #fff;
+    color: var(--texto-escuro);
+}
+
+.comunicado-dialog--leitura h3 {
+    margin-top: 4px;
+    font-size: 1rem;
+}
+
+.comunicado-dialog__mensagem {
+    max-height: 30vh;
+    overflow-y: auto;
+    padding: 12px;
+    border: 1px solid var(--borda);
+    border-radius: 4px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.comunicado-dialog--leitura ul {
+    padding-left: 22px;
+}
+
+.comunicados-vazio {
+    padding: 24px 0;
+    color: var(--texto-cinza);
+}
+
 .card-texto {
     font-size: 0.85rem;
     color: var(--texto-cinza);
@@ -336,6 +458,20 @@ body {
 }
 
 .acoes-card a:hover {
+    text-decoration: underline;
+}
+
+.acoes-card button {
+    border: 0;
+    background: transparent;
+    color: var(--cor-principal);
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.acoes-card button:hover,
+.acoes-card button:focus-visible {
     text-decoration: underline;
 }
 

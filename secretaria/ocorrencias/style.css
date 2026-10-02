@@ -245,6 +245,119 @@ body {
     border-bottom: none;
 }
 
+/* Gravidades */
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-leve {
+    background-color: #e2f3e8;
+    color: #176533;
+}
+
+.badge-media {
+    background-color: #fff0cf;
+    color: #805500;
+}
+
+.badge-grave {
+    background-color: #fde2e1;
+    color: #a3201a;
+}
+
+.badge-outro {
+    background-color: #eeeeee;
+    color: #444444;
+}
+
+.btn-inspecionar {
+    border: 1px solid var(--borda);
+    border-radius: 4px;
+    background: var(--branco);
+    color: var(--texto-escuro);
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.btn-inspecionar:hover,
+.btn-inspecionar:focus-visible {
+    background: #eeeeee;
+}
+
+/* Diálogos de cadastro e detalhes */
+.ocorrencia-dialog {
+    width: min(560px, calc(100vw - 32px));
+    max-height: min(85vh, 760px);
+    margin: auto;
+    padding: 0;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    color: var(--texto-escuro);
+}
+
+.ocorrencia-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.55);
+}
+
+.detalhes-ocorrencia {
+    display: grid;
+    gap: 16px;
+    padding: 24px;
+}
+
+.detalhes-ocorrencia h2 {
+    font-size: 1.25rem;
+}
+
+.detalhes-ocorrencia__campos {
+    display: grid;
+    grid-template-columns: minmax(100px, 0.7fr) 1.5fr;
+    gap: 10px 16px;
+}
+
+.detalhes-ocorrencia__campos dt {
+    color: var(--texto-cinza);
+    font-weight: 500;
+}
+
+.detalhes-ocorrencia__campos dd {
+    overflow-wrap: anywhere;
+}
+
+.detalhes-ocorrencia h3 {
+    font-size: 0.95rem;
+}
+
+.detalhes-ocorrencia__descricao {
+    max-height: 30vh;
+    overflow-y: auto;
+    padding: 12px;
+    border: 1px solid var(--borda);
+    border-radius: 4px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.detalhes-ocorrencia__acoes {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.detalhes-ocorrencia__acoes button {
+    border: 0;
+    border-radius: 4px;
+    background: var(--cor-principal);
+    color: var(--branco);
+    padding: 9px 18px;
+    cursor: pointer;
+}
+
 /* Status Tags */
 .status {
     display: inline-block;
