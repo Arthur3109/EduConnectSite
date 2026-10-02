@@ -47,7 +47,7 @@
         const dialog = document.createElement('dialog');
         dialog.className = 'ocorrencia-dialog';
         dialog.innerHTML = `
-            <form method="dialog" style="display:grid;gap:14px;min-width:min(560px,90vw);padding:24px">
+            <form method="dialog" class="nova-ocorrencia-form">
                 <h2>Nova Ocorrência</h2>
                 <label>Aluno<input name="aluno" required></label>
                 <label>Tipo<select name="tipo" required>

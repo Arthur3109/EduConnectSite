@@ -294,6 +294,8 @@ body {
     width: min(560px, calc(100vw - 32px));
     max-height: min(85vh, 760px);
     margin: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     padding: 0;
     border: 1px solid var(--borda);
     border-radius: 8px;
@@ -302,6 +304,88 @@ body {
 
 .ocorrencia-dialog::backdrop {
     background: rgba(0, 0, 0, 0.55);
+}
+
+.nova-ocorrencia-form {
+    display: grid;
+    gap: 16px;
+    min-width: 0;
+    padding: 24px;
+}
+
+.nova-ocorrencia-form h2 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.nova-ocorrencia-form > label {
+    display: grid;
+    gap: 6px;
+    min-width: 0;
+    color: var(--texto-escuro);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.nova-ocorrencia-form input,
+.nova-ocorrencia-form select,
+.nova-ocorrencia-form textarea {
+    width: 100%;
+    min-width: 0;
+    border: 1px solid var(--borda);
+    border-radius: 5px;
+    background: #ffffff;
+    color: var(--texto-escuro);
+    padding: 10px 12px;
+    font: inherit;
+    font-size: 0.9rem;
+}
+
+.nova-ocorrencia-form textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+.nova-ocorrencia-form input:focus,
+.nova-ocorrencia-form select:focus,
+.nova-ocorrencia-form textarea:focus {
+    border-color: #176533;
+    outline: 2px solid rgba(23, 101, 51, 0.18);
+}
+
+.nova-ocorrencia-form > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.nova-ocorrencia-form button {
+    min-height: 40px;
+    border: 1px solid var(--cor-principal);
+    border-radius: 5px;
+    background: var(--cor-principal);
+    color: var(--branco);
+    padding: 8px 14px;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.nova-ocorrencia-form button[data-cancel] {
+    border-color: var(--borda);
+    background: #ffffff;
+    color: var(--texto-escuro);
+}
+
+.nova-ocorrencia-form button:hover {
+    filter: brightness(0.92);
+}
+
+.nova-ocorrencia-form button:focus-visible {
+    outline: 2px solid #176533;
+    outline-offset: 2px;
 }
 
 .detalhes-ocorrencia {

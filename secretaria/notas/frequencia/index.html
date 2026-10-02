@@ -81,9 +81,9 @@
                         </div>
 
                         <!-- Abas -->
-                        <div class="abas">
-                            <a href="../index.html" class="aba">Notas</a>
-                            <a href="index.html" class="aba ativa">Frequência</a>
+                        <div class="abas" role="tablist" aria-label="Visualização acadêmica">
+                            <a href="../index.html" class="aba" data-tab="notas" aria-selected="false">Notas</a>
+                            <a href="index.html" class="aba ativa" data-tab="frequencia" aria-selected="true">Frequência</a>
                         </div>
 
                         <!-- Tabela de Frequência -->
@@ -169,7 +169,9 @@
             </div>
         </div>
     </div>
+    <script src="../../../assets/js/educonnect-backend.js"></script>
     <script src="../../menu-mobile.js" defer></script>
+    <script src="../notas-frequencia.js"></script>
 </body>
 
 </html>
