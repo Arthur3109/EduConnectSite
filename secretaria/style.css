@@ -390,3 +390,263 @@ body {
     .tabela th, .tabela td,
     .tabela-preview th, .tabela-preview td { padding: 10px; }
 }
+
+/* Botões discretos para abrir o sino e as preferências sem alterar o cabeçalho oficial. */
+.header-icon-button {
+    position: relative;
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border: 1px solid rgba(255, 253, 247, 0.35);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--branco);
+    cursor: pointer;
+}
+
+.header-icon-button:hover,
+.header-icon-button:focus-visible {
+    background: rgba(255, 253, 247, 0.12);
+}
+
+.header-icon-button:focus-visible,
+.dashboard-dialog__close:focus-visible,
+.dashboard-dialog__button:focus-visible,
+.theme-setting input:focus-visible {
+    outline: 2px solid #cccccc;
+    outline-offset: 2px;
+}
+
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: grid;
+    min-width: 18px;
+    height: 18px;
+    place-items: center;
+    padding: 0 4px;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    background: #fffdf7;
+    color: #000000;
+    font-size: 0.68rem;
+    line-height: 1;
+}
+
+/* Regras específicas da dashboard complementam o tema compartilhado com as demais páginas. */
+body.secretaria-dark {
+    --dashboard-background: #18181a;
+    --dashboard-surface: #252527;
+    --dashboard-text: #fffdf7;
+    --dashboard-muted: #b0b0b2;
+    --dashboard-border: #545456;
+    background: var(--dashboard-background);
+}
+
+body {
+    --dashboard-background: var(--bg-body);
+    --dashboard-surface: var(--branco);
+    --dashboard-text: var(--texto-escuro);
+    --dashboard-muted: var(--texto-cinza);
+    --dashboard-border: var(--borda);
+}
+
+body.secretaria-dark .content,
+body.secretaria-dark .content h1,
+body.secretaria-dark .content h2 {
+    color: var(--dashboard-text);
+}
+
+body.secretaria-dark .card,
+body.secretaria-dark .aviso {
+    border-color: var(--dashboard-border);
+    background-color: var(--dashboard-surface);
+}
+
+body.secretaria-dark .card h2,
+body.secretaria-dark .aviso p {
+    color: var(--dashboard-muted);
+}
+
+body.secretaria-dark .card h1,
+body.secretaria-dark .aviso strong {
+    color: var(--dashboard-text);
+}
+
+body.secretaria-dark .card span {
+    background-color: #3b3b3d;
+    color: #fffdf7;
+}
+
+body.secretaria-dark .tabela,
+body.secretaria-dark .tabela td {
+    border-color: var(--dashboard-border);
+    background-color: var(--dashboard-surface);
+    color: var(--dashboard-text);
+}
+
+body.secretaria-dark .tabela thead {
+    background-color: #000000;
+    color: #fffdf7;
+}
+
+body.secretaria-dark .concluido {
+    background-color: #3b3b3d;
+    color: #fffdf7;
+}
+
+/* Os diálogos nativos mantêm contraste, foco e fechamento por Escape. */
+.dashboard-dialog {
+    width: min(100% - 32px, 620px);
+    max-height: min(90vh, 760px);
+    margin: auto;
+    padding: 0;
+    overflow: auto;
+    border: 1px solid var(--dashboard-border);
+    border-radius: 8px;
+    background: var(--dashboard-surface);
+    color: var(--dashboard-text);
+}
+
+.dashboard-dialog::backdrop {
+    background: rgb(0 0 0 / 55%);
+}
+
+.dashboard-dialog__content {
+    display: grid;
+    gap: 18px;
+    padding: clamp(20px, 4vw, 30px);
+}
+
+.dashboard-dialog__heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.dashboard-dialog__heading h2 {
+    margin: 0 0 5px;
+    color: var(--dashboard-text);
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.dashboard-dialog__heading p,
+.dashboard-alert__description {
+    color: var(--dashboard-muted);
+    font-size: 0.88rem;
+    line-height: 1.6;
+}
+
+.dashboard-dialog__close {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    place-items: center;
+    border: 1px solid var(--dashboard-border);
+    border-radius: 50%;
+    background: var(--dashboard-surface);
+    color: var(--dashboard-text);
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.dashboard-alerts {
+    display: grid;
+    gap: 12px;
+}
+
+.dashboard-alert,
+.dashboard-empty {
+    padding: 16px;
+    border: 1px solid var(--dashboard-border);
+    border-radius: 6px;
+    background: var(--dashboard-surface);
+}
+
+.dashboard-alert__title {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--dashboard-text);
+    font-size: 0.95rem;
+}
+
+.dashboard-alert__description {
+    margin: 0;
+}
+
+.dashboard-alert__date {
+    display: block;
+    margin-top: 8px;
+    color: var(--dashboard-muted);
+    font-size: 0.78rem;
+}
+
+.dashboard-empty {
+    color: var(--dashboard-muted);
+    text-align: center;
+}
+
+.theme-setting {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 16px 0;
+    border-top: 1px solid var(--dashboard-border);
+    border-bottom: 1px solid var(--dashboard-border);
+    cursor: pointer;
+}
+
+.theme-setting > span {
+    display: grid;
+    gap: 4px;
+}
+
+.theme-setting strong {
+    color: var(--dashboard-text);
+}
+
+.theme-setting > span > span {
+    color: var(--dashboard-muted);
+    font-size: 0.85rem;
+}
+
+.theme-setting input {
+    width: 20px;
+    height: 20px;
+    accent-color: #3b3b3d;
+    cursor: pointer;
+}
+
+.dashboard-dialog__actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.dashboard-dialog__button {
+    min-height: 40px;
+    padding: 9px 16px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    background: #000000;
+    color: #fffdf7;
+    font: inherit;
+    cursor: pointer;
+}
+
+.dashboard-dialog__button:hover {
+    background: #3b3b3d;
+    border-color: #3b3b3d;
+}
+
+@media (max-width: 600px) {
+    .user {
+        align-items: center;
+    }
+}

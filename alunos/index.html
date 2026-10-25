@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acompanhe o Desempenho</title>
+    <title>Painel do Aluno | EduConnect</title>
     <link rel="stylesheet" href="menu.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,8 +42,8 @@
             </div>
         </div>
 
-        <span class="subtitle">ACOMPANHE O DESEMPENHO</span>
-        <h1>Olá, Francisco Cunha</h1>
+        <span class="subtitle">ÁREA DO ALUNO</span>
+        <h1>Olá, Fernando Cunha</h1>
 
         <div class="student-card">
             <div class="avatar-placeholder"></div>
@@ -65,13 +65,104 @@
             </div>
         </div>
 
-        <div>
-            <a href="boletim/index.html"><button class="btn">Visualizar Boletim Completo</button></a>
-        </div>
+        <!-- Atalhos do aluno: cada ação leva a uma tela existente ou abre um formulário acessível. -->
+        <nav class="student-actions" aria-label="Serviços do aluno">
+            <a class="btn btn--primary" href="boletim/index.html">Visualizar boletim completo</a>
+            <button class="btn" type="button" data-open-dialog="atestado-dialog">Entregar atestado</button>
+            <button class="btn" type="button" data-open-dialog="ocorrencias-dialog">Consultar ocorrências</button>
+        </nav>
+
+        <!-- Comunicados publicados pela Secretaria são carregados e filtrados pelo JavaScript. -->
+        <section class="comunicados-section" aria-labelledby="comunicados-title">
+            <div class="section-heading">
+                <div>
+                    <span class="subtitle">INFORMAÇÕES OFICIAIS</span>
+                    <h2 id="comunicados-title">Comunicados</h2>
+                </div>
+                <span class="section-count" id="comunicados-count" aria-live="polite">0 comunicados</span>
+            </div>
+            <p class="section-description">Avisos enviados pela Secretaria para os alunos.</p>
+            <div class="comunicados-list" id="comunicados-list" aria-live="polite">
+                <p class="empty-state">Carregando comunicados...</p>
+            </div>
+        </section>
     </div>
 
+    <!-- O modal registra a justificativa e permite anexar um PDF no armazenamento local. -->
+    <dialog class="student-dialog" id="atestado-dialog" aria-labelledby="atestado-title">
+        <form class="student-dialog__form" id="atestado-form">
+            <div class="dialog-heading">
+                <div>
+                    <span class="subtitle">JUSTIFICATIVA DE AUSÊNCIA</span>
+                    <h2 id="atestado-title">Entregar atestado</h2>
+                </div>
+                <button class="icon-button" type="button" data-close-dialog aria-label="Fechar janela">×</button>
+            </div>
+            <p class="dialog-description">Preencha os dados para registrar sua justificativa. A Secretaria poderá consultar o envio.</p>
 
+            <label class="form-field">
+                <span>Motivo</span>
+                <input name="motivo" type="text" maxlength="120" required autocomplete="off"
+                    placeholder="Ex.: consulta médica">
+            </label>
+            <div class="date-fields">
+                <label class="form-field">
+                    <span>Data de início</span>
+                    <input name="dataInicio" type="date" required>
+                </label>
+                <label class="form-field">
+                    <span>Data de término</span>
+                    <input name="dataFim" type="date" required>
+                </label>
+            </div>
+            <label class="form-field">
+                <span>Observações</span>
+                <textarea name="observacoes" rows="4" maxlength="1000"
+                    placeholder="Acrescente informações importantes para a Secretaria (opcional)."></textarea>
+            </label>
+            <!-- O botão visível abre o seletor nativo; o input limita a escolha a arquivos PDF. -->
+            <div class="form-field">
+                <span>Arquivo do atestado (PDF)</span>
+                <input class="file-input-hidden" id="atestado-pdf" name="atestadoPdf" type="file"
+                    accept="application/pdf,.pdf" aria-describedby="atestado-file-help atestado-file-name">
+                <button class="btn btn--secondary file-select-button" id="atestado-pdf-button"
+                    type="button" aria-controls="atestado-pdf">Adicionar PDF</button>
+                <span class="file-help" id="atestado-file-help">PDF de até 2 MB. O arquivo será salvo neste navegador.</span>
+                <span class="file-name" id="atestado-file-name" aria-live="polite">Nenhum arquivo selecionado.</span>
+            </div>
+            <p class="form-feedback" id="atestado-feedback" role="status" aria-live="polite"></p>
+            <div class="dialog-actions">
+                <button class="btn btn--secondary" type="button" data-close-dialog>Cancelar</button>
+                <button class="btn btn--primary" type="submit">Enviar justificativa</button>
+            </div>
+        </form>
+    </dialog>
+
+    <!-- A lista exibe somente registros relacionados ao aluno atualmente identificado. -->
+    <dialog class="student-dialog student-dialog--wide" id="ocorrencias-dialog"
+        aria-labelledby="ocorrencias-title">
+        <section class="student-dialog__form">
+            <div class="dialog-heading">
+                <div>
+                    <span class="subtitle">REGISTROS ESCOLARES</span>
+                    <h2 id="ocorrencias-title">Ocorrências e advertências</h2>
+                </div>
+                <button class="icon-button" type="button" data-close-dialog aria-label="Fechar janela">×</button>
+            </div>
+            <p class="dialog-description">Histórico de registros vinculados ao seu nome ou à sua matrícula.</p>
+            <div class="occurrences-list" id="ocorrencias-list" aria-live="polite">
+                <p class="empty-state">Carregando ocorrências...</p>
+            </div>
+            <div class="dialog-actions">
+                <button class="btn btn--secondary" type="button" data-close-dialog>Fechar</button>
+            </div>
+        </section>
+    </dialog>
+
+    <script src="../assets/js/educonnect-backend.js"></script>
+    <script src="app.js"></script>
     <script src="main.js"></script>
+    <script src="student-services.js"></script>
 </body>
 
 </html>

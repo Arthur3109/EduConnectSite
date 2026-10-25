@@ -6,7 +6,7 @@
     'use strict';
 
     function findCardValue(card) {
-        return card?.querySelector('.valor, .numero, strong, h2, h3, p:not(:first-child)');
+        return card?.querySelector('.valor, .numero, strong, h1, h3, p:not(:first-child)');
     }
 
     function seedActivities(backend, table) {

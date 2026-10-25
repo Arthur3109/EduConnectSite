@@ -404,6 +404,37 @@ body {
     padding-top: 6px;
 }
 
+/* Os rótulos mantêm os filtros identificáveis em telas largas e empilhadas. */
+.filtro-boletim {
+    display: grid;
+    flex: 1;
+    min-width: 0;
+    gap: 5px;
+    color: var(--texto-cinza);
+    font-size: 0.78rem;
+    font-weight: 500;
+}
+
+.filtro-boletim select {
+    width: 100%;
+}
+
+.boletim-feedback,
+.boletim-vazio {
+    min-height: 1.25rem;
+    margin-top: 12px;
+    color: var(--texto-cinza);
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.boletim-vazio {
+    margin: 0;
+    padding: 14px;
+    border: 1px dashed var(--borda);
+    border-radius: 6px;
+}
+
 /* --- Responsividade Básica --- */
 @media (max-width: 1200px) {
     .grid { flex-direction: column; }

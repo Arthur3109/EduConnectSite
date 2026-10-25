@@ -299,6 +299,28 @@ a {
     color: var(--branco);
 }
 
+/* O estado de fechamento é exibido separadamente da situação da nota. */
+.fechamento-status {
+    display: inline-block;
+    padding: 4px 10px;
+    border: 1px solid var(--borda);
+    border-radius: 20px;
+    color: var(--texto-cinza);
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+
+.fechamento-status.fechado {
+    border-color: var(--cor-principal);
+    background-color: var(--cor-principal);
+    color: var(--branco);
+}
+
+.fechamento-status.em-andamento {
+    background-color: #e0e0e0;
+    color: var(--texto-escuro);
+}
+
 /* Rodapé da Tabela */
 .tabela-footer {
     display: flex;

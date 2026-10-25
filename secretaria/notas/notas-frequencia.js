@@ -57,6 +57,14 @@
     }
 
     function attendanceValues(classes, presences) {
+        if (classes == null || classes === '' || presences == null || presences === '') {
+            return {
+                aulasDadas: classes == null || classes === '' ? null : Number(classes),
+                presencas: presences == null || presences === '' ? null : Number(presences),
+                faltas: null,
+                frequencia: null
+            };
+        }
         if (backend?.calculateFrequency) return backend.calculateFrequency(classes, presences);
         const aulasDadas = Number(classes);
         const presencas = Number(presences);
@@ -99,8 +107,10 @@
                 && record.disciplina === 'Matemática'
                 && record.bimestre === '1º Bimestre');
             const record = {
-                ...(imported ?? {}),
                 ...student,
+                // Dados já consolidados no núcleo têm prioridade sobre a
+                // referência estática usada como demonstração inicial.
+                ...(imported ?? {}),
                 id: backend?.buildAcademicId?.({
                     matricula: student.matricula,
                     turma: '3º Ano A',
@@ -125,20 +135,25 @@
     function loadRecords() {
         const stored = readStoredRecords();
         if (!stored?.length) {
-            const records = createMockRecords();
+            // Quando já há registros acadêmicos, eles são a fonte de verdade;
+            // os valores do HTML servem apenas de demonstração sem dados locais.
+            const academic = backend?.getAcademicRecords?.() ?? [];
+            const records = academic.length
+                ? academic.map(calculateRecord)
+                : createMockRecords();
             saveRecords(records);
             return records;
         }
 
-        const records = stored.map(calculateRecord);
-        const storedIds = new Set(records.map((record) => record.id));
-        const newBackendRecords = (backend?.getAcademicRecords?.() ?? [])
-            .filter((record) => !storedIds.has(record.id))
-            .map((record) => calculateRecord(record));
-        if (newBackendRecords.length) {
-            records.push(...newBackendRecords);
-            saveRecords(records);
-        }
+        // A chave legada continua compatível, mas dados compartilhados mais
+        // recentes substituem a cópia antiga quando o identificador coincide.
+        const merged = new Map(stored.map((record) => [record.id, calculateRecord(record)]));
+        (backend?.getAcademicRecords?.() ?? []).forEach((record) => {
+            const legacy = merged.get(record.id) ?? {};
+            merged.set(record.id, calculateRecord({ ...legacy, ...record }));
+        });
+        const records = [...merged.values()];
+        saveRecords(records);
         return records;
     }
 
@@ -191,7 +206,7 @@
         if (filters.length < 3 || !table || !body || !head || tabs.length < 2) return;
 
         let records = loadRecords();
-        const labels = ['Matrícula', 'Nome do Aluno', 'N1', 'N2', 'N3', 'Média', 'Situação'];
+        const labels = ['Matrícula', 'Nome do Aluno', 'N1', 'N2', 'N3', 'Média', 'Situação', 'Fechamento'];
         populateFilter(filters[0], 'Turma: Todas', records.map((record) => record.turma));
         populateFilter(filters[1], 'Disciplina: Todas', records.map((record) => record.disciplina));
         populateFilter(filters[2], 'Bimestre: Todos', records.map((record) => record.bimestre));
@@ -206,8 +221,14 @@
             const filtered = activeFilters();
             const frequencyTab = activeTab === 'frequencia';
             const columns = frequencyTab
-                ? ['Matrícula', 'Nome do Aluno', 'Aulas Dadas', 'Presenças', 'Faltas', '% Frequência', 'Situação']
+                ? ['Matrícula', 'Nome do Aluno', 'Aulas Dadas', 'Presenças', 'Faltas', '% Frequência', 'Situação', 'Fechamento']
                 : labels;
+            const visibleRecords = frequencyTab
+                ? filtered.filter((record) => record.aulasDadas != null
+                    || record.presencas != null
+                    || record.faltas != null
+                    || record.frequencia != null)
+                : filtered;
             head.replaceChildren();
             const headerRow = document.createElement('tr');
             columns.forEach((label) => {
@@ -218,22 +239,25 @@
             head.append(headerRow);
             body.replaceChildren();
 
-            filtered.forEach((record) => {
+            visibleRecords.forEach((record) => {
                 const row = document.createElement('tr');
                 const status = frequencyTab ? record.situacaoFrequencia : record.situacaoNotas;
                 const values = frequencyTab
-                    ? [record.matricula, record.alunoNome, record.aulasDadas, record.presencas, record.faltas, `${formatNumber(record.frequencia)}%`, status]
-                    : [record.matricula, record.alunoNome, record.n1, record.n2, record.n3, formatNumber(record.media), status];
+                    ? [record.matricula, record.alunoNome, record.aulasDadas, record.presencas, record.faltas, record.frequencia == null ? '—' : `${formatNumber(record.frequencia)}%`, status, record.fechado ? 'Bimestre fechado' : 'Em andamento']
+                    : [record.matricula, record.alunoNome, record.n1, record.n2, record.n3, formatNumber(record.media), status, record.fechado ? 'Bimestre fechado' : 'Em andamento'];
                 values.forEach((value, index) => {
                     const cell = document.createElement('td');
                     if (index === 0 || (frequencyTab && index >= 2 && index <= 5) || (!frequencyTab && index === 5)) {
                         const strong = document.createElement('strong');
                         strong.textContent = String(value ?? '—');
                         cell.append(strong);
-                    } else if (index === 6) {
+                    } else if (index === 6 || index === 7) {
                         const badge = document.createElement('span');
-                        badge.className = `situacao ${statusClass(status)}`.trim();
+                        badge.className = index === 6
+                            ? `situacao ${statusClass(status)}`.trim()
+                            : `fechamento-status ${record.fechado ? 'fechado' : 'em-andamento'}`;
                         badge.textContent = status;
+                        if (index === 7) badge.textContent = value;
                         cell.append(badge);
                     } else {
                         cell.textContent = String(value ?? '—');
@@ -246,22 +270,22 @@
             if (!filtered.length) {
                 const row = document.createElement('tr');
                 const cell = document.createElement('td');
-                cell.colSpan = 7;
+                cell.colSpan = 8;
                 cell.textContent = 'Nenhum registro encontrado para os filtros informados.';
                 row.append(cell);
                 body.append(row);
             }
 
             if (frequencyTab) {
-                const valid = filtered.map((record) => record.frequencia).filter(Number.isFinite);
+                const valid = visibleRecords.map((record) => record.frequencia).filter(Number.isFinite);
                 const averageAttendance = valid.length ? valid.reduce((sum, value) => sum + value, 0) / valid.length : null;
-                const risks = filtered.filter((record) => record.situacaoFrequencia === 'Risco').length;
+                const risks = visibleRecords.filter((record) => record.situacaoFrequencia === 'Risco').length;
                 setSummary(footer, ['Frequência Média da Turma', 'Alunos em Risco (< 75%)'], [averageAttendance == null ? '—' : `${formatNumber(averageAttendance)}%`, String(risks)]);
             } else {
-                const valid = filtered.map((record) => record.media).filter(Number.isFinite);
+                const valid = visibleRecords.map((record) => record.media).filter(Number.isFinite);
                 const classAverage = valid.length ? valid.reduce((sum, value) => sum + value, 0) / valid.length : null;
-                const approved = filtered.filter((record) => record.situacaoNotas === 'Aprovado').length;
-                const rate = filtered.length ? (approved / filtered.length) * 100 : null;
+                const approved = visibleRecords.filter((record) => record.situacaoNotas === 'Aprovado').length;
+                const rate = visibleRecords.length ? (approved / visibleRecords.length) * 100 : null;
                 setSummary(footer, ['Média da Turma', 'Taxa de Aprovação'], [classAverage == null ? '—' : formatNumber(classAverage), rate == null ? '—' : `${formatNumber(rate, 0)}%`]);
             }
         }
@@ -289,6 +313,23 @@
         filterButton?.addEventListener('click', () => render(activeTab));
         filters.forEach((select) => select.addEventListener('change', () => render(activeTab)));
         setActiveTab(activeTab);
+
+        // Recarrega a tabela quando professor ou outra aba altera os mesmos
+        // registros, sem gravar de volta durante a sincronização.
+        function refreshAcademicRecords() {
+            records = (backend?.getAcademicRecords?.() ?? []).map(calculateRecord);
+            populateFilter(filters[0], 'Turma: Todas', records.map((record) => record.turma));
+            populateFilter(filters[1], 'Disciplina: Todas', records.map((record) => record.disciplina));
+            populateFilter(filters[2], 'Bimestre: Todos', records.map((record) => record.bimestre));
+            render(activeTab);
+        }
+
+        window.addEventListener(backend?.eventName ?? 'educonnect:data-change', (event) => {
+            if (event.detail?.key === backend?.keys?.academico) refreshAcademicRecords();
+        });
+        window.addEventListener('storage', (event) => {
+            if (event.key === backend?.keys?.academico) refreshAcademicRecords();
+        });
     }
 
     document.addEventListener('DOMContentLoaded', init);

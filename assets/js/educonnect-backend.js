@@ -200,6 +200,9 @@
 
     function getAcademicRecords() {
         return readArray(KEYS.academico).map((record) => ({
+            // Campos adicionais, como marcadores de migração e fechamento,
+            // precisam sobreviver à leitura usada por todos os módulos.
+            ...record,
             id: String(record?.id ?? ''),
             alunoId: String(record?.alunoId ?? '').trim(),
             alunoNome: String(record?.alunoNome ?? '').trim(),
@@ -344,9 +347,14 @@
             criadoEm: nowIso(),
             data: record.data || new Date().toLocaleDateString('pt-BR'),
             aluno: String(record.aluno ?? '').trim(),
+            // Campos opcionais enriquecem novas ocorrências sem alterar registros antigos.
+            alunoId: String(record.alunoId ?? '').trim(),
+            matricula: String(record.matricula ?? '').trim(),
+            turma: String(record.turma ?? '').trim(),
             tipo: String(record.tipo ?? '').trim(),
             gravidade: String(record.gravidade ?? '').trim(),
             descricao: String(record.descricao ?? '').trim(),
+            autor: String(record.autor ?? '').trim(),
             status: String(record.status ?? 'Aberta').trim()
         };
         records.unshift(next);
@@ -482,9 +490,11 @@
         if (existing.some((record) => record.__seedKey === key)) return existing;
 
         const seeded = [];
+        const existingIds = new Set(existing.map((record) => record.id));
         table?.querySelectorAll(':scope > tbody > tr').forEach((row) => {
             const record = buildRecord(row);
-            if (!record) return;
+            if (!record || existingIds.has(record.id)) return;
+            existingIds.add(record.id);
             seeded.push({
                 ...record,
                 __seedKey: key,
@@ -494,6 +504,8 @@
         });
 
         if (!seeded.length) return existing;
+        // Identificadores iguais nunca geram linhas duplicadas nem substituem
+        // valores acadêmicos que já tenham sido lançados pelo professor.
         const merged = [...existing, ...seeded];
         saveCollection(KEYS.academico, merged);
         return merged;

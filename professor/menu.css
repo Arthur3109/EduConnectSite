@@ -1,293 +1,337 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+/* Ajustes específicos do Professor sobre a folha oficial da Secretaria. */
+
+/* Torna os itens de navegação clicáveis mantendo espaçamento e tipografia do menu-base. */
+.menu-action {
+    display: block;
+    width: 100%;
+    padding: 15px 25px;
+    border: 0;
+    border-left: 4px solid transparent;
+    background: transparent;
+    color: #d1d1d1;
+    font: inherit;
+    font-size: 0.95rem;
+    text-align: left;
+    cursor: pointer;
 }
 
-:root {
-  --bg-primary: #000000;
-  --surface-color: #3b3b3d;
-  --text-main: #fffdf7;
-  --text-muted: #545456;
-  --gradient:
-    radial-gradient(80% 80% at 100% 0%, #545456 0%, #3b3b3d 20%, #000 60%),
-    radial-gradient(80% 80% at 0% 100%, #545456 0%, #3b3b3d 20%, #000 60%);
-  --border-color: #6b6b6d;
-  --bg-secondary: #3b3b3d;
+.menu-action:hover,
+.menu-action:focus-visible {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--branco);
 }
 
-.dark-mode {
-  --bg-primary: #fffdf7;
-  --surface-color: #f1f1f3;
-  --text-main: #18181a;
-  --text-muted: #6b6b6d;
-  --gradient:
-    radial-gradient(80% 80% at 100% 0%, #6b6b6d 0%, #f1f1f3 20%, #fffdf7 60%),
-    radial-gradient(80% 80% at 0% 100%, #6b6b6d 0%, #f1f1f3 20%, #f1f1f3 60%);
-  --border-color: #3b3b3d;
-  --bg-secondary: #f1f1f3;
+/* Alinha título, descrição e ação principal na página como nas telas administrativas. */
+.cabecalho-pagina {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
 }
 
-.theme-toggle {
-  position: relative;
-  width: 5.625rem;
-  height: 2.5rem;
-  border: none;
-  border-radius: 50px;
-  background: var(--text-main);
-  cursor: pointer;
-  padding: 0;
-  overflow: hidden;
-  transition: background 0.3s ease;
+.content .cabecalho-pagina h1 {
+    margin: 0;
 }
 
-.toggle-ball {
-  position: absolute;
-  top: 0.1875rem;
-  left: 0.1875rem;
-  width: 2.125rem;
-  height: 2.125rem;
-  border-radius: 50%;
-  background: var(--bg-primary);
-  transition: transform 0.3s ease;
+.page-description,
+.dialog-description {
+    color: var(--texto-cinza);
+    font-size: 0.9rem;
+    line-height: 1.6;
 }
 
-/* Ícones */
-.toggle-icon {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;
-  font-size: 20px;
-  line-height: 1;
-  transition: opacity 0.3s ease;
+.btn-novo,
+.table-button,
+.dialog-button {
+    min-height: 40px;
+    padding: 9px 14px;
+    border: 1px solid var(--cor-principal);
+    border-radius: 5px;
+    background: var(--cor-principal);
+    color: var(--branco);
+    font: inherit;
+    font-size: 0.86rem;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-.sun {
-  left: 10px;
-  color: #fff;
+.btn-novo:hover,
+.table-button:hover,
+.dialog-button:hover {
+    background: #3b3b3d;
+    border-color: #3b3b3d;
 }
 
-.moon {
-  right: 10px;
-  color: var(--text-main);
-  opacity: 0;
+.table-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    padding: 7px 10px;
+    background: var(--branco);
+    color: var(--cor-principal);
+    white-space: nowrap;
 }
 
-/* DARK MODE */
-body.dark-mode .theme-toggle {
-  background: var(--text-muted);
-}
-
-body.dark-mode .toggle-ball {
-  transform: translateX(3.125rem);
-  background: var(--bg-primary);
-}
-
-body.dark-mode .sun {
-  opacity: 0;
-}
-
-body.dark-mode .moon {
-  opacity: 1;
-}
-
-.top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-body {
-  background: var(--gradient);
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  color: var(--text-main);
-  padding: clamp(1rem, 3vw, 2rem);
-}
-
-h1 {
-  font-size: 1.875rem;
-  font-weight: 600;
-  color: var(--text-main);
-}
-
-h2 {
-  font-size: 1.25rem;
-  font-weight: 400;
-  color: var(--text-muted);
-}
-
-a {
-  text-decoration: none;
-  color: var(--text-main);
-}
-
-.logout a {
-  text-decoration: none;
-  color: var(--text-main);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3125rem;
-  font-size: 0.875rem;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.625rem;
-  width: min(100%, 76rem);
-  padding: clamp(1rem, 3vw, 2rem);
-  border-radius: 0.625rem;
-  border: 1px solid var(--border-color);
-}
-
-.container > h1 {
-  margin-bottom: 0;
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(13.75rem, 100%), 1fr));
-  gap: 0.625rem;
-}
-
-.card {
-  min-width: 0;
-  min-height: 9.375rem;
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border: 1px solid var(--border-color);
-  border-radius: 1rem;
-}
-
-.card h1 {
-  font-size: clamp(1.5rem, 4vw, 1.875rem);
-  line-height: 1.25;
-}
-
-.card:hover {
-  background-color: var(--bg-secondary);
-  transition: all 0.3s ease-in-out;
-}
-
-table {
-  width: 100%;
-  min-width: 42rem;
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  border-collapse: collapse;
-  border-width: 2px;
-  border-style: solid;
-}
-
-table td,
-table th {
-  border-width: 2px;
-  border-color: var(--border-color);
-  border-style: solid;
-  padding: 0.9375rem;
-  text-align: left;
-}
-
-.table-responsive {
-  max-width: 100%;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  -webkit-overflow-scrolling: touch;
-}
-
-table thead {
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  text-align: left;
-}
-
-.aberto {
-  border: 2px solid #00ff4c;
-  padding: 0.3125rem;
-  max-width: 6.25rem;
-  border-radius: 0.3125rem;
-  text-align: center;
-}
-
-.fechado {
-  background-color: #ff0000;
-  color: var(--text-main);
-  padding: 0.3125rem;
-  max-width: 6.25rem;
-  border-radius: 0.3125rem;
-  text-align: center;
-}
-
-.btn {
-  background-color: transparent;
-  color: var(--text-main);
-  padding: 0.625rem 1.25rem;
-  border: none;
-  border-radius: 0.3125rem;
-  cursor: pointer;
-  margin-right: 0;
-  border: 1px solid var(--border-color);
+.table-button:hover {
+    background: #e0e0e0;
+    color: var(--cor-principal);
 }
 
 .actions {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
-.actions > a {
-  display: flex;
+.section-title {
+    margin: 28px 0 14px;
+    font-size: 1.1rem;
+    font-weight: 500;
 }
 
-.btn:hover {
-  background-color: var(--bg-secondary);
-  color: var(--text-main);
-  transition: all 0.3s ease-in-out;
+.content .cards {
+    margin-bottom: 28px;
 }
 
-@media (max-width: 768px) {
-  body {
-    align-items: stretch;
-  }
+.content .cards .card {
+    min-width: 0;
+}
 
-  .container {
+.content .cards .card h1 {
+    overflow-wrap: anywhere;
+}
+
+.content .tabela {
+    min-width: 850px;
+}
+
+/* A tabela mantém suas colunas legíveis e rola dentro do painel em telas estreitas. */
+.table-responsive {
     width: 100%;
-  }
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
 }
 
-@media (max-width: 576px) {
-  .container > h1 {
-    font-size: clamp(1.5rem, 7vw, 1.875rem);
-  }
-
-  .container > h2 {
-    font-size: clamp(1rem, 4.5vw, 1.25rem);
-  }
+.empty-state {
+    padding: 22px;
+    border: 1px dashed var(--borda);
+    border-radius: 8px;
+    color: var(--texto-cinza);
+    text-align: center;
 }
 
-@media (max-width: 480px) {
-  .actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
+.section-count {
+    color: var(--texto-cinza);
+    font-size: 0.9rem;
+}
 
-  .actions > a,
-  .actions .btn {
+.teacher-communications {
+    display: grid;
+    gap: 14px;
+}
+
+.teacher-communication {
+    padding: 18px 20px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    background: var(--branco);
+}
+
+.teacher-communication__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--texto-cinza);
+    font-size: 0.82rem;
+}
+
+.teacher-communication__type {
+    color: var(--cor-principal);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.teacher-communication h2 {
+    margin: 12px 0 6px;
+    color: var(--cor-principal);
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.teacher-communication p {
+    color: var(--texto-escuro);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+/* Os diálogos nativos incluem foco e fechamento por Escape oferecidos pelo navegador. */
+.teacher-dialog {
+    width: min(100% - 32px, 600px);
+    max-height: min(90vh, 820px);
+    margin: auto;
+    padding: 0;
+    overflow: auto;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    background: var(--branco);
+    color: var(--texto-escuro);
+}
+
+.teacher-dialog::backdrop {
+    background: rgb(0 0 0 / 55%);
+}
+
+.teacher-dialog__form {
+    display: grid;
+    gap: 16px;
+    padding: clamp(20px, 4vw, 30px);
+}
+
+.dialog-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.dialog-heading h2 {
+    margin: 0 0 5px;
+    color: var(--cor-principal);
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.icon-button {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    place-items: center;
+    border: 1px solid var(--borda);
+    border-radius: 50%;
+    background: var(--branco);
+    color: var(--cor-principal);
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.form-field {
+    display: grid;
+    gap: 7px;
+    color: var(--texto-escuro);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
     width: 100%;
-  }
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid var(--borda);
+    border-radius: 5px;
+    background: var(--branco);
+    color: var(--texto-escuro);
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 400;
+}
 
-  .actions .btn {
-    padding-inline: 0.75rem;
-  }
+.form-field textarea {
+    resize: vertical;
+}
+
+.form-field input:focus-visible,
+.form-field select:focus-visible,
+.form-field textarea:focus-visible,
+.btn-novo:focus-visible,
+.table-button:focus-visible,
+.dialog-button:focus-visible,
+.icon-button:focus-visible,
+.menu-action:focus-visible {
+    outline: 3px solid #666666;
+    outline-offset: 2px;
+}
+
+.file-help,
+.form-feedback {
+    color: var(--texto-cinza);
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+.form-feedback {
+    min-height: 1.25rem;
+}
+
+.date-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 4px;
+}
+
+.dialog-button--secondary {
+    border-color: var(--borda);
+    background: var(--branco);
+    color: var(--texto-escuro);
+}
+
+.dialog-button--secondary:hover {
+    background: #e0e0e0;
+    border-color: var(--borda);
+    color: var(--texto-escuro);
+}
+
+@media (max-width: 900px) {
+    .menu-action {
+        width: auto;
+        padding: 12px 16px;
+        border-left: 0;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 600px) {
+    .cabecalho-pagina {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .teacher-communication {
+        padding: 16px;
+    }
+
+    .teacher-communication__meta {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .date-fields {
+        grid-template-columns: 1fr;
+    }
+
+    .dialog-actions {
+        flex-direction: column-reverse;
+    }
+
+    .dialog-actions .dialog-button {
+        width: 100%;
+    }
 }

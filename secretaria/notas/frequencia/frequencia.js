@@ -42,7 +42,9 @@
             }
         });
 
-        const records = backend.getAcademicRecords().filter((record) => record.__seedKey === seedKey);
+        // A consulta deve incluir registros do professor, mesmo quando eles
+        // não foram criados pela migração das linhas demonstrativas.
+        const records = backend.getAcademicRecords();
         function fillSelect(select, values) {
             const current = select.value || '';
             select.replaceChildren(...values.map((value) => new Option(value, value)));
@@ -67,6 +69,9 @@
             body.replaceChildren();
             filtered.forEach((record) => {
                 const row = document.createElement('tr');
+                const attendanceStatus = record.frequencia == null
+                    ? (record.situacaoFrequencia || 'Não definida')
+                    : record.frequencia >= 85 ? 'Regular' : record.frequencia >= 75 ? 'Atenção' : 'Risco';
                 [
                     record.matricula,
                     record.alunoNome,
@@ -74,13 +79,28 @@
                     record.presencas,
                     record.faltas,
                     record.frequencia == null ? '—' : `${backend.formatNumber(record.frequencia, 1)}%`,
-                    record.situacao || 'Não definida'
+                    attendanceStatus,
+                    record.fechado ? 'Bimestre fechado' : 'Em andamento'
                 ].forEach((value, index) => {
                     const cell = document.createElement('td');
                     if (index === 0 || index === 2 || index === 3 || index === 4 || index === 5) {
                         const strong = document.createElement('strong');
                         strong.textContent = String(value ?? '—');
                         cell.append(strong);
+                    } else if (index === 6 || index === 7) {
+                        const badge = document.createElement('span');
+                        badge.className = index === 6 ? 'situacao' : 'fechamento-status';
+                        if (index === 6) {
+                            const status = backend.normalizeText(value);
+                            const statusClass = status === 'regular' ? 'aprovado'
+                                : status === 'atencao' ? 'recuperacao'
+                                    : status === 'risco' ? 'reprovado' : '';
+                            if (statusClass) badge.classList.add(statusClass);
+                        } else {
+                            badge.classList.add(record.fechado ? 'fechado' : 'em-andamento');
+                        }
+                        badge.textContent = value;
+                        cell.append(badge);
                     } else {
                         cell.textContent = String(value ?? '—');
                     }
@@ -92,7 +112,7 @@
             if (!filtered.length) {
                 const row = document.createElement('tr');
                 const cell = document.createElement('td');
-                cell.colSpan = 7;
+                cell.colSpan = 8;
                 cell.textContent = 'Nenhum registro de frequência encontrado.';
                 row.append(cell);
                 body.append(row);

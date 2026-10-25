@@ -43,18 +43,18 @@
             }
         });
 
-        const seeded = backend.getAcademicRecords().filter((record) => record.__seedKey === seedKey);
-        if (!seeded.length) return;
-
+        // A filtragem deve incluir notas vindas das turmas do Professor, não
+        // apenas os dados demonstrativos migrados desta tabela.
+        const allRecords = backend.getAcademicRecords();
         const options = {
-            turma: [...new Set(backend.getAcademicRecords().map((record) => record.turma).filter(Boolean))],
-            disciplina: [...new Set(backend.getAcademicRecords().map((record) => record.disciplina).filter(Boolean))],
-            bimestre: [...new Set(backend.getAcademicRecords().map((record) => record.bimestre).filter(Boolean))]
+            turma: [...new Set(allRecords.map((record) => record.turma).filter(Boolean))],
+            disciplina: [...new Set(allRecords.map((record) => record.disciplina).filter(Boolean))],
+            bimestre: [...new Set(allRecords.map((record) => record.bimestre).filter(Boolean))]
         };
 
         function fillSelect(select, values) {
             const current = select.value || select.options[0]?.value || '';
-            select.replaceChildren(...values.map((value) => new Option(`\uFEFF${value}`.replace('\uFEFF', ''), value)));
+            select.replaceChildren(...values.map((value) => new Option(value, value)));
             if (values.includes(current)) select.value = current;
         }
 
@@ -75,13 +75,36 @@
             body.replaceChildren();
             records.forEach((record) => {
                 const row = document.createElement('tr');
-                const cells = [record.matricula, record.alunoNome, record.n1, record.n2, record.n3, record.media, record.situacao || 'Não definida'];
+                const cells = [
+                    record.matricula,
+                    record.alunoNome,
+                    record.n1,
+                    record.n2,
+                    record.n3,
+                    record.media,
+                    record.situacao || record.situacaoNotas || 'Não definida',
+                    record.fechado ? 'Bimestre fechado' : 'Em andamento'
+                ];
                 cells.forEach((value, index) => {
                     const cell = document.createElement('td');
                     if (index === 0 || index === 5) {
                         const strong = document.createElement('strong');
                         strong.textContent = index === 5 && value != null ? backend.formatNumber(value, 1) : String(value ?? '—');
                         cell.append(strong);
+                    } else if (index === 6 || index === 7) {
+                        const badge = document.createElement('span');
+                        badge.className = index === 6 ? 'situacao' : 'fechamento-status';
+                        if (index === 6) {
+                            const normalized = backend.normalizeText(value);
+                            const statusClass = normalized === 'aprovado' ? 'aprovado'
+                                : normalized === 'recuperacao' ? 'recuperacao'
+                                    : normalized === 'reprovado' ? 'reprovado' : '';
+                            if (statusClass) badge.classList.add(statusClass);
+                        } else {
+                            badge.classList.add(record.fechado ? 'fechado' : 'em-andamento');
+                        }
+                        badge.textContent = value;
+                        cell.append(badge);
                     } else {
                         cell.textContent = value == null ? '—' : (typeof value === 'number' ? backend.formatNumber(value, 1) : String(value));
                     }
@@ -93,7 +116,7 @@
             if (!records.length) {
                 const row = document.createElement('tr');
                 const cell = document.createElement('td');
-                cell.colSpan = 7;
+                cell.colSpan = 8;
                 cell.textContent = 'Nenhum registro encontrado para os filtros informados.';
                 row.append(cell);
                 body.append(row);
@@ -103,7 +126,9 @@
             const classAverage = validAverages.length
                 ? validAverages.reduce((sum, value) => sum + value, 0) / validAverages.length
                 : null;
-            const approved = records.filter((record) => backend.normalizeText(record.situacao) === 'aprovado').length;
+            const approved = records.filter((record) =>
+                backend.normalizeText(record.situacao || record.situacaoNotas) === 'aprovado'
+            ).length;
             if (footer) {
                 const spans = footer.querySelectorAll('span');
                 if (spans[0]) spans[0].innerHTML = `Média da Turma: <strong>${classAverage == null ? '—' : backend.formatNumber(classAverage, 1)}</strong>`;

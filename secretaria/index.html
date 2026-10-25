@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduConnect - Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard/controls.css">
     <link rel="stylesheet" href="menu-mobile.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
@@ -22,10 +23,16 @@
             <span class="tag">SECRETARIA</span>
         </div>
         <div class="user">
-            <span class="material-symbols-outlined">
-                notifications
-            </span>
+            <button class="header-icon-button" id="notifications-button" type="button"
+                aria-label="Abrir informações importantes" aria-haspopup="dialog">
+                <span class="material-symbols-outlined" aria-hidden="true">notifications</span>
+                <span class="notification-count" id="notification-count" aria-live="polite">0</span>
+            </button>
             <span>Secretaria Principal</span>
+            <button class="header-icon-button" id="settings-button" type="button"
+                aria-label="Configurações da dashboard" aria-haspopup="dialog">
+                <span class="material-symbols-outlined" aria-hidden="true">settings</span>
+            </button>
             <div class="avatar"></div>
         </div>
     </header>
@@ -149,35 +156,57 @@
                         </tbody>
                     </table>
 
-                    <!-- Avisos -->
-                    <h2>Avisos do Sistema</h2>
-                    <div class="avisos">
-                        <div class="aviso erro">
-                            <span class="material-symbols-outlined">
-                                warning
-                            </span>
-                            <div>
-                                <strong>[MANUTENÇÃO CRÍTICA] Atualização programada para hoje à noite às 23:00.</strong>
-                                <p>O módulo de matrículas ficará indisponível por aproximadamente 30 minutos.</p>
-                            </div>
-                        </div>
-                        <div class="aviso info">
-                            <span class="material-symbols-outlined">
-                                priority_high
-                            </span>
-                            <div>
-                                <strong>Fechamento do Diário de Classe - Bimestre 3</strong>
-                                <p>Prazo final para os professores lançarem as notas é 01/09. Lembrete enviado por
-                                    e-mail.</p>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
 
             </div>
         </div>
     </div>
+
+    <!-- O sino abre avisos atuais produzidos pelos registros locais da aplicação. -->
+    <dialog class="dashboard-dialog" id="notifications-dialog" aria-labelledby="notifications-title">
+        <section class="dashboard-dialog__content">
+            <div class="dashboard-dialog__heading">
+                <div>
+                    <h2 id="notifications-title">Informações importantes</h2>
+                    <p>Atestados, ocorrências e comunicados que precisam da atenção da Secretaria.</p>
+                </div>
+                <button class="dashboard-dialog__close" type="button" data-close-dashboard-dialog
+                    aria-label="Fechar informações">×</button>
+            </div>
+            <div id="dashboard-alerts" class="dashboard-alerts" aria-live="polite">
+                <p class="dashboard-empty">Carregando informações...</p>
+            </div>
+        </section>
+    </dialog>
+
+    <!-- A opção escolhida é salva separadamente das preferências de outros módulos. -->
+    <dialog class="dashboard-dialog dashboard-dialog--settings" id="settings-dialog"
+        aria-labelledby="settings-title">
+        <form class="dashboard-dialog__content" method="dialog">
+            <div class="dashboard-dialog__heading">
+                <div>
+                    <h2 id="settings-title">Personalizar dashboard</h2>
+                    <p>Escolha como deseja visualizar as páginas da Secretaria neste navegador.</p>
+                </div>
+                <button class="dashboard-dialog__close" type="button" data-close-dashboard-dialog
+                    aria-label="Fechar configurações">×</button>
+            </div>
+            <label class="theme-setting">
+                <span>
+                    <strong>Modo escuro</strong>
+                    <span>Aplica o tema escuro em todas as páginas da Secretaria.</span>
+                </span>
+                <input id="dashboard-theme-toggle" type="checkbox">
+            </label>
+            <div class="dashboard-dialog__actions">
+                <button class="dashboard-dialog__button" type="submit">Concluir</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script src="../assets/js/educonnect-backend.js"></script>
+    <script src="dashboard/controls.js"></script>
+    <script src="dashboard/dashboard.js"></script>
     <script src="menu-mobile.js" defer></script>
 </body>
 

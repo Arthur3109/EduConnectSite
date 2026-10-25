@@ -5,6 +5,7 @@
 // apontada para outro nó; o script espera encontrar esse botão no HTML.
 const themeToggle = document.getElementById("themeToggle");
 
+if (themeToggle) {
 
 /* =========================================================
  * 2. ALTERAÇÃO E PERSISTÊNCIA DO TEMA
@@ -45,4 +46,5 @@ if (localStorage.getItem("theme") === "dark") {
     // add aplica a classe sem alterná-la; ao contrário de toggle, a operação é
     // idempotente e não desfaz a preferência que acabou de ser lida.
     document.body.classList.add("dark-mode");
+}
 }

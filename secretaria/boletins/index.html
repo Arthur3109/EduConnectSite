@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduConnect - Emissão de Boletins</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../dashboard/controls.css">
     <link rel="stylesheet" href="../menu-mobile.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
@@ -60,11 +61,24 @@
             <!-- Filtros Superiores -->
             <div class="painel-filtros">
                 <div class="seletores">
-                    <select><option>Turma: 3º Ano A</option></select>
-                    <select><option>Série: Ensino Médio</option></select>
-                    <select><option>Bimestre: 3º Bimestre</option></select>
+                    <label class="filtro-boletim">
+                        <span>Turma</span>
+                        <select id="boletim-turma" aria-label="Filtrar boletins por turma"></select>
+                    </label>
+                    <label class="filtro-boletim">
+                        <span>Série</span>
+                        <select id="boletim-serie" aria-label="Filtrar boletins por série"></select>
+                    </label>
+                    <label class="filtro-boletim">
+                        <span>Bimestre</span>
+                        <select id="boletim-bimestre" aria-label="Filtrar boletins por bimestre"></select>
+                    </label>
+                    <label class="filtro-boletim">
+                        <span>Aluno</span>
+                        <select id="boletim-aluno" aria-label="Selecionar aluno do boletim"></select>
+                    </label>
                 </div>
-                <button class="btn-gerar">Gerar Boletins</button>
+                <button class="btn-gerar" type="button">Gerar Boletins</button>
             </div>
 
             <div class="grid">
@@ -74,18 +88,18 @@
                     
                     <div class="painel">
                         
-                        <h2 class="subtitulo-secao">Visualização Prévia (Amanda Costa Nogueira)</h2>
+                        <h2 class="subtitulo-secao">Visualização Prévia</h2>
                         
                         <!-- Mini-Boletim Preview -->
                         <div class="boletim-preview">
                             <div class="preview-topo">
                                 <div>
                                     <strong>EduConnect High School</strong>
-                                    <p>Boletim Escolar Oficial — Ano Letivo 2024</p>
+                                    <p>Boletim Escolar Oficial</p>
                                 </div>
                                 <div class="preview-info-aluno">
-                                    <span>Matrícula: 20260001</span>
-                                    <span>Turma: 3º Ano A - EM</span>
+                                    <span id="preview-matricula">Matrícula: —</span>
+                                    <span id="preview-turma">Turma: —</span>
                                 </div>
                             </div>
 
@@ -93,69 +107,29 @@
                                 <thead>
                                     <tr>
                                         <th>Disciplina</th>
-                                        <th>B1</th>
-                                        <th>B2</th>
-                                        <th>B3</th>
+                                        <th>N1</th>
+                                        <th>N2</th>
+                                        <th>N3</th>
                                         <th>Média</th>
                                         <th>Situação</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>Matemática</strong></td>
-                                        <td>8.5</td>
-                                        <td>9.0</td>
-                                        <td>8.0</td>
-                                        <td><strong>8.5</strong></td>
-                                        <td><span class="badge-sit">Aprovado</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Português</strong></td>
-                                        <td>7.0</td>
-                                        <td>8.0</td>
-                                        <td>7.5</td>
-                                        <td><strong>7.5</strong></td>
-                                        <td><span class="badge-sit">Aprovado</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Física</strong></td>
-                                        <td>6.0</td>
-                                        <td>6.5</td>
-                                        <td>7.0</td>
-                                        <td><strong>6.5</strong></td>
-                                        <td><span class="badge-sit">Aprovado</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Química</strong></td>
-                                        <td>5.5</td>
-                                        <td>7.0</td>
-                                        <td>6.0</td>
-                                        <td><strong>6.2</strong></td>
-                                        <td><span class="badge-sit">Aprovado</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>História</strong></td>
-                                        <td>9.0</td>
-                                        <td>8.5</td>
-                                        <td>9.5</td>
-                                        <td><strong>9.0</strong></td>
-                                        <td><span class="badge-sit">Aprovado</span></td>
-                                    </tr>
-                                </tbody>
+                                <tbody id="boletim-registros"></tbody>
                             </table>
 
                             <div class="preview-rodape">
-                                <span>Total de Faltas: <strong>4 Faltas</strong></span>
-                                <span>Frequência Acumulada: <strong>97.5%</strong></span>
+                                <span id="preview-faltas">Total de Faltas: <strong>—</strong></span>
+                                <span id="preview-frequencia">Frequência: <strong>—</strong></span>
                             </div>
                         </div>
 
                         <!-- Ações do Boletim -->
                         <div class="acoes-boletim">
-                            <button class="btn-acao primario">Imprimir Lote</button>
-                            <button class="btn-acao">Exportar PDF</button>
-                            <button class="btn-acao">Enviar por E-mail</button>
+                            <button class="btn-acao primario" type="button">Imprimir Boletim</button>
+                            <button class="btn-acao" type="button">Exportar PDF</button>
+                            <button class="btn-acao" type="button">Enviar por E-mail</button>
                         </div>
+                        <p class="boletim-feedback" id="boletim-feedback" role="status" aria-live="polite"></p>
 
                     </div>
                 </div>
@@ -163,62 +137,17 @@
                 <!-- Coluna da Direita (Histórico Recente) -->
                 <div class="col-direita">
                     <div class="titulo-historico">Histórico Recente</div>
-                    <div class="lista-historico">
-                        
-                        <div class="historico-card">
-                            <div class="card-hist-topo">
-                                <strong>3º Ano A</strong>
-                                <span class="status-hist gerado">Gerado</span>
-                            </div>
-                            <p>3º Bimestre</p>
-                            <div class="card-hist-rodape">
-                                <span>35 Alunos</span>
-                                <span class="data-hist">Gerado em: 31/10/2024</span>
-                            </div>
-                        </div>
-
-                        <div class="historico-card">
-                            <div class="card-hist-topo">
-                                <strong>3º Ano B</strong>
-                                <span class="status-hist gerado">Gerado</span>
-                            </div>
-                            <p>3º Bimestre</p>
-                            <div class="card-hist-rodape">
-                                <span>38 Alunos</span>
-                                <span class="data-hist">Gerado em: 30/10/2024</span>
-                            </div>
-                        </div>
-
-                        <div class="historico-card">
-                            <div class="card-hist-topo">
-                                <strong>2º Ano A</strong>
-                                <span class="status-hist gerado">Gerado</span>
-                            </div>
-                            <p>3º Bimestre</p>
-                            <div class="card-hist-rodape">
-                                <span>32 Alunos</span>
-                                <span class="data-hist">Gerado em: 29/10/2024</span>
-                            </div>
-                        </div>
-
-                        <div class="historico-card">
-                            <div class="card-hist-topo">
-                                <strong>1º Ano A</strong>
-                                <span class="status-hist pendente">Pendente</span>
-                            </div>
-                            <p>3º Bimestre</p>
-                            <div class="card-hist-rodape">
-                                <span>28 Alunos</span>
-                                <span class="data-hist">Gerado em: 29/10/2024</span>
-                            </div>
-                        </div>
-
+                    <div class="lista-historico" id="lista-historico" aria-live="polite">
+                        <p class="boletim-vazio">Nenhum lote foi gerado ainda.</p>
                     </div>
                 </div>
 
             </div>
         </div>
     </div>
+    <script src="../../assets/js/educonnect-backend.js"></script>
+    <script src="../dashboard/controls.js"></script>
+    <script src="boletins.js"></script>
     <script src="../menu-mobile.js" defer></script>
 </body>
 </html>
