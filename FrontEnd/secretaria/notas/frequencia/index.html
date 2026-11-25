@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduConnect - Notas e Frequência</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../dashboard/controls.css">
+    <link rel="stylesheet" href="../../menu-mobile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+
+<body>
+
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="logo">
+            <span class="material-symbols-outlined">
+                school
+            </span>
+            <strong>EduConnect</strong>
+            <span class="tag">SECRETARIA</span>
+        </div>
+        <div class="user">
+            <span class="material-symbols-outlined">
+                notifications
+            </span>
+            <span>Secretaria Principal</span>
+            <div class="avatar"></div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Menu Lateral -->
+        <div class="sidebar">
+            <ul class="menu">
+                <li><a href="../../index.html">Dashboard</a></li>
+                <li><a href="../../usuarios/index.html">Usuários</a></li>
+                <li><a href="../../turmas/index.html">Turmas e Salas</a></li>
+                <li><a href="../../disciplinas/index.html">Disciplinas</a></li>
+                <li class="ativo"><a href="../../notas/index.html">Notas e Frequência</a></li>
+                <li><a href="../../ocorrencias/index.html">Ocorrências</a></li>
+                <li><a href="../../comunicados/index.html">Comunicados</a></li>
+                <li><a href="../../boletins/index.html">Boletins</a></li>
+                <li><a href="../../auditoria/index.html">Auditoria</a></li>
+            </ul>
+            <div class="sair">
+                <a href="../../../index.html"><span class="material-symbols-outlined">
+                        logout
+                    </span> sair</a>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="content">
+
+            <h1>Notas e Frequência</h1>
+
+            <div class="grid">
+
+                <!-- Coluna da Esquerda (Principal) -->
+                <div class="col-esquerda">
+
+                    <div class="painel">
+
+                        <!-- Filtros -->
+                        <div class="filtros-linha">
+                            <div class="seletores">
+                                <select>
+                                    <option>Turma: 3º Ano A</option>
+                                </select>
+                                <select>
+                                    <option>Disciplina: Matemática</option>
+                                </select>
+                                <select>
+                                    <option>Bimestre: 1º Bimestre</option>
+                                </select>
+                            </div>
+                            <button class="btn-filtrar">Filtrar</button>
+                        </div>
+
+                        <!-- Abas -->
+                        <div class="abas" role="tablist" aria-label="Visualização acadêmica">
+                            <a href="../index.html" class="aba" data-tab="notas" aria-selected="false">Notas</a>
+                            <a href="index.html" class="aba ativa" data-tab="frequencia" aria-selected="true">Frequência</a>
+                        </div>
+
+                        <!-- Tabela de Frequência -->
+                        <table class="tabela">
+                            <thead>
+                                <tr>
+                                    <th>Matrícula</th>
+                                    <th>Nome do Aluno</th>
+                                    <th>Aulas Dadas</th>
+                                    <th>Presenças</th>
+                                    <th>Faltas</th>
+                                    <th>% Frequência</th>
+                                    <th>Situação</th>
+                                    <th>Fechamento</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>20260001</strong></td>
+                                    <td>Ana Exemplo</td>
+                                    <td>40</td>
+                                    <td>38</td>
+                                    <td>2</td>
+                                    <td><strong>95%</strong></td>
+                                    <td><span class="situacao aprovado">Regular</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>20260002</strong></td>
+                                    <td>Bruno Exemplo</td>
+                                    <td>40</td>
+                                    <td>31</td>
+                                    <td>9</td>
+                                    <td><strong>77.5%</strong></td>
+                                    <td><span class="situacao recuperacao">Atenção</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Rodapé da Tabela / Resumo -->
+                        <div class="tabela-footer">
+                            <span>Frequência Média da Turma: <strong>85%</strong></span>
+                            <span>Alunos em Risco (&lt; 75%): <strong>1</strong></span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="../../../assets/js/educonnect-backend.js"></script>
+    <script src="../../dashboard/controls.js"></script>
+    <script src="../../menu-mobile.js" defer></script>
+    <script src="../notas-frequencia.js"></script>
+</body>
+
+</html>

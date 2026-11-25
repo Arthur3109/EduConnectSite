@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduConnect - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard/controls.css">
+    <link rel="stylesheet" href="menu-mobile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+
+<body>
+
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="logo">
+            <span class="material-symbols-outlined">
+                school
+            </span>
+            <strong>EduConnect</strong>
+            <span class="tag">SECRETARIA</span>
+        </div>
+        <div class="user">
+            <button class="header-icon-button" id="notifications-button" type="button"
+                aria-label="Abrir informações importantes" aria-haspopup="dialog">
+                <span class="material-symbols-outlined" aria-hidden="true">notifications</span>
+                <span class="notification-count" id="notification-count" aria-live="polite">0</span>
+            </button>
+            <span>Secretaria Principal</span>
+            <button class="header-icon-button" id="settings-button" type="button"
+                aria-label="Configurações da dashboard" aria-haspopup="dialog">
+                <span class="material-symbols-outlined" aria-hidden="true">settings</span>
+            </button>
+            <div class="avatar"></div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Menu Lateral -->
+        <div class="sidebar">
+            <ul class="menu">
+                <li class="ativo"><a href="index.html">Dashboard</a></li>
+                <li><a href="usuarios/index.html">Usuários</a></li>
+                <li><a href="turmas/index.html">Turmas e Salas</a></li>
+                <li><a href="disciplinas/index.html">Disciplinas</a></li>
+                <li><a href="notas/index.html">Notas e Frequência</a></li>
+                <li><a href="ocorrencias/index.html">Ocorrências</a></li>
+                <li><a href="comunicados/index.html">Comunicados</a></li>
+                <li><a href="boletins/index.html">Boletins</a></li>
+                <li><a href="auditoria/index.html">Auditoria</a></li>
+            </ul>
+            <div class="sair">
+                <a href="../index.html"><span class="material-symbols-outlined">
+                        logout
+                    </span> sair
+                </a>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="content">
+            <div class="dashboard-heading">
+                <h1>Dashboard — Visão Geral</h1>
+            </div>
+
+            <div class="grid">
+
+                <!-- Coluna da Esquerda -->
+                <div class="col-esquerda">
+
+                    <!-- Cards -->
+                    <div class="cards">
+                        <div class="card">
+                            <h2>TOTAL DE ALUNOS</h2>
+                            <h1>1.247</h1>
+                            <span class="material-symbols-outlined">
+                                group
+                            </span>
+                        </div>
+                        <div class="card">
+                            <h2>PROFESSORES ATIVOS</h2>
+                            <h1>86</h1>
+                            <span class="material-symbols-outlined">
+                                person_check
+                            </span>
+                        </div>
+                        <div class="card">
+                            <h2>TURMAS ABERTAS</h2>
+                            <h1>42</h1>
+                            <span class="material-symbols-outlined">
+                                door_front
+                            </span>
+                        </div>
+                        <div class="card">
+                            <h2>OCORRÊNCIAS PENDENTES</h2>
+                            <h1>15</h1>
+                            <span class="material-symbols-outlined">
+                                warning
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Tabela -->
+                    <h2>Atividades Recentes (Últimos 30 dias)</h2>
+                    <table class="tabela">
+                        <thead>
+                            <tr>
+                                <th>Data / Hora</th>
+                                <th>Descrição da Atividade</th>
+                                <th>Responsável</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="4">Nenhuma atividade registrada.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- O sino abre avisos atuais produzidos pelos registros locais da aplicação. -->
+    <dialog class="dashboard-dialog" id="notifications-dialog" aria-labelledby="notifications-title">
+        <section class="dashboard-dialog__content">
+            <div class="dashboard-dialog__heading">
+                <div>
+                    <h2 id="notifications-title">Informações importantes</h2>
+                    <p>Atestados, ocorrências e comunicados que precisam da atenção da Secretaria.</p>
+                </div>
+                <button class="dashboard-dialog__close" type="button" data-close-dashboard-dialog
+                    aria-label="Fechar informações">×</button>
+            </div>
+            <div id="dashboard-alerts" class="dashboard-alerts" aria-live="polite">
+                <p class="dashboard-empty">Carregando informações...</p>
+            </div>
+        </section>
+    </dialog>
+
+    <!-- A opção escolhida é salva separadamente das preferências de outros módulos. -->
+    <dialog class="dashboard-dialog dashboard-dialog--settings" id="settings-dialog"
+        aria-labelledby="settings-title">
+        <form class="dashboard-dialog__content" method="dialog">
+            <div class="dashboard-dialog__heading">
+                <div>
+                    <h2 id="settings-title">Personalizar dashboard</h2>
+                    <p>Escolha como deseja visualizar as páginas da Secretaria neste navegador.</p>
+                </div>
+                <button class="dashboard-dialog__close" type="button" data-close-dashboard-dialog
+                    aria-label="Fechar configurações">×</button>
+            </div>
+            <label class="theme-setting">
+                <span>
+                    <strong>Modo escuro</strong>
+                    <span>Aplica o tema escuro em todas as páginas da Secretaria.</span>
+                </span>
+                <input id="dashboard-theme-toggle" type="checkbox">
+            </label>
+            <div class="dashboard-dialog__actions">
+                <button class="dashboard-dialog__button" type="submit">Concluir</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script src="../assets/js/educonnect-backend.js"></script>
+    <script src="dashboard/controls.js"></script>
+    <script src="dashboard/dashboard.js"></script>
+    <script src="menu-mobile.js" defer></script>
+</body>
+
+</html>

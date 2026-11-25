@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduConnect - Turmas e Salas</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../dashboard/controls.css">
+    <link rel="stylesheet" href="../menu-mobile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+
+<body>
+
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="logo">
+            <span class="material-symbols-outlined">
+                school
+            </span>
+            <strong>EduConnect</strong>
+            <span class="tag">SECRETARIA</span>
+        </div>
+        <div class="user">
+            <span class="material-symbols-outlined">
+                notifications
+            </span>
+            <span>Secretaria Principal</span>
+            <div class="avatar"></div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Menu Lateral -->
+        <div class="sidebar">
+            <ul class="menu">
+                <li><a href="../index.html">Dashboard</a></li>
+                <li><a href="../usuarios/index.html">Usuários</a></li>
+                <li class="ativo"><a href="../turmas/index.html">Turmas e Salas</a></li>
+                <li><a href="../disciplinas/index.html">Disciplinas</a></li>
+                <li><a href="../notas/index.html">Notas e Frequência</a></li>
+                <li><a href="../ocorrencias/index.html">Ocorrências</a></li>
+                <li><a href="../comunicados/index.html">Comunicados</a></li>
+                <li><a href="../boletins/index.html">Boletins</a></li>
+                <li><a href="../auditoria/index.html">Auditoria</a></li>
+            </ul>
+            <div class="sair">
+                <a href="../../index.html"><span class="material-symbols-outlined">
+                        logout
+                    </span> sair</a>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="content">
+
+            <div class="cabecalho-pagina">
+                <h1>Turmas e Salas</h1>
+            </div>
+
+            <div class="grid">
+
+                <!-- Coluna da Esquerda (Turmas Ativas) -->
+                <div class="col-esquerda">
+
+                    <div class="painel">
+
+                        <div class="painel-topo">
+                            <h2>Turmas Ativas</h2>
+                            <button class="btn-novo" type="button">+ Nova Turma</button>
+                        </div>
+
+                        <!-- Tabela -->
+                        <table class="tabela">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Nome da Turma</th>
+                                    <th>Série</th>
+                                    <th>Turno</th>
+                                    <th>Sala</th>
+                                    <th>Qtd Alunos</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="turmasTabelaBody" aria-live="polite">
+                                <tr>
+                                    <td><strong>3A-EM</strong></td>
+                                    <td>3º Ano A</td>
+                                    <td>3º ano</td>
+                                    <td>Matutino</td>
+                                    <td><strong>Sala 101</strong></td>
+                                    <td>2 / 40</td>
+                                    <td>
+                                        <button class="btn">Gerenciar</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>6A</strong></td>
+                                    <td>6º Ano A</td>
+                                    <td>6º ano</td>
+                                    <td>Matutino</td>
+                                    <td><strong>Sala 102</strong></td>
+                                    <td>1 / 40</td>
+                                    <td>
+                                        <button class="btn">Gerenciar</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>6B</strong></td>
+                                    <td>6º Ano B</td>
+                                    <td>6º ano</td>
+                                    <td>Vespertino</td>
+                                    <td><strong>Sala 102</strong></td>
+                                    <td>0 / 40</td>
+                                    <td><button class="btn">Gerenciar</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>7A</strong></td>
+                                    <td>7º Ano A</td>
+                                    <td>7º ano</td>
+                                    <td>Matutino</td>
+                                    <td><strong>Sala 103</strong></td>
+                                    <td>0 / 35</td>
+                                    <td><button class="btn">Gerenciar</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>7D</strong></td>
+                                    <td>7º Ano D</td>
+                                    <td>7º ano</td>
+                                    <td>Vespertino</td>
+                                    <td><strong>Sala 103</strong></td>
+                                    <td>0 / 35</td>
+                                    <td><button class="btn">Gerenciar</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>8C</strong></td>
+                                    <td>8º Ano C</td>
+                                    <td>8º ano</td>
+                                    <td>Matutino</td>
+                                    <td><strong>Sala 104</strong></td>
+                                    <td>0 / 30</td>
+                                    <td><button class="btn">Gerenciar</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <!-- Coluna da Direita (Salas Disponíveis) -->
+                <div class="col-direita">
+                    <div class="titulo-salas">Salas Disponíveis</div>
+                    <div class="lista-salas" id="salasCards" aria-live="polite">
+
+                        <div class="sala-card">
+                            <span class="material-symbols-outlined sala-icone">
+                                door_open
+                            </span>
+                            <div class="sala-info">
+                                <strong>Sala 101</strong>
+                                <p>Capacidade: 40 alunos</p>
+                                <span class="status-ocupada">● Ocupada (3A-EM)</span>
+                            </div>
+                        </div>
+
+                        <div class="sala-card">
+                            <span class="material-symbols-outlined sala-icone">
+                                door_open
+                            </span>
+                            <div class="sala-info">
+                                <strong>Sala 102</strong>
+                                <p>Capacidade: 40 alunos</p>
+                                <span class="status-ocupada">● Ocupada (6A, 6B)</span>
+                            </div>
+                        </div>
+
+                        <div class="sala-card">
+                            <span class="material-symbols-outlined sala-icone">
+                                door_open
+                            </span>
+                            <div class="sala-info">
+                                <strong>Sala 103</strong>
+                                <p>Capacidade: 35 alunos</p>
+                                <span class="status-ocupada">● Ocupada (7A, 7D)</span>
+                            </div>
+                        </div>
+
+                        <div class="sala-card">
+                            <span class="material-symbols-outlined sala-icone">
+                                door_open
+                            </span>
+                            <div class="sala-info">
+                                <strong>Sala 104</strong>
+                                <p>Capacidade: 30 alunos</p>
+                                <span class="status-ocupada">● Ocupada (8C)</span>
+                            </div>
+                        </div>
+
+                        <div class="sala-card">
+                            <span class="material-symbols-outlined sala-icone">
+                                door_open
+                            </span>
+                            <div class="sala-info">
+                                <strong>Laboratório A</strong>
+                                <p>Capacidade: 30 computadores</p>
+                                <span class="status-livre">● Livre</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="../../assets/js/educonnect-backend.js"></script>
+    <script src="../dashboard/controls.js"></script>
+    <script src="turmas-salas.js" defer></script>
+    <script src="../menu-mobile.js" defer></script>
+</body>
+
+</html>

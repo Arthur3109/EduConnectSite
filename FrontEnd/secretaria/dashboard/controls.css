@@ -1,0 +1,542 @@
+.dashboard-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 25px;
+}
+
+.dashboard-heading h1 {
+    margin-bottom: 0;
+}
+
+@media (max-width: 700px) {
+    .dashboard-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+.header-icon-button {
+    position: relative;
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border: 1px solid rgba(255, 253, 247, 0.35);
+    border-radius: 6px;
+    background: transparent;
+    color: #fffdf7;
+    cursor: pointer;
+}
+
+.header-icon-button:hover,
+.header-icon-button:focus-visible {
+    background: rgba(255, 253, 247, 0.12);
+}
+
+.header-icon-button:focus-visible,
+.dashboard-dialog__close:focus-visible,
+.dashboard-dialog__button:focus-visible,
+.theme-setting input:focus-visible {
+    outline: 2px solid #cccccc;
+    outline-offset: 2px;
+}
+
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: grid;
+    min-width: 18px;
+    height: 18px;
+    place-items: center;
+    padding: 0 4px;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    background: #fffdf7;
+    color: #000000;
+    font-size: 0.68rem;
+    line-height: 1;
+}
+
+body {
+    --dashboard-background: var(--bg-body, #fffdf7);
+    --dashboard-surface: var(--branco, #fffdf7);
+    --dashboard-text: var(--texto-escuro, #000000);
+    --dashboard-muted: var(--texto-cinza, #666666);
+    --dashboard-border: var(--borda, #cccccc);
+}
+
+body.secretaria-dark {
+    --dashboard-background: #18181a;
+    --dashboard-surface: #252527;
+    --dashboard-text: #fffdf7;
+    --dashboard-muted: #b0b0b2;
+    --dashboard-border: #545456;
+    --bg-body: #18181a;
+    --branco: #252527;
+    --cor-principal: #fffdf7;
+    --texto-escuro: #fffdf7;
+    --texto-cinza: #b0b0b2;
+    --borda: #545456;
+    background: var(--dashboard-background);
+    color: var(--dashboard-text);
+    color-scheme: dark;
+}
+
+body.secretaria-dark .content,
+body.secretaria-dark .content h1,
+body.secretaria-dark .content h2,
+body.secretaria-dark .content h3,
+body.secretaria-dark .content p,
+body.secretaria-dark .content label,
+body.secretaria-dark .content td,
+body.secretaria-dark .content th {
+    color: var(--dashboard-text);
+}
+
+body.secretaria-dark .painel,
+body.secretaria-dark .card,
+body.secretaria-dark .aviso,
+body.secretaria-dark .tabela,
+body.secretaria-dark .tabela-preview,
+body.secretaria-dark .comunicado-card,
+body.secretaria-dark .sala-card,
+body.secretaria-dark .historico-card,
+body.secretaria-dark .boletim-preview,
+body.secretaria-dark .modal-conteudo,
+body.secretaria-dark .modal-content,
+body.secretaria-dark .filtros-container,
+body.secretaria-dark .painel-filtros,
+body.secretaria-dark .titulo-historico,
+body.secretaria-dark .filtros-linha,
+body.secretaria-dark .filtros-linha-2,
+body.secretaria-dark .tabela-footer {
+    border-color: var(--dashboard-border);
+    background-color: var(--dashboard-surface);
+    color: var(--dashboard-text);
+}
+
+body.secretaria-dark .card h2,
+body.secretaria-dark .aviso p,
+body.secretaria-dark .texto-secundario,
+body.secretaria-dark .data-hist {
+    color: var(--dashboard-muted);
+}
+
+body.secretaria-dark .card h1,
+body.secretaria-dark .aviso strong {
+    color: var(--dashboard-text);
+}
+
+body.secretaria-dark .card span {
+    background-color: #3b3b3d;
+    color: #fffdf7;
+}
+
+body.secretaria-dark table,
+body.secretaria-dark table td,
+body.secretaria-dark table th {
+    border-color: var(--dashboard-border);
+}
+
+body.secretaria-dark table,
+body.secretaria-dark table tbody,
+body.secretaria-dark table tr,
+body.secretaria-dark table td {
+    background-color: var(--dashboard-surface);
+}
+
+body.secretaria-dark .concluido {
+    background-color: #3b3b3d;
+    color: #fffdf7;
+}
+
+body.secretaria-dark input:not([type="checkbox"]),
+body.secretaria-dark select,
+body.secretaria-dark textarea {
+    border-color: var(--dashboard-border);
+    background-color: var(--dashboard-surface);
+    color: var(--dashboard-text);
+    color-scheme: dark;
+}
+
+.dashboard-dialog {
+    width: min(100% - 32px, 620px);
+    max-height: min(90vh, 760px);
+    margin: auto;
+    padding: 0;
+    overflow: auto;
+    border: 1px solid var(--dashboard-border);
+    border-radius: 8px;
+    background: var(--dashboard-surface);
+    color: var(--dashboard-text);
+}
+
+.dashboard-dialog::backdrop {
+    background: rgb(0 0 0 / 55%);
+}
+
+.dashboard-dialog__content {
+    display: grid;
+    gap: 18px;
+    padding: clamp(20px, 4vw, 30px);
+}
+
+.dashboard-dialog__heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.dashboard-dialog__heading h2 {
+    margin: 0 0 5px;
+    color: var(--dashboard-text);
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.dashboard-dialog__heading p,
+.dashboard-alert__description {
+    color: var(--dashboard-muted);
+    font-size: 0.88rem;
+    line-height: 1.6;
+}
+
+.dashboard-dialog__close {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    place-items: center;
+    border: 1px solid var(--dashboard-border);
+    border-radius: 50%;
+    background: var(--dashboard-surface);
+    color: var(--dashboard-text);
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.dashboard-alerts {
+    display: grid;
+    gap: 12px;
+}
+
+.dashboard-alert,
+.dashboard-empty {
+    padding: 16px;
+    border: 1px solid var(--dashboard-border);
+    border-radius: 6px;
+    background: var(--dashboard-surface);
+}
+
+.dashboard-alert__title {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--dashboard-text);
+    font-size: 0.95rem;
+}
+
+.dashboard-alert__description {
+    margin: 0;
+}
+
+.dashboard-alert__date {
+    display: block;
+    margin-top: 8px;
+    color: var(--dashboard-muted);
+    font-size: 0.78rem;
+}
+
+.dashboard-empty {
+    color: var(--dashboard-muted);
+    text-align: center;
+}
+
+.theme-setting {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 16px 0;
+    border-top: 1px solid var(--dashboard-border);
+    border-bottom: 1px solid var(--dashboard-border);
+    cursor: pointer;
+}
+
+.theme-setting > span {
+    display: grid;
+    gap: 4px;
+}
+
+.theme-setting strong {
+    color: var(--dashboard-text);
+}
+
+.theme-setting > span > span {
+    color: var(--dashboard-muted);
+    font-size: 0.85rem;
+}
+
+.theme-setting input {
+    width: 20px;
+    height: 20px;
+    accent-color: #3b3b3d;
+    cursor: pointer;
+}
+
+.dashboard-dialog__actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.dashboard-dialog__button {
+    min-height: 40px;
+    padding: 9px 16px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    background: #000000;
+    color: #fffdf7;
+    font: inherit;
+    cursor: pointer;
+}
+
+.dashboard-dialog__button:hover {
+    background: #3b3b3d;
+    border-color: #3b3b3d;
+}
+
+/* Cobertura compartilhada para componentes com classes próprias em todas as páginas da Secretaria. */
+body.secretaria-dark .content,
+body.secretaria-dark .content h1,
+body.secretaria-dark .content h2,
+body.secretaria-dark .content h3,
+body.secretaria-dark .content h4,
+body.secretaria-dark .painel-topo h2,
+body.secretaria-dark .cabecalho-pagina h1,
+body.secretaria-dark .card-titulo-area h2,
+body.secretaria-dark .card-info-topo,
+body.secretaria-dark .sala-info strong,
+body.secretaria-dark .modal-cabecalho h2,
+body.secretaria-dark .turma-modal-header h2,
+body.secretaria-dark .disciplina-modal-header h2,
+body.secretaria-dark .comunicado-form h2,
+body.secretaria-dark .ocorrencia-dialog h2,
+body.secretaria-dark .detalhes-ocorrencia h2,
+body.secretaria-dark .detalhes-ocorrencia h3,
+body.secretaria-dark .historial-h2 {
+    color: var(--dashboard-text);
+}
+
+body.secretaria-dark .painel,
+body.secretaria-dark .filtros-container,
+body.secretaria-dark .painel-filtros,
+body.secretaria-dark .lista-salas,
+body.secretaria-dark .lista-comunicados,
+body.secretaria-dark .comunicado-card,
+body.secretaria-dark .comunicado-dialog,
+body.secretaria-dark .comunicado-form,
+body.secretaria-dark .comunicado-dialog__mensagem,
+body.secretaria-dark .destinatarios-opcoes,
+body.secretaria-dark .ocorrencia-dialog,
+body.secretaria-dark .nova-ocorrencia-form,
+body.secretaria-dark .detalhes-ocorrencia,
+body.secretaria-dark .detalhes-ocorrencia__descricao,
+body.secretaria-dark .modal-usuario,
+body.secretaria-dark .modal-conteudo,
+body.secretaria-dark .modal-cabecalho,
+body.secretaria-dark .modal-turma,
+body.secretaria-dark .turma-modal-content,
+body.secretaria-dark .turma-modal-header,
+body.secretaria-dark .modal-disciplina,
+body.secretaria-dark .disciplina-modal-content,
+body.secretaria-dark .disciplina-modal-header,
+body.secretaria-dark .sala-card,
+body.secretaria-dark .regra,
+body.secretaria-dark .regras,
+body.secretaria-dark .tabela-footer,
+body.secretaria-dark .barra-busca,
+body.secretaria-dark .historico-card,
+body.secretaria-dark .boletim-preview,
+body.secretaria-dark .painel-topo,
+body.secretaria-dark .filtros-linha,
+body.secretaria-dark .filtros-linha-2,
+body.secretaria-dark .titulo-historico {
+    border-color: var(--dashboard-border);
+    background: var(--dashboard-surface);
+    color: var(--dashboard-text);
+}
+
+body.secretaria-dark .sala-icone,
+body.secretaria-dark .comunicado-card--concluido,
+body.secretaria-dark .card span {
+    background: #3b3b3d;
+    color: var(--dashboard-text);
+}
+
+body.secretaria-dark .barra-busca input,
+body.secretaria-dark input,
+body.secretaria-dark select,
+body.secretaria-dark textarea,
+body.secretaria-dark .campo-modal input,
+body.secretaria-dark .campo-modal select,
+body.secretaria-dark .turma-field input,
+body.secretaria-dark .turma-field select,
+body.secretaria-dark .disciplina-field input,
+body.secretaria-dark .disciplina-field select,
+body.secretaria-dark .comunicado-form input,
+body.secretaria-dark .comunicado-form select,
+body.secretaria-dark .comunicado-form textarea,
+body.secretaria-dark .nova-ocorrencia-form input,
+body.secretaria-dark .nova-ocorrencia-form select,
+body.secretaria-dark .nova-ocorrencia-form textarea {
+    border-color: var(--dashboard-border);
+    background: #252527;
+    color: var(--dashboard-text);
+    color-scheme: dark;
+}
+
+body.secretaria-dark input:disabled,
+body.secretaria-dark input[readonly],
+body.secretaria-dark select:disabled,
+body.secretaria-dark textarea:disabled,
+body.secretaria-dark .campo-modal :disabled,
+body.secretaria-dark .turma-field input[readonly] {
+    background: #303033;
+    color: #c3c3c5;
+}
+
+body.secretaria-dark table,
+body.secretaria-dark table tbody,
+body.secretaria-dark table tr,
+body.secretaria-dark table td,
+body.secretaria-dark table th {
+    border-color: var(--dashboard-border);
+}
+
+body.secretaria-dark table tbody,
+body.secretaria-dark table tr,
+body.secretaria-dark table td {
+    background: var(--dashboard-surface);
+}
+
+body.secretaria-dark table td,
+body.secretaria-dark table th,
+body.secretaria-dark .tabela td,
+body.secretaria-dark .tabela th,
+body.secretaria-dark .tabela-preview td,
+body.secretaria-dark .tabela-preview th {
+    color: var(--dashboard-text);
+}
+
+body.secretaria-dark table thead,
+body.secretaria-dark .tabela thead,
+body.secretaria-dark .tabela-preview thead,
+body.secretaria-dark .titulo-regras,
+body.secretaria-dark .titulo-salas {
+    background: #000000;
+    color: #fffdf7;
+}
+
+body.secretaria-dark .btn,
+body.secretaria-dark .btn-acao,
+body.secretaria-dark .btn-pag,
+body.secretaria-dark .btn-inspecionar,
+body.secretaria-dark .btn-cancelar,
+body.secretaria-dark .btn-modal-cancel,
+body.secretaria-dark .btn-disciplina-cancel,
+body.secretaria-dark .comunicado-dialog__acoes .btn-secundario,
+body.secretaria-dark .nova-ocorrencia-form button[data-cancel],
+body.secretaria-dark .modal-fechar,
+body.secretaria-dark .turma-modal-close,
+body.secretaria-dark .disciplina-modal-close {
+    border-color: var(--dashboard-border);
+    background: var(--dashboard-surface);
+    color: var(--dashboard-text);
+}
+
+body.secretaria-dark .btn-novo,
+body.secretaria-dark .btn-buscar,
+body.secretaria-dark .btn-filtrar,
+body.secretaria-dark .btn-salvar,
+body.secretaria-dark .btn-modal-save,
+body.secretaria-dark .btn-disciplina-save,
+body.secretaria-dark .btn-pag.ativa,
+body.secretaria-dark .status-inativo,
+body.secretaria-dark .situacao.reprovado,
+body.secretaria-dark .status.aberta {
+    border-color: #3b3b3d;
+    background: #3b3b3d;
+    color: #fffdf7;
+}
+
+body.secretaria-dark .btn-novo:hover,
+body.secretaria-dark .btn-buscar:hover,
+body.secretaria-dark .btn-filtrar:hover,
+body.secretaria-dark .btn-salvar:hover,
+body.secretaria-dark .btn-modal-save:hover,
+body.secretaria-dark .btn-disciplina-save:hover,
+body.secretaria-dark .btn:hover,
+body.secretaria-dark .btn-acao:hover,
+body.secretaria-dark .btn-pag:hover,
+body.secretaria-dark .btn-inspecionar:hover {
+    background: #454548;
+}
+
+body.secretaria-dark .concluido,
+body.secretaria-dark .status-ativo,
+body.secretaria-dark .situacao.aprovado,
+body.secretaria-dark .situacao.recuperacao,
+body.secretaria-dark .fechamento-status,
+body.secretaria-dark .fechamento-status.em-andamento,
+body.secretaria-dark .status.resolvida,
+body.secretaria-dark .badge-outro,
+body.secretaria-dark .badge.informativo,
+body.secretaria-dark .aviso.erro {
+    border-color: var(--dashboard-border);
+    background: #3b3b3d;
+    color: #fffdf7;
+}
+
+body.secretaria-dark .texto-secundario,
+body.secretaria-dark .data-hist,
+body.secretaria-dark .data-envio,
+body.secretaria-dark .sala-info p,
+body.secretaria-dark .modal-tipo,
+body.secretaria-dark .modal-identificador,
+body.secretaria-dark .turma-modal-eyebrow,
+body.secretaria-dark .disciplina-modal-eyebrow,
+body.secretaria-dark .disciplina-field small,
+body.secretaria-dark .turma-field small,
+body.secretaria-dark .detalhes-ocorrencia__campos dt,
+body.secretaria-dark .sem-turmas,
+body.secretaria-dark .sem-resultados,
+body.secretaria-dark .aba,
+body.secretaria-dark .status-envio.concluido {
+    color: var(--dashboard-muted);
+}
+
+body.secretaria-dark .aba.ativa {
+    border-bottom-color: var(--dashboard-text);
+    color: var(--dashboard-text);
+}
+
+body.secretaria-dark dialog,
+body.secretaria-dark dialog form,
+body.secretaria-dark dialog section {
+    background: var(--dashboard-surface);
+    color: var(--dashboard-text);
+}
+
+body.secretaria-dark dialog::backdrop {
+    background: rgb(0 0 0 / 72%);
+}
+
+@media (max-width: 600px) {
+    .user {
+        align-items: center;
+    }
+}

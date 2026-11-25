@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lançamento de Notas</title>
+    <link rel="stylesheet" href="notas.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_back_ios" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+
+<body data-class-name="7º Ano D">
+
+    <div class="container">
+        <div class="top">    
+            <div class="logout">
+                <a href="../menu.html">
+                    <span class="material-symbols-outlined">
+                        arrow_back_ios
+                    </span>
+                    Sair
+                </a>
+            </div>
+            
+            <div class="darkmode">
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+                    <span class="material-symbols-outlined toggle-icon moon">
+                        light_mode
+                    </span>
+                    <span class="material-symbols-outlined toggle-icon sun">
+                        dark_mode
+                    </span>
+                    <span class="toggle-ball"></span>
+                </button>
+            </div>
+        </div>
+        <h1>Lançamento de Notas - 2º Bimestre - Turma 7D</h1>
+
+        <div class="warning">
+            <p><strong>Atenção:</strong> As notas devem ser lançadas até 30/09</p>
+        </div>
+
+        <table class="darkTable">
+            <thead>
+                <tr>
+                    <th>NOME DO ALUNO</th>
+                    <th>NOTA 1</th>
+                    <th>NOTA 2</th>
+                    <th>NOTA 3</th>
+                    <th>MÉDIA</th>
+                    <th>FREQUÊNCIA %</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <p class="warning">Não há alunos matriculados nesta turma no banco de dados.</p>
+    </div>
+
+    <script src="../../assets/js/educonnect-backend.js"></script>
+    <script src="../notas.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduConnect - Gestão de Usuários</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../dashboard/controls.css">
+    <link rel="stylesheet" href="../../menu-mobile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+
+<body>
+
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="logo">
+            <span class="material-symbols-outlined">
+                school
+            </span>
+            <strong>EduConnect</strong>
+            <span class="tag">SECRETARIA</span>
+        </div>
+        <div class="user">
+            <span class="material-symbols-outlined">
+                notifications
+            </span>
+            <span>Secretaria Principal</span>
+            <div class="avatar"></div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Menu Lateral -->
+        <div class="sidebar">
+            <ul class="menu">
+                <li><a href="../../index.html">Dashboard</a></li>
+                <li class="ativo"><a href="../../usuarios/index.html">Usuários</a></li>
+                <li><a href="../../turmas/index.html">Turmas e Salas</a></li>
+                <li><a href="../../disciplinas/index.html">Disciplinas</a></li>
+                <li><a href="../../notas/index.html">Notas e Frequência</a></li>
+                <li><a href="../../ocorrencias/index.html">Ocorrências</a></li>
+                <li><a href="../../comunicados/index.html">Comunicados</a></li>
+                <li><a href="../../boletins/index.html">Boletins</a></li>
+                <li><a href="../../auditoria/index.html">Auditoria</a></li>
+            </ul>
+            <div class="sair">
+                <a href="../../../index.html"><span class="material-symbols-outlined">
+                        logout
+                    </span> sair</a>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="content">
+
+            <div class="cabecalho-pagina">
+                <h1>Gestão de Usuários</h1>
+                <button class="btn-novo" type="button">+ Novo Profissional</button>
+            </div>
+
+            <div class="grid">
+
+                <!-- Coluna da Esquerda (Principal) -->
+                <div class="col-esquerda">
+
+                    <div class="painel">
+
+                        <!-- Abas com Menu de Navegação -->
+                        <div class="abas">
+                            <a href="../index.html" class="aba" data-category="alunos">Alunos</a>
+                            <a href="../professor/index.html" class="aba" data-category="professores">Professores</a>
+                            <a href="../profissionais/index.html" class="aba ativa" data-category="profissionais" aria-current="page">Profissionais</a>
+                        </div>
+
+                        <!-- Filtros e Busca -->
+                        <div class="filtros-container">
+                            <div class="barra-busca">
+                                <span class="material-symbols-outlined">
+                                    search
+                                </span>
+                                <input type="search" placeholder="Buscar profissional por nome, ID, cargo ou CPF...">
+                                <button class="btn-buscar" type="button">Buscar</button>
+                            </div>
+                            <div class="seletores">
+                                <select aria-label="Filtrar por cargo">
+                                    <option>Cargo: Todos</option>
+                                </select>
+                                <select aria-label="Filtrar por departamento">
+                                    <option>Departamento: Todos</option>
+                                </select>
+                                <select aria-label="Filtrar por status">
+                                    <option>Status: Todos</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Tabela de Profissionais -->
+                        <table class="tabela" id="tabela-usuarios">
+                            <thead>
+                                <tr>
+                                    <th>ID / Registro</th>
+                                    <th>Nome Completo</th>
+                                    <th>Cargo</th>
+                                    <th>Departamento</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="corpo-tabela-usuarios" aria-live="polite">
+                                <tr>
+                                    <td><strong>EMP2026001</strong></td>
+                                    <td>Clara Exemplo</td>
+                                    <td>Secretária</td>
+                                    <td>Secretaria escolar</td>
+                                    <td>
+                                        <div class="status-ativo">Ativo</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                        <button class="btn-acao">
+                                            <span class="material-symbols-outlined">visibility</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Paginação -->
+                        <div class="paginacao" id="paginacao-usuarios" aria-label="Paginação de usuários">
+                            <button class="btn-pag">&lt;</button>
+                            <button class="btn-pag ativa">1</button>
+                            <button class="btn-pag">2</button>
+                            <span>...</span>
+                            <button class="btn-pag">5</button>
+                            <button class="btn-pag">&gt;</button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="../../../assets/js/educonnect-backend.js"></script>
+    <script src="../../dashboard/controls.js"></script>
+    <script src="../../menu-mobile.js" defer></script>
+    <script src="../usuarios.js" defer></script>
+</body>
+
+</html>

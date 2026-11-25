@@ -1,0 +1,488 @@
+/* Ajustes específicos do Professor sobre a folha oficial da Secretaria. */
+
+.header-theme-button {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border: 1px solid rgba(255, 253, 247, 0.35);
+    border-radius: 6px;
+    background: transparent;
+    color: #fffdf7;
+    cursor: pointer;
+}
+
+.header-theme-button:hover,
+.header-theme-button:focus-visible {
+    background: rgba(255, 253, 247, 0.12);
+}
+
+.header-theme-button:focus-visible {
+    outline: 2px solid #cccccc;
+    outline-offset: 2px;
+}
+
+body.professor-dark {
+    --bg-body: #18181a;
+    --branco: #252527;
+    --cor-principal: #fffdf7;
+    --texto-escuro: #fffdf7;
+    --texto-cinza: #b0b0b2;
+    --borda: #545456;
+    background: #18181a;
+    color: #fffdf7;
+    color-scheme: dark;
+}
+
+body.professor-dark .header,
+body.professor-dark .sidebar {
+    --branco: #fffdf7;
+}
+
+body.professor-dark .menu li a,
+body.professor-dark .menu-action {
+    color: #d1d1d1;
+}
+
+body.professor-dark .menu li.ativo a,
+body.professor-dark .menu li a:hover,
+body.professor-dark .menu-action:hover,
+body.professor-dark .menu-action:focus-visible {
+    color: #fffdf7;
+}
+
+body.professor-dark .header-theme-button {
+    flex: 0 0 38px;
+}
+
+body.professor-dark .card,
+body.professor-dark .teacher-communication,
+body.professor-dark .empty-state,
+body.professor-dark .teacher-dialog,
+body.professor-dark .teacher-dialog__form,
+body.professor-dark .dialog-heading,
+body.professor-dark .icon-button,
+body.professor-dark .table-responsive {
+    border-color: #545456;
+    background: #252527;
+    color: #fffdf7;
+}
+
+body.professor-dark .form-field input,
+body.professor-dark .form-field select,
+body.professor-dark .form-field textarea {
+    border-color: #545456;
+    background: #252527;
+    color: #fffdf7;
+    color-scheme: dark;
+}
+
+body.professor-dark .content h1,
+body.professor-dark .content h2,
+body.professor-dark .section-title,
+body.professor-dark .teacher-communication h2,
+body.professor-dark .teacher-communication__type,
+body.professor-dark .dialog-heading h2,
+body.professor-dark .form-field,
+body.professor-dark .teacher-communication p {
+    color: #fffdf7;
+}
+
+body.professor-dark .page-description,
+body.professor-dark .dialog-description,
+body.professor-dark .section-count,
+body.professor-dark .empty-state,
+body.professor-dark .file-help,
+body.professor-dark .form-feedback,
+body.professor-dark .teacher-communication__meta {
+    color: #b0b0b2;
+}
+
+body.professor-dark .card h2,
+body.professor-dark .card h1 {
+    color: #fffdf7;
+}
+
+body.professor-dark .card span {
+    background: #3b3b3d;
+    color: #fffdf7;
+}
+
+body.professor-dark .tabela,
+body.professor-dark .tabela td,
+body.professor-dark .tabela th {
+    border-color: #545456;
+    color: #fffdf7;
+}
+
+body.professor-dark .tabela,
+body.professor-dark .tabela td {
+    background: #252527;
+}
+
+body.professor-dark .tabela thead {
+    background: #000;
+    color: #fffdf7;
+}
+
+body.professor-dark .table-button,
+body.professor-dark .dialog-button--secondary,
+body.professor-dark .icon-button {
+    border-color: #545456;
+    background: #252527;
+    color: #fffdf7;
+}
+
+body.professor-dark .btn-novo,
+body.professor-dark .dialog-button:not(.dialog-button--secondary),
+body.professor-dark .table-button:hover {
+    border-color: #3b3b3d;
+    background: #3b3b3d;
+    color: #fffdf7;
+}
+
+body.professor-dark .pendente,
+body.professor-dark .concluido {
+    background: #3b3b3d;
+    color: #fffdf7;
+}
+
+body.professor-dark .teacher-dialog::backdrop {
+    background: rgb(0 0 0 / 72%);
+}
+
+/* Torna os itens de navegação clicáveis mantendo espaçamento e tipografia do menu-base. */
+.menu-action {
+    display: block;
+    width: 100%;
+    padding: 15px 25px;
+    border: 0;
+    border-left: 4px solid transparent;
+    background: transparent;
+    color: #d1d1d1;
+    font: inherit;
+    font-size: 0.95rem;
+    text-align: left;
+    cursor: pointer;
+}
+
+.menu-action:hover,
+.menu-action:focus-visible {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--branco);
+}
+
+/* Alinha título, descrição e ação principal na página como nas telas administrativas. */
+.cabecalho-pagina {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.content .cabecalho-pagina h1 {
+    margin: 0;
+}
+
+.page-description,
+.dialog-description {
+    color: var(--texto-cinza);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.btn-novo,
+.table-button,
+.dialog-button {
+    min-height: 40px;
+    padding: 9px 14px;
+    border: 1px solid var(--cor-principal);
+    border-radius: 5px;
+    background: var(--cor-principal);
+    color: var(--branco);
+    font: inherit;
+    font-size: 0.86rem;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-novo:hover,
+.table-button:hover,
+.dialog-button:hover {
+    background: #3b3b3d;
+    border-color: #3b3b3d;
+}
+
+.table-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    padding: 7px 10px;
+    background: var(--branco);
+    color: var(--cor-principal);
+    white-space: nowrap;
+}
+
+.table-button:hover {
+    background: #e0e0e0;
+    color: var(--cor-principal);
+}
+
+.actions {
+    flex-wrap: wrap;
+}
+
+.section-title {
+    margin: 28px 0 14px;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.content .cards {
+    margin-bottom: 28px;
+}
+
+.content .cards .card {
+    min-width: 0;
+}
+
+.content .cards .card h1 {
+    overflow-wrap: anywhere;
+}
+
+.content .tabela {
+    min-width: 850px;
+}
+
+/* A tabela mantém suas colunas legíveis e rola dentro do painel em telas estreitas. */
+.table-responsive {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.empty-state {
+    padding: 22px;
+    border: 1px dashed var(--borda);
+    border-radius: 8px;
+    color: var(--texto-cinza);
+    text-align: center;
+}
+
+.section-count {
+    color: var(--texto-cinza);
+    font-size: 0.9rem;
+}
+
+.teacher-communications {
+    display: grid;
+    gap: 14px;
+}
+
+.teacher-communication {
+    padding: 18px 20px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    background: var(--branco);
+}
+
+.teacher-communication__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--texto-cinza);
+    font-size: 0.82rem;
+}
+
+.teacher-communication__type {
+    color: var(--cor-principal);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.teacher-communication h2 {
+    margin: 12px 0 6px;
+    color: var(--cor-principal);
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.teacher-communication p {
+    color: var(--texto-escuro);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+/* Os diálogos nativos incluem foco e fechamento por Escape oferecidos pelo navegador. */
+.teacher-dialog {
+    width: min(100% - 32px, 600px);
+    max-height: min(90vh, 820px);
+    margin: auto;
+    padding: 0;
+    overflow: auto;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    background: var(--branco);
+    color: var(--texto-escuro);
+}
+
+.teacher-dialog::backdrop {
+    background: rgb(0 0 0 / 55%);
+}
+
+.teacher-dialog__form {
+    display: grid;
+    gap: 16px;
+    padding: clamp(20px, 4vw, 30px);
+}
+
+.dialog-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.dialog-heading h2 {
+    margin: 0 0 5px;
+    color: var(--cor-principal);
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.icon-button {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    place-items: center;
+    border: 1px solid var(--borda);
+    border-radius: 50%;
+    background: var(--branco);
+    color: var(--cor-principal);
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.form-field {
+    display: grid;
+    gap: 7px;
+    color: var(--texto-escuro);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+    width: 100%;
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid var(--borda);
+    border-radius: 5px;
+    background: var(--branco);
+    color: var(--texto-escuro);
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.form-field textarea {
+    resize: vertical;
+}
+
+.form-field input:focus-visible,
+.form-field select:focus-visible,
+.form-field textarea:focus-visible,
+.btn-novo:focus-visible,
+.table-button:focus-visible,
+.dialog-button:focus-visible,
+.icon-button:focus-visible,
+.menu-action:focus-visible {
+    outline: 3px solid #666666;
+    outline-offset: 2px;
+}
+
+.file-help,
+.form-feedback {
+    color: var(--texto-cinza);
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+.form-feedback {
+    min-height: 1.25rem;
+}
+
+.date-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 4px;
+}
+
+.dialog-button--secondary {
+    border-color: var(--borda);
+    background: var(--branco);
+    color: var(--texto-escuro);
+}
+
+.dialog-button--secondary:hover {
+    background: #e0e0e0;
+    border-color: var(--borda);
+    color: var(--texto-escuro);
+}
+
+@media (max-width: 900px) {
+    .menu-action {
+        width: auto;
+        padding: 12px 16px;
+        border-left: 0;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 600px) {
+    .cabecalho-pagina {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .teacher-communication {
+        padding: 16px;
+    }
+
+    .teacher-communication__meta {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .date-fields {
+        grid-template-columns: 1fr;
+    }
+
+    .dialog-actions {
+        flex-direction: column-reverse;
+    }
+
+    .dialog-actions .dialog-button {
+        width: 100%;
+    }
+}

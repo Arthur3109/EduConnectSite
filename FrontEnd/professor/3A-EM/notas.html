@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lançamento de Notas - 3º Ano A</title>
+    <link rel="stylesheet" href="../6A/notas.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+</head>
+
+<body data-class-name="3º Ano A">
+    <div class="container">
+        <div class="top">
+            <div class="logout">
+                <a href="../menu.html">
+                    <span class="material-symbols-outlined">arrow_back_ios</span>
+                    Voltar
+                </a>
+            </div>
+            <div class="darkmode">
+                <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+                    <span class="material-symbols-outlined toggle-icon moon">light_mode</span>
+                    <span class="material-symbols-outlined toggle-icon sun">dark_mode</span>
+                    <span class="toggle-ball"></span>
+                </button>
+            </div>
+        </div>
+        <h1>Lançamento de Notas - 1º Bimestre - Turma 3º Ano A</h1>
+        <div class="warning">
+            <p><strong>Atenção:</strong> Este bimestre foi fechado conforme o banco de dados.</p>
+        </div>
+        <table class="darkTable">
+            <thead>
+                <tr>
+                    <th>NOME DO ALUNO</th>
+                    <th>NOTA 1</th>
+                    <th>NOTA 2</th>
+                    <th>NOTA 3</th>
+                    <th>MÉDIA</th>
+                    <th>FREQUÊNCIA %</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Ana Exemplo</td>
+                    <td><input type="text" name="nota1" placeholder="Digite a nota"></td>
+                    <td><input type="text" name="nota2" placeholder="Digite a nota"></td>
+                    <td><input type="text" name="nota3" placeholder="Digite a nota"></td>
+                    <td><span class="media"></span></td>
+                    <td><span class="frequencia"></span></td>
+                </tr>
+                <tr>
+                    <td>Bruno Exemplo</td>
+                    <td><input type="text" name="nota1" placeholder="Digite a nota"></td>
+                    <td><input type="text" name="nota2" placeholder="Digite a nota"></td>
+                    <td><input type="text" name="nota3" placeholder="Digite a nota"></td>
+                    <td><span class="media"></span></td>
+                    <td><span class="frequencia"></span></td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <a href="#"><button class="btn">Fechar Bimestre</button></a>
+        </div>
+    </div>
+    <script src="../../assets/js/educonnect-backend.js"></script>
+    <script src="../notas.js"></script>
+    <script src="../6A/main.js"></script>
+</body>
+
+</html>

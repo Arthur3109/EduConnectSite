@@ -1,0 +1,144 @@
+EDUCONNECT | BANCO E INTEGRAÇÃO ACADÊMICA
+
+1. Escolha apenas um caminho de instalação
+
+• Base nova. Importe Banco/EduConnect_final.sql inteiro pelo cliente mysql ou Workbench.
+O script cria educonnect_integracao e carrega as pessoas, turmas, vínculos e boletins
+de exemplo do SQL de 13/11/2026. Use uma conexão com permissão para criar o schema,
+as tabelas, as views, os procedimentos e os triggers.
+
+• Base já criada com o SQL de 13/11. Use Banco/EduConnect_atualizar_13112026.sql em uma
+cópia de homologação de educonnect_completo. Ele acrescenta as estruturas e substitui
+a regra de situação do diário e a rotina de fechamento. Os cadastros, senhas,
+lançamentos e snapshots existentes permanecem com seus IDs. Ajuste o USE caso a cópia
+tenha outro nome. Esta atualização pressupõe a estrutura completa daquela versão.
+
+Execute uma única vez, com a aplicação parada e interrupção no primeiro erro. Faça
+backup antes de atualizar uma instalação com dados. DDL no MySQL confirma alterações
+por etapas. Se a atualização falhar, restaure a cópia anterior antes de repetir.
+Confirme o resultado no schema escolhido:
+  SELECT versao, aplicada_em FROM tb_versao_banco;
+  SELECT * FROM vw_boletim_vigente ORDER BY cd_lote, aluno, disciplina;
+
+2. Abrir o módulo conectado no XAMPP
+
+Inicie o MySQL/MariaDB. Como administrador de banco, crie o usuário técnico:
+  CREATE USER 'educonnect_web'@'127.0.0.1' IDENTIFIED BY 'SUA_SENHA_TECNICA';
+
+Troque SUA_SENHA_TECNICA por uma senha própria. Execute Banco/permissoes.sql.
+Se tiver usado a atualização, troque educonnect_integracao por educonnect_completo
+no arquivo de permissões e no DSN. A conta técnica acessa as consultas e rotinas usadas
+pelo módulo. Ela é diferente das contas escolares usadas na tela de login.
+
+Em um PowerShell aberto na pasta que contém FrontEnd, rode:
+  $env:EDU_DB_USER = 'educonnect_web'
+  $env:EDU_DB_PASSWORD = Read-Host 'Senha da conta técnica do banco'
+  $env:EDU_DSN = 'mysql:host=127.0.0.1;port=3306;dbname=educonnect_integracao;charset=utf8mb4'
+  & C:\xampp\php\php.exe -S 127.0.0.1:8080 -t FrontEnd
+
+Ajuste a porta 3306 caso o banco use outra. O módulo requer PHP 8 com pdo_mysql e
+um diretório session.save_path gravável pelo PHP. Abra http://127.0.0.1:8080/academico/
+ou siga o link “Acessar diário e boletins no banco” na página de login. Use o servidor
+embutido para demonstração local. Em hospedagem, configure as três variáveis no serviço
+PHP, publique somente FrontEnd e use HTTPS. GitHub Pages serve o protótipo estático;
+o módulo conectado precisa de hospedagem com PHP e acesso ao banco.
+
+Contas fictícias da instalação nova (senha escolar EduDemo-2026!):
+  professor@example.invalid    Caio
+  secretaria@example.invalid   Clara
+  aluno@example.invalid        Ana
+Na atualização valem os identificadores e hashes já cadastrados. Use as contas de
+demonstração somente em uma base de demonstração.
+
+3. Roteiro para conferir o fluxo
+
+Entre como professor, abra Matemática da turma 3º Ano A no segundo bimestre e
+expanda a linha de Ana. Salve três notas e recarregue a página. A média vem do banco.
+Lance aulas e presenças no resumo ou, para uma linha nova, registre a chamada por data
+e número da aula. Ao relançar a mesma aula, a presença é corrigida sem duplicação.
+
+Entre como aluno. O diário mostra apenas as matrículas da conta. O primeiro bimestre
+já tem boletim publicado. No segundo, complete as notas e a frequência dos dois
+alunos em Matemática e Língua Portuguesa. Feche cada disciplina como professor ou
+secretaria. Como secretaria, use “Emitir lote da turma”. Consulte o novo lote como aluno.
+
+A média considera N1, N2 e N3. Os pesos iniciais são iguais; avaliações com pesos
+configurados usam média ponderada. O arredondamento é de uma casa decimal. Média
+de pelo menos 7 indica aprovação; de 5 até abaixo de 7, recuperação; abaixo de 5,
+reprovação. A situação de frequência usa 85% e 75%. O alerta à coordenação considera
+20% de faltas. Uma falta justificada permanece identificada na chamada e conta como
+ausência no percentual. A média anual disponível em vw_resultado_anual considera
+os quatro bimestres fechados da mesma matrícula com pesos iguais.
+
+4. Correção e histórico
+
+Professor escreve apenas no próprio vínculo aberto. Secretaria pode corrigir um
+lançamento aberto. Após fechamento, Coordenação, Administração ou Direção corrigem
+com justificativa. Crie esses perfis em contas apropriadas; a carga não promove
+automaticamente a conta de secretaria. Se o ano estiver registrado em tb_encerramento_ano,
+a correção fica restrita à Direção com justificativa.
+
+Uma correção de boletim altera o diário numa transação e registra autor, data,
+motivo, valores anteriores e novos em tb_auditoria. A secretaria emite outro lote
+para publicar. vw_boletim_publicado guarda todas as emissões e vw_boletim_vigente
+seleciona a última de cada turma e período. A reemissão é uma ação explícita. Duas
+edições baseadas na mesma revisão do diário geram conflito: a segunda pessoa precisa
+recarregar o registro antes de reaplicar sua mudança.
+
+5. Contrato de integração para as demais telas
+
+A interface PHP em academico/ lê e grava no banco e obtém o ator da sessão. As demais
+telas HTML/JS do ZIP conservam o comportamento do protótipo, inclusive seus dados
+locais e seu login demonstrativo. O SQL não importa alterações salvas no localStorage
+de computadores de alunos e professores. Esses dados exigem exportação do navegador
+de origem e conciliação de aluno, turma, disciplina, ano e período antes da importação.
+
+• Diário. Consulte vw_diario_integracao junto com vw_acesso_diario filtrada pela
+  conta da sessão. A chave é (cd_matricula, cd_atribuicao, cd_periodo). ds_matricula
+  é o código escolar público; cd_matricula identifica o vínculo naquele ano.
+• Salvar. sp_editar_diario(ator, matricula, atribuicao, periodo, revisao, operacao,
+  n1, n2, n3, aulas, presentes, data_aula, numero_aula, presenca, motivo).
+  Em “Notas”, envie as três notas da linha, usando NULL para limpar um campo
+  ainda aberto. Em “Frequência”, envie aulas e presentes. Em “Chamada”, envie
+  data, número e Presente/Falta/Justificada. Use NULL nos argumentos sem uso.
+  Cada chamada controla a própria transação. A aplicação deve recuperar a revisão
+  seguinte antes de uma nova edição. Resumo legado e chamada individual são modos
+  distintos por matrícula, disciplina e período, para evitar dupla contagem.
+• Fechamento e publicação. Use sp_fechar_bimestre(atribuicao,periodo,ator) e depois
+  sp_gerar_boletins(turma,periodo,ator). Para liberar um período planejado, a gestão
+  do calendário atualiza tb_periodo_letivo.ds_status para Aberto. A situação geral
+  do período e o fechamento por disciplina são campos distintos.
+• Boletim. Filtre vw_boletim_vigente pelo escopo vw_acesso_boletim da sessão.
+  Para consultar uma via histórica, use o lote específico de vw_boletim_publicado.
+  O módulo usa a impressão do navegador para a tabela publicada.
+• Comunicados. Grupos e turmas ficam nas tabelas de destinatários. Use
+  sp_publicar_comunicado(ator, comunicado) para publicar no portal e registrar o
+  envio. Consulte vw_caixa_comunicados por cd_usuario e chame
+  sp_marcar_lido(ator, comunicado). O envio externo de e-mail depende de um serviço
+  de entrega. A rotina de publicação registra somente a publicação no portal.
+• Ocorrências. sp_corrigir_ocorrencia recebe ator, ocorrência, novo status, nova
+  descrição, descrição anterior, status anterior e motivo. Conflitos são recusados.
+• Atestados. Alunos usam ds_titular='Aluno' e cd_aluno. Professores usam
+  ds_titular='Professor', cd_professor e cd_aluno NULL. tb_anexo guarda a chave do
+  arquivo, nome, tipo e tamanho. O serviço de upload deve validar PDF e limite de
+  2 MiB conforme as telas e controlar acesso ao armazenamento.
+• Contas. sp_criar_conta cria a conta e o papel na mesma transação, mediante uma
+  conta de secretaria. A API gera o hash da senha. A autenticação do módulo PHP usa
+  password_verify, sessão, validação de formulário, bloqueio por identificador e IP
+  após cinco falhas em dez minutos e expiração após trinta minutos de inatividade.
+• Agenda e atividades. tb_evento_escolar aceita eventos gerais ou de turma.
+  tb_atividade e tb_entrega_atividade sustentam vw_pendencias_atividades. Filtre
+  por aluno autorizado e ordene por dt_prazo para compor o painel.
+
+6. Origem e validação
+
+Base de dados: Educonnect (3).zip, BackEnd/db_EduConnect 13112026.sql.
+Interface empacotada: FrontEnd do mesmo ZIP, com o módulo academico/ e o link
+na tela de login. Foram consultadas também as regras da documentação do ZIP e a
+branch main de Arthur3109/EduConnectSite, commit 0cf3dd24bf83337eec2e84af9b3c96c55f9b8a25.
+A branch e o ZIP diferem; o ZIP contém a carga escolar usada na integração.
+
+Testado com MariaDB 10.4.32 e PHP 8.0.30/PDO. Os testes cobriram instalação e
+atualização, preservação de cadastro, entrada dos três perfis, bloqueio de escrita
+do aluno, edição simultânea, chamada por aula, retificação auditada, histórico de
+lotes, comunicados e ocorrências. MySQL 8 não foi executado nesta validação.
