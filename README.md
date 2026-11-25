@@ -6,6 +6,12 @@ O projeto foi desenvolvido como uma aplicação web, utilizando tecnologias fund
 
 ---
 
+## 🌐 Acesse o EduConnect
+
+[**Clique aqui para acessar o projeto**](https://arthur3109.github.io/EduConnectSite/FrontEnd/)
+
+---
+
 ## Sobre o projeto
 
 O EduConnect nasceu com a proposta de explorar o desenvolvimento de uma plataforma educacional, aplicando na prática conhecimentos de programação Front-End e Back-End.
