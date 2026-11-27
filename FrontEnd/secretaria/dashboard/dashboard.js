@@ -38,9 +38,19 @@
         });
 
         const audit = backend.getAudit().slice(0, 5);
-        if (table && audit.length) {
+        if (table) {
             const body = table.querySelector('tbody');
-            body?.replaceChildren(...audit.map((entry) => {
+            if (!body) return;
+            if (!audit.length) {
+                const row = document.createElement('tr');
+                const cell = document.createElement('td');
+                cell.colSpan = 4;
+                cell.textContent = 'Nenhuma atividade registrada.';
+                row.append(cell);
+                body.replaceChildren(row);
+                return;
+            }
+            body.replaceChildren(...audit.map((entry) => {
                 const row = document.createElement('tr');
                 const date = new Date(entry.dataHora);
                 const dateText = Number.isNaN(date.getTime()) ? entry.dataHora : date.toLocaleString('pt-BR');
@@ -55,4 +65,16 @@
     }
 
     document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', () => {
+        const backend = window.EduConnectBackend;
+        if (!backend) return;
+        window.addEventListener(backend.eventName, (event) => {
+            if (event.detail?.key === backend.keys.auditoria
+                || Object.values(backend.keys).includes(event.detail?.key)) init();
+        });
+        window.addEventListener('storage', (event) => {
+            if (event.key === backend.keys.auditoria
+                || Object.values(backend.keys).includes(event.key)) init();
+        });
+    });
 })();

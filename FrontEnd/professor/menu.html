@@ -197,6 +197,7 @@
                 <span>Documento em PDF (opcional)</span>
                 <input id="atestado-pdf" name="atestadoPdf" type="file" accept="application/pdf,.pdf">
                 <span class="file-help">PDF de até 2 MB. O arquivo será armazenado neste navegador.</span>
+                <span class="file-name" id="atestado-file-name" aria-live="polite">Nenhum arquivo selecionado.</span>
             </div>
             <p class="form-feedback" id="atestado-feedback" role="status" aria-live="polite"></p>
             <div class="dialog-actions">
@@ -218,8 +219,9 @@
             </div>
             <label class="form-field">
                 <span>Aluno</span>
-                <input name="aluno" type="text" maxlength="160" required autocomplete="off"
-                    placeholder="Nome completo do aluno">
+                <select name="aluno" id="ocorrencia-aluno" required>
+                    <option value="">Selecione um aluno</option>
+                </select>
             </label>
             <label class="form-field">
                 <span>Turma (opcional)</span>

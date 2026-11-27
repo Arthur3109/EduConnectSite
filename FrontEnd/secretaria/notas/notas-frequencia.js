@@ -7,8 +7,9 @@
     const STORAGE_KEY = 'educonnect_notas_frequencia';
     const backend = window.EduConnectBackend;
     const STUDENTS = [
-        { matricula: '20260001', alunoNome: 'Ana Exemplo', n1: 8.5, n2: 7.0, n3: 9.0, aulasDadas: 40, presencas: 38 },
-        { matricula: '20260002', alunoNome: 'Bruno Exemplo', n1: 5.5, n2: 6.0, n3: 4.5, aulasDadas: 40, presencas: 31 }
+        { matricula: '20260001', alunoNome: 'Ana Lima', n1: 8.5, n2: 7.0, n3: 9.0, aulasDadas: 40, presencas: 38 },
+        { matricula: '20260002', alunoNome: 'Bruno Reis', n1: 5.5, n2: 6.0, n3: 4.5, aulasDadas: 40, presencas: 31 },
+        { matricula: '20260003', alunoNome: 'Lia Santos', n1: 3.5, n2: 4.0, n3: 5.0, aulasDadas: 40, presencas: 28 }
     ];
 
     /* 2. Mantém a chave exigida como fonte local e sincroniza com o backend, se disponível. */

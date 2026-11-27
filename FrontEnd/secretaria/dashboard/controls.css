@@ -251,6 +251,34 @@ body.secretaria-dark textarea {
     font-size: 0.78rem;
 }
 
+.dashboard-alerts__mark-all,
+.dashboard-alert__mark-seen {
+    min-height: 36px;
+    padding: 7px 12px;
+    border: 1px solid var(--dashboard-border);
+    border-radius: 5px;
+    background: var(--dashboard-surface);
+    color: var(--dashboard-text);
+    font: inherit;
+    font-size: 0.82rem;
+    cursor: pointer;
+}
+
+.dashboard-alerts__mark-all {
+    justify-self: end;
+}
+
+.dashboard-alert__mark-seen:disabled {
+    cursor: default;
+    opacity: 0.7;
+}
+
+.dashboard-alerts__mark-all:focus-visible,
+.dashboard-alert__mark-seen:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
 .dashboard-empty {
     color: var(--dashboard-muted);
     text-align: center;
@@ -533,6 +561,26 @@ body.secretaria-dark dialog section {
 
 body.secretaria-dark dialog::backdrop {
     background: rgb(0 0 0 / 72%);
+}
+
+body.secretaria-dark .header,
+body.secretaria-dark .header .logo,
+body.secretaria-dark .header .logo strong,
+body.secretaria-dark .header .logo .material-symbols-outlined,
+body.secretaria-dark .header .user,
+body.secretaria-dark .sidebar,
+body.secretaria-dark .sidebar .menu li a,
+body.secretaria-dark .sidebar .menu li.ativo a,
+body.secretaria-dark .sidebar .sair a {
+    color: #fffdf7;
+}
+
+body.secretaria-dark .header .logo .tag {
+    color: #fffdf7;
+}
+
+body.secretaria-dark .header .avatar {
+    border-color: #fffdf7;
 }
 
 @media (max-width: 600px) {

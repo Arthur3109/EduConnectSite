@@ -374,6 +374,11 @@
                 feedback.textContent = 'Não foi possível salvar. O armazenamento do navegador pode estar cheio.';
                 return;
             }
+            backend.addAudit({
+                modulo: 'Atestados',
+                acao: 'Envio',
+                descricao: `O aluno ${student.nome} enviou um atestado.`
+            });
 
             form.reset();
             selectedPdf = null;

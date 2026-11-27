@@ -209,3 +209,34 @@ form {
     flex-direction: column;
     align-items: center;
 }
+
+.demo-credentials {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 4px;
+    padding: 12px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.04);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.demo-credentials strong {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--text-main);
+}
+
+.demo-credentials p {
+    margin: 3px 0;
+}
+
+@media (max-width: 500px) {
+    form {
+        width: min(400px, calc(100vw - 40px));
+        padding: 20px;
+        box-sizing: border-box;
+    }
+}

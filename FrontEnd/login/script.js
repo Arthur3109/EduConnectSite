@@ -9,7 +9,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
             senha: '123',
             tipo: 'professor',
             uid: 'professor-PROF2026001',
-            nome: 'Caio Exemplo',
+            nome: 'Caio Silva',
             destino: '../professor/menu.html'
         },
         {
@@ -17,7 +17,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
             senha: '123',
             tipo: 'secretaria',
             uid: 'secretaria-EMP2026001',
-            nome: 'Clara Exemplo',
+            nome: 'Clara Dias',
             destino: '../secretaria/index.html'
         },
         {
@@ -25,7 +25,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
             senha: '123',
             tipo: 'aluno',
             uid: 'aluno-20260001',
-            nome: 'Ana Exemplo',
+            nome: 'Ana Lima',
             codigo: '20260001',
             turma: '3º Ano A',
             destino: '../alunos/index.html'

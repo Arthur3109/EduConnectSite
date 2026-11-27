@@ -237,6 +237,10 @@ body {
     color: var(--cor-principal);
     text-decoration: underline;
     font-weight: 500;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
 }
 
 .link-vinculo:hover {

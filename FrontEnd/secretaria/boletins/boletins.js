@@ -147,8 +147,14 @@
         const previewHeading = document.querySelector('.subtitulo-secao');
         const previewEnrollment = document.getElementById('preview-matricula');
         const previewClass = document.getElementById('preview-turma');
+        const previewIssueDate = document.getElementById('preview-emissao');
         const footerAbsences = document.getElementById('preview-faltas');
         const footerFrequency = document.getElementById('preview-frequencia');
+        const emailDialog = document.getElementById('email-dialog');
+        const emailForm = document.getElementById('email-form');
+        const emailInput = document.getElementById('email-recipient');
+        const emailSubjectInput = document.getElementById('email-subject');
+        const emailBodyInput = document.getElementById('email-body');
 
         if (!turmaSelect || !serieSelect || !termSelect || !studentSelect
             || !previewTableBody || !historyList) return;
@@ -276,6 +282,9 @@
             if (previewClass) {
                 const series = serieSelect.value;
                 previewClass.textContent = `Turma: ${turmaSelect.value || '—'}${series ? ` - ${series}` : ''}`;
+            }
+            if (previewIssueDate) {
+                previewIssueDate.textContent = `Emissão: ${new Date().toLocaleString('pt-BR')}`;
             }
 
             const absenceRecords = records.filter((record) => Number.isFinite(record.faltas));
@@ -421,15 +430,6 @@
                 return;
             }
 
-            let email = student.email;
-            if (!email) {
-                email = window.prompt(`Informe o endereço de e-mail de ${student.nome}:`)?.trim() ?? '';
-            }
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                feedback.textContent = 'Informe um endereço de e-mail válido para preparar o envio.';
-                return;
-            }
-
             const lines = academic.map((record) => [
                 record.disciplina || 'Disciplina não informada',
                 `N1: ${record.n1 ?? '—'}`,
@@ -442,18 +442,23 @@
             const body = [
                 `Olá, ${student.nome}.`,
                 '',
-                `Segue a prévia do boletim da turma ${turmaSelect.value}, ${termSelect.value}:`,
+                `Segue o histórico acadêmico referente à turma ${turmaSelect.value}, ${termSelect.value}:`,
                 ...lines,
                 '',
-                'Este e-mail foi preparado pelo sistema EduConnect.'
+                `Frequência média: ${footerFrequency?.textContent.replace('Frequência:', '').trim() || '—'}`,
+                `Total de faltas: ${footerAbsences?.textContent.replace('Total de Faltas:', '').trim() || '—'}`,
+                '',
+                'Documento de demonstração acadêmica EduConnect.'
             ].join('\n');
 
-            backend.addAudit({
-                modulo: 'Boletins',
-                acao: 'Envio',
-                descricao: `Preparou o boletim de ${student.nome} para envio por e-mail.`
-            });
-            window.location.href = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            if (!emailDialog || !emailForm || !emailInput || !emailSubjectInput || !emailBodyInput) {
+                feedback.textContent = 'O formulário de e-mail não está disponível nesta página.';
+                return;
+            }
+            emailInput.value = student.email;
+            emailSubjectInput.value = subject;
+            emailBodyInput.value = body;
+            emailDialog.showModal();
         }
 
         // Mudanças nos filtros atualizam tanto a seleção quanto a prévia exibida.
@@ -484,8 +489,29 @@
         termSelect.addEventListener('change', renderPreview);
         studentSelect.addEventListener('change', renderPreview);
         generateButton?.addEventListener('click', generateReports);
+        emailForm?.addEventListener('submit', (event) => {
+            event.preventDefault();
+            if (!emailForm.reportValidity()) return;
+            const email = emailInput.value.trim();
+            const subject = emailSubjectInput.value;
+            const body = emailBodyInput.value;
+            backend.addAudit({
+                modulo: 'Boletins',
+                acao: 'Preparação de e-mail',
+                descricao: `Preparou o boletim de ${getSelectedStudent()?.nome || 'aluno selecionado'} para ${email}.`
+            });
+            feedback.textContent = 'O aplicativo de e-mail será aberto. Revise e envie a mensagem por ele.';
+            emailDialog.close();
+            window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        });
+        document.querySelectorAll('[data-close-email]').forEach((button) => {
+            button.addEventListener('click', () => emailDialog?.close());
+        });
+        emailDialog?.addEventListener('click', (event) => {
+            if (event.target === emailDialog) emailDialog.close();
+        });
 
-        document.querySelectorAll('.btn-acao').forEach((button) => {
+        document.querySelectorAll('.acoes-boletim .btn-acao').forEach((button) => {
             const label = backend.normalizeText(button.textContent);
             button.addEventListener('click', () => {
                 if (label.includes('imprimir')) {

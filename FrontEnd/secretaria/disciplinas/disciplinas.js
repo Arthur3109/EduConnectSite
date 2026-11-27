@@ -8,21 +8,35 @@
     const TEACHERS_KEY = 'educonnect_usuarios_professores';
     const CLASSES_KEY = 'educonnect_turmas';
     const DEFAULT_CLASSES = ['3º Ano A', '6º Ano A', '6º Ano B', '7º Ano A', '7º Ano D', '8º Ano C', 'Todas'];
-    const DEFAULT_TEACHERS = ['Caio Exemplo'];
+    const DEFAULT_TEACHERS = ['Caio Silva', 'Beatriz Rocha', 'Rafael Nunes'];
     const mockData = [
         {
             codigo: 'MAT-101',
             nome: 'Matemática',
             cargaHoraria: 100,
             turmas: ['3º Ano A', '6º Ano A'],
-            professores: ['Caio Exemplo']
+            professores: ['Caio Silva']
         },
         {
             codigo: 'PORT-202',
             nome: 'Língua Portuguesa',
             cargaHoraria: 150,
-            turmas: ['3º Ano A'],
-            professores: ['Caio Exemplo']
+            turmas: ['3º Ano A', '6º Ano B'],
+            professores: ['Beatriz Rocha']
+        },
+        {
+            codigo: 'CIEN-303',
+            nome: 'Ciências',
+            cargaHoraria: 120,
+            turmas: ['7º Ano A', '8º Ano C'],
+            professores: ['Rafael Nunes']
+        },
+        {
+            codigo: 'HIST-404',
+            nome: 'História',
+            cargaHoraria: 100,
+            turmas: ['7º Ano D', '8º Ano C'],
+            professores: ['Rafael Nunes']
         }
     ];
 
@@ -70,6 +84,8 @@
      * @returns {boolean} Indica se a gravação foi concluída.
      */
     function saveDisciplinas() {
+        const backend = window.EduConnectBackend;
+        if (backend) return backend.write(STORAGE_KEY, state.disciplinas);
         try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state.disciplinas));
             return true;
@@ -99,12 +115,15 @@
      * @returns {object} Disciplina normalizada.
      */
     function normalizeDiscipline(record) {
+        const teachers = Array.isArray(record.professores)
+            ? record.professores
+            : String(record.professores ?? '').split(',');
         return {
             codigo: String(record.codigo ?? record.id ?? '').trim(),
             nome: String(record.nome ?? record.nomeDisciplina ?? '').trim(),
             cargaHoraria: Number(record.cargaHoraria ?? record.horas ?? 0),
             turmas: Array.isArray(record.turmas) ? record.turmas.map(String) : [],
-            professores: Array.isArray(record.professores) ? record.professores.map(String) : []
+            professores: teachers.map((name) => String(name).trim()).filter(Boolean)
         };
     }
 
@@ -133,7 +152,17 @@
     function readTeachers() {
         const storedTeachers = readArray(TEACHERS_KEY) ?? [];
         const names = storedTeachers.map((teacher) => String(teacher.nome ?? teacher.nomeCompleto ?? '').trim()).filter(Boolean);
-        return [...new Set([...names, ...DEFAULT_TEACHERS])].sort((first, second) => first.localeCompare(second, 'pt-BR'));
+        const linkedNames = state.disciplinas.flatMap((discipline) => discipline.professores);
+        return [...new Set([...names, ...DEFAULT_TEACHERS, ...linkedNames])]
+            .sort((first, second) => first.localeCompare(second, 'pt-BR'));
+    }
+
+    function addDisciplineAudit(action, description) {
+        window.EduConnectBackend?.addAudit({
+            modulo: 'Disciplinas',
+            acao: action,
+            descricao: description
+        });
     }
 
     /**
@@ -431,14 +460,21 @@
             professores: getCheckedValues(teacherChoices)
         };
 
-        if (state.editingCode) {
+        const previousState = cloneRecords(state.disciplinas);
+        const isEditing = Boolean(state.editingCode);
+        if (isEditing) {
             const index = state.disciplinas.findIndex((item) => item.codigo === state.editingCode);
             if (index >= 0) state.disciplinas[index] = disciplina;
         } else {
             state.disciplinas.unshift(disciplina);
         }
 
-        if (!saveDisciplinas()) return;
+        if (!saveDisciplinas()) {
+            state.disciplinas = previousState;
+            return;
+        }
+        addDisciplineAudit(isEditing ? 'Edição' : 'Cadastro',
+            `${isEditing ? 'Atualizou' : 'Cadastrou'} a disciplina ${disciplina.nome}.`);
         dialog.close();
         handleSearch();
     }
@@ -454,8 +490,14 @@
         const confirmed = window.confirm(`Excluir a disciplina ${disciplina.codigo} — ${disciplina.nome}? Esta ação não pode ser desfeita.`);
         if (!confirmed) return;
 
+        const previousState = state.disciplinas;
         state.disciplinas = state.disciplinas.filter((item) => item.codigo !== codigo);
-        if (saveDisciplinas()) handleSearch();
+        if (!saveDisciplinas()) {
+            state.disciplinas = previousState;
+            return;
+        }
+        addDisciplineAudit('Exclusão', `Excluiu a disciplina ${disciplina.nome}.`);
+        handleSearch();
     }
 
     /**
@@ -502,8 +544,13 @@
             event.preventDefault();
             const discipline = state.disciplinas.find((item) => item.codigo === state.linkingCode);
             if (!discipline) return;
+            const previousTeachers = [...discipline.professores];
             discipline.professores = getCheckedValues(dialog.querySelector('.professores-choice-list'));
-            if (!saveDisciplinas()) return;
+            if (!saveDisciplinas()) {
+                discipline.professores = previousTeachers;
+                return;
+            }
+            addDisciplineAudit('Vínculo docente', `Atualizou os professores vinculados à disciplina ${discipline.nome}.`);
             dialog.close();
             handleSearch();
         });

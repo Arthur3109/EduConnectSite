@@ -40,14 +40,19 @@
         <div class="form">
             <h1>Bem-vindo de volta!</h1>
             <h2><span>Faça login</span> para continuar</h2>
-            <p><a href="../academico/">Acessar diário e boletins no banco</a></p><form action="#" id="loginForm">
+            <form id="loginForm">
                 <input type="email" id="email" name="email" placeholder="Seu email" required>
 
                 <input type="password" id="password" name="password" placeholder="*********" required>
                 
                 <button type="submit" class="btn">Entrar na demonstração local</button>
             
-                <p>esqueceu sua senha? <a href="#">Clique aqui</a></p>
+                <div class="demo-credentials" aria-label="Credenciais de demonstração">
+                    <strong>Acessos de demonstração</strong>
+                    <p>Professor: <b>professor@gmail.com</b> — senha: <b>123</b></p>
+                    <p>Secretaria: <b>secretaria@gmail.com</b> — senha: <b>123</b></p>
+                    <p>Aluno: <b>aluno@gmail.com</b> — senha: <b>123</b></p>
+                </div>
             </form>
         </div>
     </div>

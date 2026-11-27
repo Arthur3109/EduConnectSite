@@ -27,23 +27,32 @@
     const EVENT_NAME = 'educonnect:data-change';
     const INITIAL_DATA = Object.freeze({
         alunos: [
-            { codigo: '20260001', nome: 'Ana Exemplo', turma: '3º Ano A', serie: '3º ano', status: 'Ativo' },
-            { codigo: '20260002', nome: 'Bruno Exemplo', turma: '3º Ano A', serie: '3º ano', status: 'Ativo' },
-            { codigo: '20260003', nome: 'Lia Exemplo', turma: '6º Ano A', serie: '6º ano', status: 'Ativo' }
+            { codigo: '20260001', nome: 'Ana Lima', turma: '3º Ano A', serie: '3º ano', status: 'Ativo' },
+            { codigo: '20260002', nome: 'Bruno Reis', turma: '3º Ano A', serie: '3º ano', status: 'Ativo' },
+            { codigo: '20260003', nome: 'Lia Santos', turma: '6º Ano A', serie: '6º ano', status: 'Ativo' },
+            { codigo: '20260004', nome: 'Miguel Costa', turma: '6º Ano A', serie: '6º ano', status: 'Ativo' },
+            { codigo: '20260005', nome: 'Sofia Oliveira', turma: '6º Ano B', serie: '6º ano', status: 'Ativo' },
+            { codigo: '20260006', nome: 'Davi Mendes', turma: '7º Ano A', serie: '7º ano', status: 'Ativo' },
+            { codigo: '20260007', nome: 'Helena Souza', turma: '7º Ano D', serie: '7º ano', status: 'Ativo' },
+            { codigo: '20260008', nome: 'Lucas Pereira', turma: '8º Ano C', serie: '8º ano', status: 'Ativo' }
         ],
         professores: [
-            { codigo: 'PROF2026001', nome: 'Caio Exemplo', disciplina: 'Matemática e Língua Portuguesa', turmas: '3º Ano A, 6º Ano A', status: 'Ativo' }
+            { codigo: 'PROF2026001', nome: 'Caio Silva', disciplina: 'Matemática', turmas: '3º Ano A, 6º Ano A', status: 'Ativo' },
+            { codigo: 'PROF2026002', nome: 'Beatriz Rocha', disciplina: 'Língua Portuguesa', turmas: '3º Ano A, 6º Ano B', status: 'Ativo' },
+            { codigo: 'PROF2026003', nome: 'Rafael Nunes', disciplina: 'Ciências e História', turmas: '7º Ano A, 7º Ano D, 8º Ano C', status: 'Ativo' }
         ],
         profissionais: [
-            { codigo: 'EMP2026001', nome: 'Clara Exemplo', cargo: 'Secretária', departamento: 'Secretaria escolar', status: 'Ativo' }
+            { codigo: 'EMP2026001', nome: 'Clara Dias', cargo: 'Secretária', departamento: 'Secretaria escolar', status: 'Ativo' },
+            { codigo: 'EMP2026002', nome: 'Marcos Almeida', cargo: 'Coordenador Pedagógico', departamento: 'Coordenação', status: 'Ativo' },
+            { codigo: 'EMP2026003', nome: 'Paula Ferreira', cargo: 'Diretora', departamento: 'Direção', status: 'Ativo' }
         ],
         turmas: [
             { codigo: '3A-EM', nome: '3º Ano A', serie: '3º ano', turno: 'Matutino', salaId: 'sala-101', capacidade: 40, alunos: 2, ativa: true },
-            { codigo: '6A', nome: '6º Ano A', serie: '6º ano', turno: 'Matutino', salaId: 'sala-102', capacidade: 40, alunos: 1, ativa: true },
-            { codigo: '6B', nome: '6º Ano B', serie: '6º ano', turno: 'Vespertino', salaId: 'sala-102', capacidade: 40, alunos: 0, ativa: true },
-            { codigo: '7A', nome: '7º Ano A', serie: '7º ano', turno: 'Matutino', salaId: 'sala-103', capacidade: 35, alunos: 0, ativa: true },
-            { codigo: '7D', nome: '7º Ano D', serie: '7º ano', turno: 'Vespertino', salaId: 'sala-103', capacidade: 35, alunos: 0, ativa: true },
-            { codigo: '8C', nome: '8º Ano C', serie: '8º ano', turno: 'Matutino', salaId: 'sala-104', capacidade: 30, alunos: 0, ativa: true }
+            { codigo: '6A', nome: '6º Ano A', serie: '6º ano', turno: 'Matutino', salaId: 'sala-102', capacidade: 40, alunos: 2, ativa: true },
+            { codigo: '6B', nome: '6º Ano B', serie: '6º ano', turno: 'Vespertino', salaId: 'sala-102', capacidade: 40, alunos: 1, ativa: true },
+            { codigo: '7A', nome: '7º Ano A', serie: '7º ano', turno: 'Matutino', salaId: 'sala-103', capacidade: 35, alunos: 1, ativa: true },
+            { codigo: '7D', nome: '7º Ano D', serie: '7º ano', turno: 'Vespertino', salaId: 'sala-103', capacidade: 35, alunos: 1, ativa: true },
+            { codigo: '8C', nome: '8º Ano C', serie: '8º ano', turno: 'Matutino', salaId: 'sala-104', capacidade: 30, alunos: 1, ativa: true }
         ],
         salas: [
             { id: 'sala-101', nome: 'Sala 101', capacidade: 40, unidade: 'alunos', tipo: 'Sala de aula', permiteTurma: true },
@@ -53,23 +62,32 @@
             { id: 'laboratorio-a', nome: 'Laboratório A', capacidade: 30, unidade: 'computadores', tipo: 'Laboratório', permiteTurma: false }
         ],
         disciplinas: [
-            { codigo: 'MAT-101', nome: 'Matemática', cargaHoraria: 100, turmas: ['3º Ano A', '6º Ano A'], professores: ['Caio Exemplo'] },
-            { codigo: 'PORT-202', nome: 'Língua Portuguesa', cargaHoraria: 150, turmas: ['3º Ano A'], professores: ['Caio Exemplo'] }
+            { codigo: 'MAT-101', nome: 'Matemática', cargaHoraria: 100, turmas: ['3º Ano A', '6º Ano A'], professores: ['Caio Silva'] },
+            { codigo: 'PORT-202', nome: 'Língua Portuguesa', cargaHoraria: 150, turmas: ['3º Ano A', '6º Ano B'], professores: ['Beatriz Rocha'] },
+            { codigo: 'CIEN-303', nome: 'Ciências', cargaHoraria: 120, turmas: ['7º Ano A', '8º Ano C'], professores: ['Rafael Nunes'] },
+            { codigo: 'HIST-404', nome: 'História', cargaHoraria: 100, turmas: ['7º Ano D', '8º Ano C'], professores: ['Rafael Nunes'] }
         ],
         academico: [
-            { id: '3º-ano-a|20260001|matematica|1º-bimestre', alunoId: 'aluno-20260001', matricula: '20260001', alunoNome: 'Ana Exemplo', turma: '3º Ano A', disciplina: 'Matemática', bimestre: '1º Bimestre', n1: 8.5, n2: 7, n3: 9, media: 8.2, aulasDadas: 40, presencas: 38, faltas: 2, frequencia: 95, situacao: 'Aprovado', fechado: true },
-            { id: '3º-ano-a|20260002|matematica|1º-bimestre', alunoId: 'aluno-20260002', matricula: '20260002', alunoNome: 'Bruno Exemplo', turma: '3º Ano A', disciplina: 'Matemática', bimestre: '1º Bimestre', n1: 5.5, n2: 6, n3: 4.5, media: 5.3, aulasDadas: 40, presencas: 31, faltas: 9, frequencia: 77.5, situacao: 'Recuperação', fechado: true },
-            { id: '3º-ano-a|20260001|lingua-portuguesa|1º-bimestre', alunoId: 'aluno-20260001', matricula: '20260001', alunoNome: 'Ana Exemplo', turma: '3º Ano A', disciplina: 'Língua Portuguesa', bimestre: '1º Bimestre', n1: 8, n2: 7, n3: 9, media: 8, aulasDadas: 40, presencas: 40, faltas: 0, frequencia: 100, situacao: 'Aprovado', fechado: true },
-            { id: '3º-ano-a|20260002|lingua-portuguesa|1º-bimestre', alunoId: 'aluno-20260002', matricula: '20260002', alunoNome: 'Bruno Exemplo', turma: '3º Ano A', disciplina: 'Língua Portuguesa', bimestre: '1º Bimestre', n1: 4, n2: 3.5, n3: 5, media: 4.2, aulasDadas: 40, presencas: 29, faltas: 11, frequencia: 72.5, situacao: 'Reprovado', fechado: true }
+            { id: '3º-ano-a|20260001|matematica|1º-bimestre', alunoId: 'aluno-20260001', matricula: '20260001', alunoNome: 'Ana Lima', turma: '3º Ano A', disciplina: 'Matemática', bimestre: '1º Bimestre', n1: 8.5, n2: 7, n3: 9, media: 8.2, aulasDadas: 40, presencas: 38, faltas: 2, frequencia: 95, situacao: 'Aprovado', fechado: true },
+            { id: '3º-ano-a|20260002|matematica|1º-bimestre', alunoId: 'aluno-20260002', matricula: '20260002', alunoNome: 'Bruno Reis', turma: '3º Ano A', disciplina: 'Matemática', bimestre: '1º Bimestre', n1: 5.5, n2: 6, n3: 4.5, media: 5.3, aulasDadas: 40, presencas: 31, faltas: 9, frequencia: 77.5, situacao: 'Recuperação', fechado: true },
+            { id: '3º-ano-a|20260001|lingua-portuguesa|1º-bimestre', alunoId: 'aluno-20260001', matricula: '20260001', alunoNome: 'Ana Lima', turma: '3º Ano A', disciplina: 'Língua Portuguesa', bimestre: '1º Bimestre', n1: 8, n2: 7, n3: 9, media: 8, aulasDadas: 40, presencas: 40, faltas: 0, frequencia: 100, situacao: 'Aprovado', fechado: true },
+            { id: '3º-ano-a|20260002|lingua-portuguesa|1º-bimestre', alunoId: 'aluno-20260002', matricula: '20260002', alunoNome: 'Bruno Reis', turma: '3º Ano A', disciplina: 'Língua Portuguesa', bimestre: '1º Bimestre', n1: 4, n2: 3.5, n3: 5, media: 4.2, aulasDadas: 40, presencas: 29, faltas: 11, frequencia: 72.5, situacao: 'Reprovado', fechado: true },
+            { id: '6º-ano-a|20260003|matematica|1º-bimestre', alunoId: 'aluno-20260003', matricula: '20260003', alunoNome: 'Lia Santos', turma: '6º Ano A', disciplina: 'Matemática', bimestre: '1º Bimestre', n1: 3.5, n2: 4, n3: 5, media: 4.2, aulasDadas: 40, presencas: 28, faltas: 12, frequencia: 70, situacao: 'Reprovado', fechado: false },
+            { id: '6º-ano-a|20260004|matematica|2º-bimestre', alunoId: 'aluno-20260004', matricula: '20260004', alunoNome: 'Miguel Costa', turma: '6º Ano A', disciplina: 'Matemática', bimestre: '2º Bimestre', n1: 6.5, n2: 7, n3: null, media: null, aulasDadas: 20, presencas: 18, faltas: 2, frequencia: 90, situacao: 'Em andamento', fechado: false }
         ],
         ocorrencias: [
-            { id: 'db-OCO-DEMO-001', protocolo: 'OCO-DEMO-001', alunoId: 'aluno-20260001', aluno: 'Ana Exemplo', turma: '3º Ano A', data: '18/03/2026', tipo: 'Pedagógica', gravidade: 'Baixa', descricao: 'Acompanhamento de atividade.', status: 'Pendente', autor: 'Caio Exemplo' }
+            { id: 'db-OCO-DEMO-001', protocolo: 'OCO-DEMO-001', alunoId: 'aluno-20260001', aluno: 'Ana Lima', turma: '3º Ano A', data: '18/03/2026', tipo: 'Pedagógica', gravidade: 'Baixa', descricao: 'Acompanhamento de atividade.', status: 'Aberta', autor: 'Caio Silva' },
+            { id: 'db-OCO-DEMO-002', protocolo: 'OCO-DEMO-002', alunoId: 'aluno-20260002', aluno: 'Bruno Reis', turma: '3º Ano A', data: '20/03/2026', tipo: 'Comportamental', gravidade: 'Média', descricao: 'Conversar com o responsável sobre atrasos.', status: 'Pendente', autor: 'Beatriz Rocha' },
+            { id: 'db-OCO-DEMO-003', protocolo: 'OCO-DEMO-003', alunoId: 'aluno-20260003', aluno: 'Lia Santos', turma: '6º Ano A', data: '22/03/2026', tipo: 'Frequência', gravidade: 'Alta', descricao: 'Retorno escolar acompanhado pela equipe.', status: 'Resolvida', autor: 'Rafael Nunes' }
         ],
         atestados: [
-            { id: 'db-atestado-1', tipo: 'aluno', alunoNome: 'Ana Exemplo', motivo: 'Ausência justificada no exemplo', dataInicio: '2026-03-19', dataFim: '2026-03-20', status: 'Recebido' }
+            { id: 'db-atestado-1', tipo: 'aluno', alunoNome: 'Ana Lima', motivo: 'Consulta médica', dataInicio: '2026-03-19', dataFim: '2026-03-20', status: 'Recebido' },
+            { id: 'db-atestado-2', tipo: 'aluno', alunoNome: 'Lia Santos', motivo: 'Afastamento por saúde', dataInicio: '2026-03-21', dataFim: '2026-03-23', status: 'Aceito' }
         ],
         comunicados: [
-            { id: 'db-comunicado-1', titulo: 'Reunião do bimestre', tipo: 'Aviso', texto: 'Exemplo de convite para a reunião escolar.', status: 'Rascunho', destinatarios: ['Responsáveis'] }
+            { id: 'db-comunicado-1', titulo: 'Reunião do bimestre', tipo: 'Aviso', texto: 'Convite para a reunião de responsáveis.', status: 'Rascunho', destinatarios: ['Responsáveis'] },
+            { id: 'db-comunicado-2', titulo: 'Entrega dos boletins', tipo: 'Informativo', texto: 'Os boletins do primeiro bimestre estão disponíveis.', status: 'Enviado', destinatarios: ['Alunos', 'Responsáveis'], enviadoEm: '2026-04-17T12:00:00.000Z' },
+            { id: 'db-comunicado-3', titulo: 'Feira de Ciências', tipo: 'Evento', texto: 'Cronograma das apresentações da Feira de Ciências.', status: 'Enviado', destinatarios: ['Alunos', 'Professores', 'Responsáveis'], enviadoEm: '2026-04-18T12:00:00.000Z' }
         ]
     });
 
@@ -90,11 +108,11 @@
         'atestados',
         'notasFrequencia'
     ]);
-    const SQL_DEMO_MIGRATION_KEY = 'educonnect_sql_demo_v1';
+    const SQL_DEMO_MIGRATION_KEY = 'educonnect_sql_demo_v2';
     const LEGACY_DEMO_IDS = Object.freeze({
-        alunos: ['20240001', '20240002', '20230142', '20240003', '20220311', '20240004', '20260005'],
-        professores: ['PROF202101', 'PROF201915', 'PROF202208', 'PROF201804', 'PROF202302', 'PROF202117'],
-        profissionais: ['EMP202005', 'EMP202112', 'EMP201903', 'EMP202245', 'EMP202011', 'EMP202310'],
+        alunos: ['20240001', '20240002', '20230142', '20240003', '20220311', '20240004', '20260001', '20260002', '20260003', '20260005'],
+        professores: ['PROF202101', 'PROF201915', 'PROF202208', 'PROF201804', 'PROF202302', 'PROF202117', 'PROF2026001'],
+        profissionais: ['EMP202005', 'EMP202112', 'EMP201903', 'EMP202245', 'EMP202011', 'EMP202310', 'EMP2026001'],
         turmas: ['3A-EM', '3B-EM'],
         salas: ['sala-101', 'sala-102', 'sala-103', 'sala-104', 'sala-105', 'sala-106', 'laboratorio-a'],
         disciplinas: ['MAT-101', 'PORT-202'],
@@ -290,6 +308,10 @@
         });
     }
 
+    function clearCurrentActor() {
+        return write(KEYS.estudanteAtual, null);
+    }
+
     function getAcademicRecords() {
         return readArray(KEYS.academico).map((record) => ({
             // Campos adicionais, como marcadores de migração e fechamento,
@@ -455,6 +477,24 @@
         return next;
     }
 
+    function updateOccurrence(id, changes) {
+        const records = getOccurrences();
+        const index = records.findIndex((record) => record.id === id);
+        if (index < 0) return null;
+        const allowed = ['status', 'descricao', 'gravidade'];
+        const patch = Object.fromEntries(allowed
+            .filter((key) => changes[key] != null)
+            .map((key) => [key, String(changes[key]).trim()]));
+        records[index] = { ...records[index], ...patch, atualizadoEm: nowIso() };
+        if (!saveOccurrences(records)) return null;
+        addAudit({
+            modulo: 'Ocorrências',
+            acao: 'Atualização',
+            descricao: `Atualizou a ocorrência ${records[index].protocolo} para ${records[index].status}.`
+        });
+        return records[index];
+    }
+
     function getCommunications() {
         return readArray(KEYS.comunicados);
     }
@@ -608,7 +648,12 @@
             if (!saveCollection(key, [...records, ...replacements])) migrated = false;
         });
 
-        const legacyStudentIds = new Set(LEGACY_DEMO_IDS.alunos);
+        const legacyStudentIds = new Set([
+            ...LEGACY_DEMO_IDS.alunos,
+            '20260001',
+            '20260002',
+            '20260003'
+        ]);
         const academic = readArray(KEYS.academico).filter((record) =>
             !legacyStudentIds.has(String(record?.matricula ?? ''))
         );
@@ -718,6 +763,7 @@
         getCurrentActor,
         setCurrentActor,
         setCurrentStudent,
+        clearCurrentActor,
         getAcademicRecords,
         buildAcademicId,
         calculateAverage,
@@ -729,6 +775,7 @@
         saveOccurrences,
         nextOccurrenceProtocol,
         addOccurrence,
+        updateOccurrence,
         getCommunications,
         saveCommunications,
         addCommunication,
@@ -749,4 +796,10 @@
     });
 
     initializeLocalData();
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.logout a, .sair a').forEach((link) => {
+            link.addEventListener('click', () => clearCurrentActor());
+        });
+    });
 })();

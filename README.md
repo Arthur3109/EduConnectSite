@@ -2,7 +2,7 @@
 
 **EduConnect** é um projeto educacional de desenvolvimento web voltado ao ambiente educacional, com o objetivo de oferecer uma plataforma digital que facilite a interação e o acesso a recursos relacionados à educação.
 
-O projeto foi desenvolvido como uma aplicação web, utilizando tecnologias fundamentais do desenvolvimento Full Stack, integrando a interface do usuário com uma estrutura de processamento no servidor e banco de dados.
+O projeto foi desenvolvido como uma aplicação web estática, utilizando tecnologias fundamentais do desenvolvimento Front-End e persistência local no navegador.
 
 ---
 
@@ -14,19 +14,19 @@ O projeto foi desenvolvido como uma aplicação web, utilizando tecnologias fund
 
 ## Sobre o projeto
 
-O EduConnect nasceu com a proposta de explorar o desenvolvimento de uma plataforma educacional, aplicando na prática conhecimentos de programação Front-End e Back-End.
+O EduConnect nasceu com a proposta de explorar o desenvolvimento de uma plataforma educacional, aplicando na prática conhecimentos de programação Front-End.
 
-A aplicação busca proporcionar uma experiência de navegação organizada, intuitiva e acessível, utilizando tecnologias web para estruturar suas páginas, processar informações e permitir a comunicação com o banco de dados.
+A aplicação busca proporcionar uma experiência de navegação organizada, intuitiva e acessível, utilizando tecnologias web para estruturar suas páginas e manter dados de demonstração no navegador.
 
 Este projeto também representa uma oportunidade de aplicar conceitos importantes da engenharia de software, como organização de código, estruturação de sistemas, integração entre tecnologias e desenvolvimento de interfaces.
 
 ## Objetivos
 
 - Desenvolver uma aplicação web voltada ao contexto educacional.
-- Aplicar conhecimentos de desenvolvimento Front-End e Back-End.
+- Aplicar conhecimentos de desenvolvimento Front-End.
 - Criar interfaces intuitivas e organizadas.
-- Trabalhar com processamento de informações no servidor.
-- Integrar a aplicação a um banco de dados relacional.
+- Trabalhar com armazenamento local no navegador.
+- Organizar dados de demonstração compartilhados entre as interfaces.
 - Praticar a organização e manutenção de projetos web.
 
 ## Tecnologias utilizadas
@@ -38,14 +38,13 @@ O projeto utiliza tecnologias tradicionais do desenvolvimento web:
 | HTML5      | Estruturação das páginas                     |
 | CSS3       | Estilização e identidade visual              |
 | JavaScript | Interatividade e comportamentos da interface |
-| PHP        | Processamento e funcionalidades no servidor  |
-| MySQL      | Gerenciamento e armazenamento de dados       |
+| LocalStorage | Persistência dos dados de demonstração      |
 
-**Observação:** A implementação utiliza tecnologias nativas, sem depender de frameworks JavaScript ou frameworks PHP.
+**Observação:** A implementação utiliza tecnologias nativas, sem depender de frameworks JavaScript.
 
 ## Arquitetura do projeto
 
-O EduConnect utiliza uma estrutura que separa as responsabilidades entre Front-End e Back-End.
+O EduConnect utiliza uma estrutura separada por áreas funcionais no Front-End.
 
 ### Front-End
 
@@ -56,17 +55,9 @@ Responsável pela experiência visual e pela interação com o usuário.
 - Interações e funcionalidades com JavaScript.
 - Organização dos elementos da interface.
 
-### Back-End
+### Persistência local
 
-Responsável pelo processamento das informações e pela comunicação com o banco de dados.
-
-- Processamento de requisições utilizando PHP.
-- Integração com o banco de dados MySQL.
-- Implementação da lógica de funcionamento da aplicação.
-
-### Banco de dados
-
-O MySQL é utilizado como sistema de gerenciamento de banco de dados, permitindo armazenar e consultar informações utilizadas pela aplicação.
+Os dados de demonstração são armazenados no `localStorage` do navegador pelo módulo compartilhado em `FrontEnd/assets/js/educonnect-backend.js`.
 
 ## Estrutura do projeto
 
@@ -80,13 +71,12 @@ EduConnectSite/
 │   ├── js/
 │   └── img/
 │
-├── includes/
-│
-├── pages/
-│
-├── config/
-│
-├── index.php
+├── assets/
+├── alunos/
+├── professor/
+├── secretaria/
+├── login/
+├── index.html
 ├── README.md
 └── ...
 ```
@@ -95,13 +85,11 @@ Os diretórios e arquivos podem variar conforme a implementação atual.
 
 ## Instalação e execução
 
-Para executar o projeto localmente, é necessário possuir um ambiente de desenvolvimento PHP com suporte ao MySQL.
+Para executar o projeto localmente, basta utilizar um servidor estático ou abrir os arquivos pelo navegador.
 
 ### 1. Pré-requisitos
 
-- PHP.
-- MySQL.
-- Servidor web local, como XAMPP.
+- Servidor web estático opcional.
 - Navegador atualizado.
 - Git (opcional).
 
@@ -119,9 +107,7 @@ cd EduConnectSite
 
 ### 4. Configurar o ambiente
 
-Inicie o servidor Apache e o MySQL pelo ambiente local.
-
-Configure as credenciais de conexão com o banco de dados conforme os arquivos de configuração existentes no projeto.
+Nenhuma configuração de banco de dados ou servidor de aplicação é necessária para a demonstração.
 
 ### 5. Executar
 
@@ -133,7 +119,35 @@ Exemplo:
 http://localhost/EduConnectSite/
 ```
 
-**Importante:** A configuração definitiva depende dos arquivos de conexão e da estrutura do banco de dados presentes no repositório.
+**Importante:** Os dados são armazenados no navegador por meio do `localStorage`.
+
+Este repositório é uma demonstração acadêmica local. Os arquivos em `BackEnd/`
+contêm o modelo e os dados de exemplo em SQL, mas não precisam estar ativos
+para executar as páginas em `FrontEnd/`.
+
+Os dados iniciais do banco e do `localStorage` foram padronizados com os mesmos
+nomes, matrículas, turmas, professores, profissionais e disciplinas. Os scripts
+SQL continuam separados da execução Front-End e servem para o trabalho acadêmico.
+
+Para recriar os dados SQL, execute primeiro `db_Educonnect-CD 281020261228.sql`
+uma única vez para criar o banco e as tabelas; em seguida, execute
+`db_Educonnect-Insert 261120261936.sql`. Para apagar todos os registros e manter
+o esquema vazio, execute `db_Educonnect-Limpar_Dados.sql`. Esse último script
+não remove o banco nem as tabelas; ele exibe a contagem final de registros por
+tabela e, depois, o arquivo de INSERT pode ser executado novamente. A limpeza
+é destrutiva: use somente no banco de demonstração e após fazer qualquer cópia
+de segurança necessária.
+
+### Acessos de demonstração
+
+| Perfil | E-mail | Senha |
+|---|---|---|
+| Professor | `professor@gmail.com` | `123` |
+| Secretaria | `secretaria@gmail.com` | `123` |
+| Aluno | `aluno@gmail.com` | `123` |
+
+Para reiniciar os dados de demonstração, limpe o armazenamento do site nas
+configurações do navegador e recarregue a página inicial.
 
 ## Segurança
 
@@ -143,16 +157,15 @@ O desenvolvimento de aplicações que trabalham com informações exige atençã
 - Proteção de dados armazenados.
 - Controle adequado de acesso.
 - Tratamento de requisições.
-- Cuidados com credenciais de banco de dados.
+- Proteção dos dados mantidos no navegador.
 
 ## Aprendizados
 
 O desenvolvimento do EduConnect proporciona experiência prática em:
 
 - Desenvolvimento de aplicações web.
-- Integração entre Front-End e Back-End.
-- Programação utilizando PHP.
-- Manipulação de bancos de dados MySQL.
+- Estruturação de interfaces web.
+- Persistência de dados no navegador.
 - Estruturação de interfaces com HTML e CSS.
 - Utilização de JavaScript para interatividade.
 - Organização e manutenção de código.

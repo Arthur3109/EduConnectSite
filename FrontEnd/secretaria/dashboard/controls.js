@@ -7,6 +7,7 @@
 
     const THEME_KEY = 'educonnect_secretaria_theme';
     const ATESTADOS_KEY = 'educonnect_atestados';
+    const NOTIFICATIONS_SEEN_KEY = 'educonnect_notificacoes_vistas';
 
     function createElement(tag, className, text = '') {
         const element = document.createElement(tag);
@@ -125,8 +126,10 @@
         }
     }
 
-    function createAlert(title, description, date = '') {
+    function createAlert(id, title, description, date = '', isSeen = false) {
         const article = createElement('article', 'dashboard-alert');
+        article.dataset.notificationId = id;
+        article.classList.toggle('dashboard-alert--seen', isSeen);
         article.append(
             createElement('strong', 'dashboard-alert__title', title),
             createElement('p', 'dashboard-alert__description', description)
@@ -140,6 +143,11 @@
                 : parsedDate.toLocaleString('pt-BR');
             article.append(timestamp);
         }
+        const markSeen = createElement('button', 'dashboard-alert__mark-seen', isSeen ? 'Vista' : 'Marcar como vista');
+        markSeen.type = 'button';
+        markSeen.dataset.markNotificationSeen = '';
+        markSeen.disabled = isSeen;
+        article.append(markSeen);
         return article;
     }
 
@@ -148,28 +156,42 @@
         const count = document.getElementById('notification-count');
         if (!list || !count) return;
 
+        const seenValue = backend.read(NOTIFICATIONS_SEEN_KEY, []);
+        const seen = new Set(Array.isArray(seenValue) ? seenValue.filter((id) => typeof id === 'string') : []);
         const alerts = [];
+        const pushAlert = (record, type, title, description, date) => {
+            const stablePart = record.id || record.protocolo || record.titulo || record.aluno || title;
+            const id = `${type}:${stablePart}:${date || ''}`;
+            alerts.push({
+                id,
+                element: createAlert(id, title, description, date, seen.has(id))
+            });
+        };
         backend.getOccurrences()
             .filter((record) => record && typeof record === 'object'
                 && ['aberta', 'pendente'].includes(backend.normalizeText(record.status)))
             .slice(0, 5)
-            .forEach((record) => alerts.push(createAlert(
+            .forEach((record) => pushAlert(
+                record,
+                'ocorrencia',
                 `Ocorrência pendente: ${record.aluno || 'Aluno não identificado'}`,
                 [record.tipo, record.gravidade, record.descricao].filter(Boolean).join(' · ')
                     || 'Há uma ocorrência aguardando acompanhamento.',
                 record.criadoEm
-            )));
+            ));
         backend.readArray(ATESTADOS_KEY)
             .filter((record) => record && typeof record === 'object'
                 && ['enviado', 'pendente', 'em analise', 'recebido'].includes(backend.normalizeText(record.status)))
             .slice(0, 5)
-            .forEach((record) => alerts.push(createAlert(
+            .forEach((record) => pushAlert(
+                record,
+                'atestado',
                 `Atestado recebido: ${record.professorNome || record.alunoNome || 'Solicitante'}`,
                 [record.motivo, record.dataInicio && record.dataFim
                     ? `${record.dataInicio} a ${record.dataFim}`
                     : 'Período não informado'].filter(Boolean).join(' · '),
                 record.criadoEm
-            )));
+            ));
         backend.getCommunications()
             .filter((record) => {
                 if (!record || typeof record !== 'object'
@@ -183,16 +205,35 @@
                 });
             })
             .slice(0, 5)
-            .forEach((record) => alerts.push(createAlert(
+            .forEach((record) => pushAlert(
+                record,
+                'comunicado',
                 record.titulo || 'Comunicado da Secretaria',
                 record.texto || 'Comunicado publicado para a Secretaria.',
                 record.enviadoEm || record.criadoEm
-            )));
+            ));
 
-        count.textContent = String(alerts.length);
-        list.replaceChildren(...alerts);
+        const unreadAlerts = alerts.filter((alert) => !seen.has(alert.id));
+        count.textContent = String(unreadAlerts.length);
+        count.hidden = unreadAlerts.length === 0;
+        const notificationsButton = document.getElementById('notifications-button');
+        notificationsButton?.setAttribute(
+            'aria-label',
+            `Abrir informações importantes, ${unreadAlerts.length} não lidas`
+        );
+        const children = [];
+        if (unreadAlerts.length) {
+            const markAll = createElement('button', 'dashboard-alerts__mark-all', 'Marcar todas como vistas');
+            markAll.type = 'button';
+            markAll.dataset.markAllNotificationsSeen = '';
+            children.push(markAll);
+        }
+        children.push(...alerts.map((alert) => alert.element));
+        list.replaceChildren(...children);
         if (!alerts.length) {
             list.append(createElement('p', 'dashboard-empty', 'Não há pendências ou avisos importantes no momento.'));
+        } else if (!unreadAlerts.length) {
+            list.prepend(createElement('p', 'dashboard-empty', 'Todas as notificações foram vistas.'));
         }
     }
 
@@ -223,6 +264,28 @@
         notificationsButton?.addEventListener('click', () => {
             renderAlerts(backend);
             notificationsDialog?.showModal();
+        });
+        document.getElementById('dashboard-alerts')?.addEventListener('click', (event) => {
+            const target = event.target;
+            const markAll = target.closest('[data-mark-all-notifications-seen]');
+            const markOne = target.closest('[data-mark-notification-seen]');
+            if (!markAll && !markOne) return;
+            const current = backend.read(NOTIFICATIONS_SEEN_KEY, []);
+            const seen = new Set(Array.isArray(current) ? current.filter((id) => typeof id === 'string') : []);
+            if (markAll) {
+                document.querySelectorAll('#dashboard-alerts [data-notification-id]')
+                    .forEach((alert) => seen.add(alert.dataset.notificationId));
+            } else {
+                const alert = markOne.closest('[data-notification-id]');
+                if (alert) seen.add(alert.dataset.notificationId);
+            }
+            if (backend.write(NOTIFICATIONS_SEEN_KEY, [...seen])) {
+                renderAlerts(backend);
+            } else {
+                const feedback = createElement('p', 'dashboard-empty', 'Não foi possível registrar que a notificação foi vista.');
+                feedback.setAttribute('role', 'status');
+                document.getElementById('dashboard-alerts')?.prepend(feedback);
+            }
         });
         settingsButton?.addEventListener('click', () => settingsDialog?.showModal());
         themeToggle?.addEventListener('change', () => {

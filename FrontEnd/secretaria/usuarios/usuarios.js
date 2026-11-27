@@ -38,9 +38,14 @@
                 { key: 'status', label: 'Status', allLabel: 'Todos' }
             ],
             mockData: [
-                { codigo: '20260001', nome: 'Ana Exemplo', turma: '3º Ano A', serie: '3º ano', status: 'Ativo' },
-                { codigo: '20260002', nome: 'Bruno Exemplo', turma: '3º Ano A', serie: '3º ano', status: 'Ativo' },
-                { codigo: '20260003', nome: 'Lia Exemplo', turma: '6º Ano A', serie: '6º ano', status: 'Ativo' }
+                { codigo: '20260001', nome: 'Ana Lima', turma: '3º Ano A', serie: '3º ano', status: 'Ativo' },
+                { codigo: '20260002', nome: 'Bruno Reis', turma: '3º Ano A', serie: '3º ano', status: 'Ativo' },
+                { codigo: '20260003', nome: 'Lia Santos', turma: '6º Ano A', serie: '6º ano', status: 'Ativo' },
+                { codigo: '20260004', nome: 'Miguel Costa', turma: '6º Ano A', serie: '6º ano', status: 'Ativo' },
+                { codigo: '20260005', nome: 'Sofia Oliveira', turma: '6º Ano B', serie: '6º ano', status: 'Ativo' },
+                { codigo: '20260006', nome: 'Davi Mendes', turma: '7º Ano A', serie: '7º ano', status: 'Ativo' },
+                { codigo: '20260007', nome: 'Helena Souza', turma: '7º Ano D', serie: '7º ano', status: 'Ativo' },
+                { codigo: '20260008', nome: 'Lucas Pereira', turma: '8º Ano C', serie: '8º ano', status: 'Ativo' }
             ]
         },
         professores: {
@@ -73,7 +78,9 @@
                 { key: 'status', label: 'Status', allLabel: 'Todos' }
             ],
             mockData: [
-                { codigo: 'PROF2026001', nome: 'Caio Exemplo', disciplina: 'Matemática e Língua Portuguesa', turmas: '3º Ano A, 6º Ano A', status: 'Ativo' }
+                { codigo: 'PROF2026001', nome: 'Caio Silva', disciplina: 'Matemática', turmas: '3º Ano A, 6º Ano A', status: 'Ativo' },
+                { codigo: 'PROF2026002', nome: 'Beatriz Rocha', disciplina: 'Língua Portuguesa', turmas: '3º Ano A, 6º Ano B', status: 'Ativo' },
+                { codigo: 'PROF2026003', nome: 'Rafael Nunes', disciplina: 'Ciências e História', turmas: '7º Ano A, 7º Ano D, 8º Ano C', status: 'Ativo' }
             ]
         },
         profissionais: {
@@ -106,7 +113,9 @@
                 { key: 'status', label: 'Status', allLabel: 'Todos' }
             ],
             mockData: [
-                { codigo: 'EMP2026001', nome: 'Clara Exemplo', cargo: 'Secretária', departamento: 'Secretaria escolar', status: 'Ativo' }
+                { codigo: 'EMP2026001', nome: 'Clara Dias', cargo: 'Secretária', departamento: 'Secretaria escolar', status: 'Ativo' },
+                { codigo: 'EMP2026002', nome: 'Marcos Almeida', cargo: 'Coordenador Pedagógico', departamento: 'Coordenação', status: 'Ativo' },
+                { codigo: 'EMP2026003', nome: 'Paula Ferreira', cargo: 'Diretora', departamento: 'Direção', status: 'Ativo' }
             ]
         }
     };
@@ -179,10 +188,15 @@
          * @returns {void}
          */
         set(type, records) {
+            const key = `${STORAGE_PREFIX}${type}`;
+            const backend = window.EduConnectBackend;
+            if (backend) return backend.write(key, records);
             try {
-                localStorage.setItem(`${STORAGE_PREFIX}${type}`, JSON.stringify(records));
+                localStorage.setItem(key, JSON.stringify(records));
+                return true;
             } catch (error) {
                 console.error(`Não foi possível salvar ${type} no LocalStorage.`, error);
+                return false;
             }
         },
 
@@ -619,7 +633,12 @@
                 records.unshift(updatedRecord);
             }
 
-            storageManager.set(type, records);
+            if (!storageManager.set(type, records)) return;
+            window.EduConnectBackend?.addAudit({
+                modulo: config.plural,
+                acao: currentMode === 'edit' ? 'Edição' : 'Cadastro',
+                descricao: `${currentMode === 'edit' ? 'Atualizou' : 'Cadastrou'} ${config.name.toLocaleLowerCase('pt-BR')} ${updatedRecord.nome}.`
+            });
             state.page = 1;
             renderTable();
             dialog.close();
@@ -664,7 +683,12 @@
                 // Atualiza estado e LocalStorage antes de redesenhar a linha visível.
                 record.status = record.status === 'Ativo' ? 'Inativo' : 'Ativo';
                 record.atualizadoEm = new Date().toISOString();
-                storageManager.set(type, records);
+                if (!storageManager.set(type, records)) return;
+                window.EduConnectBackend?.addAudit({
+                    modulo: config.plural,
+                    acao: 'Status',
+                    descricao: `Alterou o status de ${record.nome} para ${record.status}.`
+                });
                 renderTable();
             }
         });

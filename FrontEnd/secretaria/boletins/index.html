@@ -94,12 +94,13 @@
                         <div class="boletim-preview">
                             <div class="preview-topo">
                                 <div>
-                                    <strong>EduConnect High School</strong>
-                                    <p>Boletim Escolar Oficial</p>
+                                    <strong>EduConnect — Sistema de Gestão Escolar</strong>
+                                    <p>Histórico Acadêmico do Estudante</p>
                                 </div>
                                 <div class="preview-info-aluno">
                                     <span id="preview-matricula">Matrícula: —</span>
                                     <span id="preview-turma">Turma: —</span>
+                                    <span id="preview-emissao"></span>
                                 </div>
                             </div>
 
@@ -121,6 +122,10 @@
                                 <span id="preview-faltas">Total de Faltas: <strong>—</strong></span>
                                 <span id="preview-frequencia">Frequência: <strong>—</strong></span>
                             </div>
+                            <p class="preview-print-note">
+                                Documento demonstrativo gerado pelo sistema EduConnect. Para validação acadêmica,
+                                consulte a Secretaria Escolar.
+                            </p>
                         </div>
 
                         <!-- Ações do Boletim -->
@@ -145,6 +150,25 @@
             </div>
         </div>
     </div>
+    <dialog class="email-dialog" id="email-dialog" aria-labelledby="email-dialog-title">
+        <form id="email-form" class="email-dialog__form">
+            <h2 id="email-dialog-title">Preparar envio do boletim</h2>
+            <p class="email-dialog__help">
+                O EduConnect abrirá o aplicativo de e-mail padrão com o conteúdo preenchido.
+                Revise a mensagem e envie por esse aplicativo.
+            </p>
+            <label for="email-recipient">E-mail do destinatário</label>
+            <input id="email-recipient" name="email" type="email" required autocomplete="email">
+            <label for="email-subject">Assunto</label>
+            <input id="email-subject" name="subject" type="text" readonly>
+            <label for="email-body">Prévia da mensagem</label>
+            <textarea id="email-body" name="body" rows="10" readonly></textarea>
+            <div class="email-dialog__actions">
+                <button type="button" class="btn-acao" data-close-email>Cancelar</button>
+                <button type="submit" class="btn-acao primario">Abrir aplicativo de e-mail</button>
+            </div>
+        </form>
+    </dialog>
     <script src="../../assets/js/educonnect-backend.js"></script>
     <script src="../dashboard/controls.js"></script>
     <script src="boletins.js"></script>

@@ -1,128 +1,214 @@
-/**
- * Reúne os serviços específicos do Professor: formulários, navegação por abas
- * e leitura dos comunicados publicados pela Secretaria.
- */
 (() => {
     'use strict';
 
-    const ATESTADOS_KEY = 'educonnect_atestados';
-    const MAX_PDF_SIZE = 2 * 1024 * 1024;
     const backend = window.EduConnectBackend;
+    const MAX_PDF_SIZE = 2 * 1024 * 1024;
+    const normalize = (value) => backend.normalizeText(value);
 
-    /**
-     * Cria elementos de texto com textContent para que registros armazenados
-     * nunca sejam interpretados como HTML.
-     */
-    function textElement(tag, className, value) {
-        const element = document.createElement(tag);
-        if (className) element.className = className;
-        element.textContent = value ?? '';
-        return element;
+    function showFeedback(element, message, isError = false) {
+        element.textContent = message;
+        element.classList.toggle('form-feedback--error', isError);
     }
 
-    /**
-     * Usa o nome do ator somente quando a identidade armazenada é de Professor;
-     * assim, uma sessão previamente usada como aluno não aparece como docente.
-     */
-    function getProfessor() {
-        const actor = backend.getCurrentActor();
-        const isTeacher = backend.normalizeText(actor?.tipo).includes('professor');
-        return {
-            uid: isTeacher ? String(actor.uid ?? '') : '',
-            nome: isTeacher && actor.nome ? String(actor.nome).trim() : 'Professor'
-        };
-    }
-
-    /**
-     * Exibe datas ISO ou textos antigos sem alterar o formato persistido.
-     */
-    function formatDate(value) {
-        if (!value) return 'Data não informada';
-        const date = new Date(value);
-        if (Number.isNaN(date.getTime())) return String(value);
-        return new Intl.DateTimeFormat('pt-BR', {
-            dateStyle: 'short',
-            timeStyle: 'short'
-        }).format(date);
-    }
-
-    /**
-     * Trata "Todos" e listas antigas em texto, mantendo apenas avisos enviados
-     * explicitamente aos professores ou a toda a comunidade escolar.
-     */
-    function isForTeachers(record) {
-        const recipients = Array.isArray(record.destinatarios)
-            ? record.destinatarios
-            : String(record.destinatarios ?? '').split(',');
-        return recipients.some((recipient) => {
-            const normalized = backend.normalizeText(recipient);
-            return normalized === 'todos' || normalized === 'professores' || normalized === 'professor';
+    function readPdf(file) {
+        if (file.size > MAX_PDF_SIZE) {
+            return Promise.reject(new Error('O PDF deve ter no máximo 2 MB.'));
+        }
+        if (!/\.pdf$/i.test(file.name) || (file.type && file.type !== 'application/pdf')) {
+            return Promise.reject(new Error('Selecione um arquivo PDF válido.'));
+        }
+        return file.slice(0, 5).text().then((signature) => {
+            if (signature !== '%PDF-') throw new Error('O arquivo não possui uma assinatura PDF válida.');
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.addEventListener('load', () => {
+                    if (typeof reader.result === 'string') resolve(reader.result);
+                    else reject(new Error('Não foi possível ler o PDF.'));
+                });
+                reader.addEventListener('error', () => reject(reader.error || new Error('Não foi possível ler o PDF.')));
+                reader.readAsDataURL(file);
+            });
         });
     }
 
-    /**
-     * Renderiza somente comunicados enviados, em ordem cronológica decrescente,
-     * e informa claramente quando a Secretaria ainda não publicou avisos.
-     */
-    function renderCommunications() {
-        const list = document.getElementById('comunicados-list');
-        const count = document.getElementById('comunicados-count');
-        if (!list || !count) return;
-
-        const records = backend.getCommunications()
-            .filter((record) =>
-                record
-                && typeof record === 'object'
-                && backend.normalizeText(record.status) === 'enviado'
-                && isForTeachers(record)
-            )
-            .sort((first, second) =>
-                String(second.enviadoEm || second.criadoEm || '')
-                    .localeCompare(String(first.enviadoEm || first.criadoEm || ''))
-            );
-
-        list.replaceChildren();
-        count.textContent = `${records.length} ${records.length === 1 ? 'comunicado' : 'comunicados'}`;
-        if (!records.length) {
-            list.append(textElement('p', 'empty-state',
-                'Ainda não há comunicados enviados para os professores.'));
+    function init() {
+        if (!backend) {
+            console.error('EduConnect: o núcleo de persistência não foi carregado para a área do Professor.');
             return;
         }
 
-        records.forEach((record) => {
-            const article = document.createElement('article');
-            article.className = 'teacher-communication';
+        const actor = backend.getCurrentActor();
+        const professorName = actor.tipo === 'professor' ? actor.nome : 'Caio Silva';
+        const name = document.getElementById('professor-name');
+        if (name) name.textContent = professorName;
 
-            const metadata = document.createElement('div');
-            metadata.className = 'teacher-communication__meta';
-            metadata.append(
-                textElement('span', 'teacher-communication__type', record.tipo || 'Informativo'),
-                textElement('time', '', formatDate(record.enviadoEm || record.criadoEm))
+        const classSelect = document.getElementById('ocorrencia-turma');
+        const studentSelect = document.getElementById('ocorrencia-aluno');
+        const occurrenceForm = document.getElementById('ocorrencia-form');
+        const occurrenceFeedback = document.getElementById('ocorrencia-feedback');
+        const attestationForm = document.getElementById('atestado-form');
+        const attestationFeedback = document.getElementById('atestado-feedback');
+        const pdfInput = document.getElementById('atestado-pdf');
+        const pdfName = document.getElementById('atestado-file-name');
+        const occurrenceTotal = document.getElementById('occurrences-total');
+
+        const classes = [...new Set(backend.getStudents().map((student) => student.turma).filter(Boolean))];
+        classes.forEach((className) => classSelect?.add(new Option(className, className)));
+
+        function populateStudents() {
+            if (!studentSelect) return;
+            const selectedClass = classSelect?.value ?? '';
+            const students = backend.getStudents().filter((student) =>
+                !selectedClass || normalize(student.turma) === normalize(selectedClass)
             );
-            article.append(
-                metadata,
-                textElement('h2', '', record.titulo || 'Comunicado'),
-                textElement('p', '', record.texto || '')
-            );
-            list.append(article);
-        });
-    }
-
-    /**
-     * Mantém as páginas das abas exclusivas e sincroniza o item ativo do menu
-     * com o fragmento da URL, permitindo também compartilhar links da aba.
-     */
-    function setupViews() {
-        const links = [...document.querySelectorAll('[data-view]')];
-        const panels = [...document.querySelectorAll('[data-view-panel]')];
-
-        function showView(viewName) {
-            const view = panels.some((panel) => panel.dataset.viewPanel === viewName)
-                ? viewName
-                : 'dashboard';
-            panels.forEach((panel) => {
-                panel.hidden = panel.dataset.viewPanel !== view;
+            const currentValue = studentSelect.value;
+            studentSelect.replaceChildren(new Option('Selecione um aluno', ''));
+            students.forEach((student) => {
+                const option = new Option(`${student.nome} — ${student.codigo}`, student.codigo);
+                studentSelect.add(option);
             });
+            if (students.some((student) => student.codigo === currentValue)) studentSelect.value = currentValue;
+        }
+
+        classSelect?.addEventListener('change', populateStudents);
+        populateStudents();
+
+        function updateOccurrenceTotal() {
+            if (occurrenceTotal) occurrenceTotal.textContent = String(backend.getOccurrences().length);
+        }
+
+        document.querySelectorAll('[data-open-dialog="ocorrencia-dialog"]').forEach((button) => {
+            button.addEventListener('click', () => {
+                const row = button.closest('tr');
+                const className = row?.cells[0]?.textContent.trim() ?? '';
+                if (classSelect && classes.includes(className)) classSelect.value = className;
+                populateStudents();
+                if (occurrenceFeedback) showFeedback(occurrenceFeedback, '');
+                document.getElementById('ocorrencia-dialog')?.showModal();
+            });
+        });
+
+        document.querySelectorAll('[data-open-dialog="atestado-dialog"]').forEach((button) => {
+            button.addEventListener('click', () => {
+                if (attestationFeedback) showFeedback(attestationFeedback, '');
+                document.getElementById('atestado-dialog')?.showModal();
+            });
+        });
+
+        let selectedPdf = null;
+        pdfInput?.addEventListener('change', async () => {
+            selectedPdf = null;
+            if (pdfName) pdfName.textContent = 'Nenhum arquivo selecionado.';
+            const file = pdfInput.files?.[0];
+            if (!file) return;
+            try {
+                await readPdf(file);
+                selectedPdf = file;
+                if (pdfName) pdfName.textContent = `${file.name} (${Math.ceil(file.size / 1024)} KB)`;
+            } catch (error) {
+                pdfInput.value = '';
+                if (attestationFeedback) showFeedback(attestationFeedback, error.message, true);
+            }
+        });
+
+        attestationForm?.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            if (!attestationForm.reportValidity()) return;
+            const values = Object.fromEntries(new FormData(attestationForm).entries());
+            if (values.dataFim < values.dataInicio) {
+                showFeedback(attestationFeedback, 'A data de término não pode ser anterior à data de início.', true);
+                attestationForm.elements.dataFim.focus();
+                return;
+            }
+            const record = {
+                id: backend.createId('atestado'),
+                tipo: 'professor',
+                professorId: actor.tipo === 'professor' ? actor.uid : '',
+                professorNome: professorName,
+                motivo: String(values.motivo).trim(),
+                dataInicio: String(values.dataInicio),
+                dataFim: String(values.dataFim),
+                observacoes: String(values.observacoes ?? '').trim(),
+                status: 'Enviado',
+                criadoEm: backend.nowIso()
+            };
+            if (selectedPdf) {
+                try {
+                    record.anexo = {
+                        nome: selectedPdf.name,
+                        tipo: 'application/pdf',
+                        tamanho: selectedPdf.size,
+                        conteudo: await readPdf(selectedPdf)
+                    };
+                } catch (error) {
+                    showFeedback(attestationFeedback, error.message, true);
+                    return;
+                }
+            }
+            const saved = backend.write('educonnect_atestados', [
+                record,
+                ...backend.readArray('educonnect_atestados')
+            ]);
+            if (!saved) {
+                showFeedback(attestationFeedback, 'Não foi possível salvar neste navegador.', true);
+                return;
+            }
+            backend.addAudit({
+                modulo: 'Atestados',
+                acao: 'Envio',
+                descricao: `O professor ${professorName} enviou um atestado.`
+            });
+            attestationForm.reset();
+            selectedPdf = null;
+            if (pdfName) pdfName.textContent = 'Nenhum arquivo selecionado.';
+            showFeedback(attestationFeedback, 'Atestado enviado e salvo neste navegador.');
+            window.setTimeout(() => document.getElementById('atestado-dialog')?.close(), 1200);
+        });
+
+        occurrenceForm?.addEventListener('submit', (event) => {
+            event.preventDefault();
+            if (!occurrenceForm.reportValidity()) return;
+            const values = Object.fromEntries(new FormData(occurrenceForm).entries());
+            const student = backend.getStudents().find((item) => item.codigo === values.aluno);
+            if (!student) {
+                showFeedback(occurrenceFeedback, 'Selecione um aluno cadastrado.', true);
+                return;
+            }
+            const record = backend.addOccurrence({
+                aluno: student.nome,
+                alunoId: `aluno-${student.codigo}`,
+                matricula: student.codigo,
+                turma: student.turma || values.turma,
+                tipo: values.tipo,
+                gravidade: values.gravidade,
+                descricao: String(values.descricao).trim(),
+                autor: professorName,
+                status: 'Aberta'
+            });
+            if (!record) {
+                showFeedback(occurrenceFeedback, 'Não foi possível salvar a ocorrência.', true);
+                return;
+            }
+            occurrenceForm.reset();
+            populateStudents();
+            updateOccurrenceTotal();
+            showFeedback(occurrenceFeedback, `Ocorrência ${record.protocolo} registrada.`);
+            window.setTimeout(() => document.getElementById('ocorrencia-dialog')?.close(), 1200);
+        });
+
+        window.addEventListener(backend.eventName, (event) => {
+            if (event.detail?.key === backend.keys.ocorrencias) updateOccurrenceTotal();
+        });
+        window.addEventListener('storage', (event) => {
+            if (event.key === backend.keys.ocorrencias) updateOccurrenceTotal();
+        });
+        updateOccurrenceTotal();
+
+        const panels = [...document.querySelectorAll('[data-view-panel]')];
+        const links = [...document.querySelectorAll('[data-view]')];
+        function showView(name) {
+            const view = panels.some((panel) => panel.dataset.viewPanel === name) ? name : 'dashboard';
+            panels.forEach((panel) => { panel.hidden = panel.dataset.viewPanel !== view; });
             links.forEach((link) => {
                 const active = link.dataset.view === view;
                 link.closest('li')?.classList.toggle('ativo', active);
@@ -131,241 +217,61 @@
             });
             if (view === 'comunicados') renderCommunications();
         }
-
-        links.forEach((link) => {
-            link.addEventListener('click', (event) => {
-                event.preventDefault();
-                const view = link.dataset.view;
-                history.replaceState(null, '', `#${view}`);
-                showView(view);
-            });
-        });
-
+        links.forEach((link) => link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const view = link.dataset.view;
+            history.replaceState(null, '', `#${view}`);
+            showView(view);
+        }));
         window.addEventListener('hashchange', () => showView(location.hash.slice(1)));
-        const initialView = location.hash.slice(1);
-        showView(initialView);
-    }
 
-    /**
-     * Preenche a seleção com as turmas que aparecem na tabela, mantendo os
-     * rótulos e a sequência já apresentada ao professor no painel.
-     */
-    function populateClasses() {
-        const select = document.getElementById('ocorrencia-turma');
-        const rows = [...document.querySelectorAll('.darkTable tbody tr')];
-        if (!select) return;
-
-        const classes = [...new Set(rows.map((row) => row.cells[0]?.textContent.trim()).filter(Boolean))];
-        classes.forEach((className) => select.add(new Option(className, className)));
-    }
-
-    /**
-     * Liga os controles de abertura e fechamento aos diálogos nativos. O
-     * navegador conserva o gerenciamento de foco e o fechamento com Escape.
-     */
-    function setupDialogs() {
-        document.querySelectorAll('[data-open-dialog]').forEach((button) => {
-            button.addEventListener('click', () => {
-                const dialog = document.getElementById(button.dataset.openDialog);
-                if (!dialog) return;
-
-                if (dialog.id === 'ocorrencia-dialog') {
-                    const row = button.closest('tr');
-                    const className = row?.cells[0]?.textContent.trim() ?? '';
-                    const classSelect = document.getElementById('ocorrencia-turma');
-                    if (classSelect) classSelect.value = className;
-                    const feedback = document.getElementById('ocorrencia-feedback');
-                    if (feedback) feedback.textContent = '';
-                }
-                if (dialog.id === 'atestado-dialog') {
-                    const feedback = document.getElementById('atestado-feedback');
-                    if (feedback) feedback.textContent = '';
-                }
-
-                dialog.showModal();
-                dialog.querySelector('input, select, textarea')?.focus();
+        const communicationList = document.getElementById('comunicados-list');
+        const communicationCount = document.getElementById('comunicados-count');
+        function renderCommunications() {
+            if (!communicationList || !communicationCount) return;
+            const records = backend.getCommunications()
+                .filter((record) => record && normalize(record.status) === 'enviado')
+                .filter((record) => {
+                    const recipients = Array.isArray(record.destinatarios)
+                        ? record.destinatarios : String(record.destinatarios ?? '').split(',');
+                    return recipients.some((recipient) => ['todos', 'professores', 'professor']
+                        .includes(normalize(recipient)));
+                })
+                .sort((a, b) => String(b.enviadoEm || b.criadoEm || '').localeCompare(String(a.enviadoEm || a.criadoEm || '')));
+            communicationList.replaceChildren();
+            communicationCount.textContent = `${records.length} ${records.length === 1 ? 'comunicado' : 'comunicados'}`;
+            if (!records.length) {
+                const empty = document.createElement('p');
+                empty.className = 'empty-state';
+                empty.textContent = 'Ainda não há comunicados enviados para os professores.';
+                communicationList.append(empty);
+                return;
+            }
+            records.forEach((record) => {
+                const article = document.createElement('article');
+                article.className = 'teacher-communication';
+                const heading = document.createElement('h2');
+                heading.textContent = record.titulo || 'Comunicado';
+                const message = document.createElement('p');
+                message.textContent = record.texto || '';
+                const time = document.createElement('time');
+                const date = record.enviadoEm || record.criadoEm;
+                time.textContent = date ? new Date(date).toLocaleString('pt-BR') : 'Data não informada';
+                article.append(heading, message, time);
+                communicationList.append(article);
             });
+        }
+        showView(location.hash.slice(1));
+        window.addEventListener(backend.eventName, (event) => {
+            if (event.detail?.key === backend.keys.comunicados) renderCommunications();
+        });
+        window.addEventListener('storage', (event) => {
+            if (event.key === backend.keys.comunicados) renderCommunications();
         });
 
         document.querySelectorAll('[data-close-dialog]').forEach((button) => {
             button.addEventListener('click', () => button.closest('dialog')?.close());
         });
-    }
-
-    /**
-     * Lê o arquivo selecionado para serialização em localStorage, rejeitando
-     * anexos que excedem o limite de tamanho do formulário.
-     */
-    function readPdf(file) {
-        if (file.size > MAX_PDF_SIZE) {
-            return Promise.reject(new Error('O arquivo PDF deve ter no máximo 2 MB.'));
-        }
-        if (!/\.pdf$/i.test(file.name) || (file.type && file.type !== 'application/pdf')) {
-            return Promise.reject(new Error('Selecione um arquivo PDF válido.'));
-        }
-
-        return file.slice(0, 5).text().then((signature) => {
-            if (signature !== '%PDF-') {
-                throw new Error('O arquivo selecionado não possui uma assinatura PDF válida.');
-            }
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.addEventListener('load', () => {
-                    if (typeof reader.result === 'string') resolve(reader.result);
-                    else reject(new Error('O navegador não conseguiu preparar o PDF.'));
-                });
-                reader.addEventListener('error', () => {
-                    reject(reader.error || new Error('Não foi possível ler o PDF.'));
-                });
-                reader.addEventListener('abort', () => reject(new Error('A leitura do PDF foi cancelada.')));
-                reader.readAsDataURL(file);
-            });
-        });
-    }
-
-    /**
-     * Salva a justificativa na chave de atestados já utilizada pelo painel do
-     * aluno, sem substituir registros existentes nem modificar outras chaves.
-     */
-    function setupAtestadoForm() {
-        const form = document.getElementById('atestado-form');
-        const feedback = document.getElementById('atestado-feedback');
-        if (!form || !feedback) return;
-
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            if (!form.reportValidity()) return;
-
-            feedback.textContent = '';
-            const values = Object.fromEntries(new FormData(form).entries());
-            if (values.dataFim < values.dataInicio) {
-                feedback.textContent = 'A data de término não pode ser anterior à data de início.';
-                form.elements.dataFim.focus();
-                return;
-            }
-
-            const professor = getProfessor();
-            const record = {
-                id: backend.createId('atestado'),
-                tipo: 'professor',
-                professorId: professor.uid || null,
-                professorNome: professor.nome,
-                motivo: String(values.motivo).trim(),
-                dataInicio: String(values.dataInicio),
-                dataFim: String(values.dataFim),
-                observacoes: String(values.observacoes ?? '').trim(),
-                status: 'Enviado',
-                criadoEm: backend.nowIso()
-            };
-
-            const file = form.elements.atestadoPdf.files?.[0];
-            if (file) {
-                try {
-                    record.anexo = {
-                        nome: file.name,
-                        tipo: 'application/pdf',
-                        tamanho: file.size,
-                        conteudo: await readPdf(file)
-                    };
-                } catch (error) {
-                    console.error('Não foi possível validar ou ler o PDF do atestado.', error);
-                    feedback.textContent = error.message;
-                    return;
-                }
-            }
-
-            const existing = backend.readArray(ATESTADOS_KEY);
-            if (!backend.write(ATESTADOS_KEY, [record, ...existing])) {
-                feedback.textContent = 'Não foi possível salvar o atestado neste navegador.';
-                return;
-            }
-
-            form.reset();
-            document.getElementById('atestado-dialog')?.close();
-        });
-    }
-
-    /**
-     * Confere o aluno cadastrado para associar matrícula e identificador, se
-     * disponíveis, antes de gravar a ocorrência pelo núcleo compartilhado.
-     */
-    function setupOccurrenceForm() {
-        const form = document.getElementById('ocorrencia-form');
-        const feedback = document.getElementById('ocorrencia-feedback');
-        if (!form || !feedback) return;
-
-        form.addEventListener('submit', (event) => {
-            event.preventDefault();
-            if (!form.reportValidity()) return;
-
-            const values = Object.fromEntries(new FormData(form).entries());
-            const studentName = String(values.aluno).trim();
-            const student = backend.getStudents().find((item) =>
-                backend.normalizeText(item.nome) === backend.normalizeText(studentName)
-            );
-            const professor = getProfessor();
-            const record = backend.addOccurrence({
-                aluno: studentName,
-                alunoId: student?.uid ?? '',
-                matricula: student?.codigo ?? '',
-                turma: String(values.turma ?? '').trim(),
-                tipo: String(values.tipo),
-                gravidade: String(values.gravidade),
-                descricao: String(values.descricao).trim(),
-                autor: professor.nome,
-                status: 'Aberta'
-            });
-
-            if (!record) {
-                feedback.textContent = 'A ocorrência não foi salva. Verifique o armazenamento e tente novamente.';
-                return;
-            }
-
-            form.reset();
-            document.getElementById('ocorrencia-dialog')?.close();
-            renderOccurrenceCount();
-        });
-    }
-
-    /** Atualiza o indicador da dashboard com o total da coleção compartilhada. */
-    function renderOccurrenceCount() {
-        const target = document.getElementById('occurrences-total');
-        if (target) target.textContent = String(backend.getOccurrences().length);
-    }
-
-    /**
-     * Atualiza comunicados e ocorrências após alterações do núcleo na mesma aba
-     * ou em outra janela do navegador.
-     */
-    function setupStorageUpdates() {
-        window.addEventListener(backend.eventName, (event) => {
-            if (event.detail?.key === backend.keys.comunicados) renderCommunications();
-            if (event.detail?.key === backend.keys.ocorrencias) renderOccurrenceCount();
-        });
-        window.addEventListener('storage', (event) => {
-            if (event.key === backend.keys.comunicados) renderCommunications();
-            if (event.key === backend.keys.ocorrencias) renderOccurrenceCount();
-        });
-    }
-
-    /** Inicializa cada serviço somente depois que os elementos da página existem. */
-    function init() {
-        if (!backend) {
-            console.error('EduConnect: o núcleo de persistência não foi carregado para a área do Professor.');
-            return;
-        }
-
-        const professor = getProfessor();
-        const name = document.getElementById('professor-name');
-        if (name) name.textContent = professor.nome;
-
-        populateClasses();
-        setupViews();
-        setupDialogs();
-        setupAtestadoForm();
-        setupOccurrenceForm();
-        setupStorageUpdates();
-        renderOccurrenceCount();
     }
 
     document.addEventListener('DOMContentLoaded', init);

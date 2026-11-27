@@ -47,9 +47,14 @@
         const dialog = document.createElement('dialog');
         dialog.className = 'ocorrencia-dialog';
         dialog.innerHTML = `
-            <form method="dialog" class="nova-ocorrencia-form">
+            <form class="nova-ocorrencia-form">
                 <h2>Nova Ocorrência</h2>
-                <label>Aluno<input name="aluno" required></label>
+                <label>Aluno<select name="aluno" required>
+                    <option value="">Selecione um aluno</option>
+                </select></label>
+                <label>Turma<select name="turma" required>
+                    <option value="">Selecione uma turma</option>
+                </select></label>
                 <label>Tipo<select name="tipo" required>
                     <option value="">Selecione</option>
                     <option>Disciplinar</option>
@@ -63,6 +68,7 @@
                     <option>Grave</option>
                 </select></label>
                 <label>Descrição<textarea name="descricao" rows="5" required></textarea></label>
+                <p class="form-feedback" role="status" aria-live="polite"></p>
                 <div style="display:flex;justify-content:flex-end;gap:10px">
                     <button type="button" data-cancel>Cancelar</button>
                     <button type="submit">Salvar ocorrência</button>
@@ -70,16 +76,51 @@
             </form>`;
         document.body.append(dialog);
 
+        const form = dialog.querySelector('form');
+        const studentSelect = form.elements.aluno;
+        const classSelect = form.elements.turma;
+        const feedback = form.querySelector('.form-feedback');
+        backend.getClasses().forEach((item) => {
+            const name = item.nome || item.codigo;
+            if (name) classSelect.add(new Option(name, name));
+        });
+        backend.getStudents().forEach((student) => {
+            studentSelect.add(new Option(`${student.nome} — ${student.codigo}`, student.codigo));
+        });
+        classSelect.addEventListener('change', () => {
+            const className = classSelect.value;
+            [...studentSelect.options].slice(1).forEach((option) => {
+                const student = backend.getStudents().find((item) => item.codigo === option.value);
+                option.hidden = Boolean(className && student?.turma !== className);
+            });
+            if (studentSelect.selectedOptions[0]?.hidden) studentSelect.value = '';
+        });
         dialog.querySelector('[data-cancel]').addEventListener('click', () => dialog.close());
-        dialog.addEventListener('submit', (event) => {
+        form.addEventListener('submit', (event) => {
             event.preventDefault();
-            const values = Object.fromEntries(new FormData(event.currentTarget).entries());
-            const record = backend.addOccurrence(values);
+            if (!form.reportValidity()) return;
+            const values = Object.fromEntries(new FormData(form).entries());
+            const student = backend.getStudents().find((item) => item.codigo === values.aluno);
+            if (!student) {
+                feedback.textContent = 'Selecione um aluno cadastrado.';
+                return;
+            }
+            const record = backend.addOccurrence({
+                ...values,
+                aluno: student.nome,
+                alunoId: `aluno-${student.codigo}`,
+                matricula: student.codigo,
+                turma: student.turma || values.turma,
+                status: 'Aberta'
+            });
             if (record) {
                 refresh();
                 dialog.close();
+            } else {
+                feedback.textContent = 'Não foi possível salvar. Verifique o armazenamento local.';
             }
         });
+        dialog.addEventListener('close', () => form.reset());
         return dialog;
     }
 
@@ -101,7 +142,7 @@
         const fields = document.createElement('dl');
         fields.className = 'detalhes-ocorrencia__campos';
         const values = new Map();
-        ['Protocolo', 'Data', 'Aluno', 'Tipo', 'Gravidade', 'Status'].forEach((label) => {
+        ['Protocolo', 'Data', 'Aluno', 'Tipo', 'Gravidade'].forEach((label) => {
             const term = document.createElement('dt');
             term.textContent = label;
             const description = document.createElement('dd');
@@ -115,19 +156,40 @@
         description.className = 'detalhes-ocorrencia__descricao';
         values.set('Descrição', description);
 
+        const statusLabel = document.createElement('label');
+        statusLabel.className = 'detalhes-ocorrencia__status';
+        statusLabel.textContent = 'Status';
+        const statusSelect = document.createElement('select');
+        statusSelect.add(new Option('Aberta', 'Aberta'));
+        statusSelect.add(new Option('Pendente', 'Pendente'));
+        statusSelect.add(new Option('Em análise', 'Em análise'));
+        statusSelect.add(new Option('Resolvida', 'Resolvida'));
+        statusLabel.append(statusSelect);
+
         const actions = document.createElement('div');
         actions.className = 'detalhes-ocorrencia__acoes';
         const closeButton = document.createElement('button');
-        closeButton.type = 'submit';
+        closeButton.type = 'button';
         closeButton.textContent = 'Fechar';
-        actions.append(closeButton);
-        form.append(fields, descriptionHeading, description, actions);
+        closeButton.addEventListener('click', () => dialog.close());
+        const saveButton = document.createElement('button');
+        saveButton.type = 'button';
+        saveButton.textContent = 'Salvar status';
+        actions.append(closeButton, saveButton);
+        form.append(fields, statusLabel, descriptionHeading, description, actions);
         dialog.append(form);
         document.body.append(dialog);
+
+        let currentId = '';
+        saveButton.addEventListener('click', () => {
+            const updated = window.EduConnectBackend.updateOccurrence(currentId, { status: statusSelect.value });
+            if (updated) dialog.close();
+        });
 
         return {
             dialog,
             open(record) {
+                currentId = record.id;
                 const gravity = padronizarGravidade(record.gravidade).label;
                 const content = {
                     Protocolo: record.protocolo,
@@ -135,12 +197,12 @@
                     Aluno: record.aluno,
                     Tipo: record.tipo,
                     Gravidade: gravity,
-                    Status: record.status,
                     Descrição: record.descricao
                 };
                 values.forEach((element, label) => {
                     element.textContent = content[label] || '—';
                 });
+                statusSelect.value = record.status || 'Aberta';
                 dialog.showModal();
             }
         };
@@ -193,6 +255,14 @@
                         badge.className = `badge ${gravity.classe}`;
                         badge.textContent = gravity.label || '—';
                         cell.append(badge);
+                    } else if (index === 6) {
+                        const statusButton = document.createElement('button');
+                        statusButton.type = 'button';
+                        statusButton.className = 'btn-inspecionar';
+                        statusButton.dataset.occurrenceId = record.id;
+                        statusButton.textContent = record.status || 'Aberta';
+                        statusButton.setAttribute('aria-label', `Alterar status da ocorrência ${record.protocolo}`);
+                        cell.append(statusButton);
                     } else if (index === 5) {
                         const inspectButton = document.createElement('button');
                         inspectButton.type = 'button';
@@ -225,6 +295,26 @@
             if (!button) return;
             const record = backend.getOccurrences().find((item) => item.id === button.dataset.occurrenceId);
             if (record) detailModal.open(record);
+        });
+        window.addEventListener(backend.eventName, (event) => {
+            if (event.detail?.key === backend.keys.ocorrencias) {
+                render();
+                if (filters[2]) {
+                    const options = [...filters[2].options].map((option) => option.value);
+                    backend.getOccurrences().map((record) => record.status).filter(Boolean).forEach((status) => {
+                        if (!options.includes(status)) filters[2].add(new Option(status, status));
+                    });
+                }
+            }
+        });
+        window.addEventListener('storage', (event) => {
+            if (event.key !== backend.keys.ocorrencias) return;
+            render();
+            if (!filters[2]) return;
+            const options = [...filters[2].options].map((option) => option.value);
+            backend.getOccurrences().map((record) => record.status).filter(Boolean).forEach((status) => {
+                if (!options.includes(status)) filters[2].add(new Option(status, status));
+            });
         });
         render();
     }
