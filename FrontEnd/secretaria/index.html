@@ -163,6 +163,16 @@
                 </span>
                 <input id="dashboard-theme-toggle" type="checkbox">
             </label>
+            <section class="backup-setting" aria-labelledby="backup-title">
+                <div>
+                    <strong id="backup-title">Backup dos dados</strong>
+                    <p>Baixe os dados salvos neste navegador em um arquivo JSON. O arquivo pode conter dados pessoais; armazene-o com segurança.</p>
+                </div>
+                <button class="dashboard-dialog__button" id="download-backup-button" type="button">
+                    Baixar backup JSON
+                </button>
+                <p class="backup-status" id="backup-status" role="status" aria-live="polite"></p>
+            </section>
             <div class="dashboard-dialog__actions">
                 <button class="dashboard-dialog__button" type="submit">Concluir</button>
             </div>

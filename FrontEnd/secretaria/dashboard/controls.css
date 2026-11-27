@@ -316,6 +316,32 @@ body.secretaria-dark textarea {
     cursor: pointer;
 }
 
+.backup-setting {
+    display: grid;
+    gap: 12px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--dashboard-border);
+}
+
+.backup-setting strong {
+    color: var(--dashboard-text);
+}
+
+.backup-setting p {
+    margin-top: 4px;
+    color: var(--dashboard-muted);
+    font-size: 0.85rem;
+}
+
+.backup-setting .dashboard-dialog__button {
+    justify-self: start;
+}
+
+.backup-setting .backup-status {
+    min-height: 1.2em;
+    margin: 0;
+}
+
 .dashboard-dialog__actions {
     display: flex;
     justify-content: flex-end;

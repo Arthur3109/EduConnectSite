@@ -8,6 +8,8 @@
     const THEME_KEY = 'educonnect_secretaria_theme';
     const ATESTADOS_KEY = 'educonnect_atestados';
     const NOTIFICATIONS_SEEN_KEY = 'educonnect_notificacoes_vistas';
+    const APP_STORAGE_PREFIX = 'educonnect_';
+    const GLOBAL_THEME_KEY = 'theme';
 
     function createElement(tag, className, text = '') {
         const element = document.createElement(tag);
@@ -119,10 +121,75 @@
             const actions = createElement('div', 'dashboard-dialog__actions');
             const submit = createElement('button', 'dashboard-dialog__button', 'Concluir');
             submit.type = 'submit';
+            const backup = createElement('section', 'backup-setting');
+            backup.setAttribute('aria-labelledby', 'backup-title');
+            const backupDescription = document.createElement('div');
+            backupDescription.append(
+                createElement('strong', '', 'Backup dos dados'),
+                createElement('p', '', 'Baixe os dados salvos neste navegador em um arquivo JSON. O arquivo pode conter dados pessoais; armazene-o com segurança.')
+            );
+            backupDescription.querySelector('strong').id = 'backup-title';
+            const download = createElement('button', 'dashboard-dialog__button', 'Baixar backup JSON');
+            download.id = 'download-backup-button';
+            download.type = 'button';
+            const status = createElement('p', 'backup-status');
+            status.id = 'backup-status';
+            status.setAttribute('role', 'status');
+            status.setAttribute('aria-live', 'polite');
+            backup.append(backupDescription, download, status);
             actions.append(submit);
-            form.append(setting, actions);
+            form.append(setting, backup, actions);
             dialog.append(form);
             document.body.append(dialog);
+        }
+    }
+
+    function downloadBackup() {
+        const status = document.getElementById('backup-status');
+        try {
+            const data = {};
+            const invalidJsonValues = {};
+            for (let index = 0; index < localStorage.length; index += 1) {
+                const key = localStorage.key(index);
+                if (!key || (!key.startsWith(APP_STORAGE_PREFIX) && key !== GLOBAL_THEME_KEY)) continue;
+
+                const rawValue = localStorage.getItem(key);
+                try {
+                    data[key] = JSON.parse(rawValue);
+                } catch {
+                    invalidJsonValues[key] = rawValue;
+                }
+            }
+
+            const backup = {
+                application: 'EduConnect',
+                backupVersion: 1,
+                createdAt: new Date().toISOString(),
+                data
+            };
+            if (Object.keys(invalidJsonValues).length) {
+                backup.invalidJsonValues = invalidJsonValues;
+            }
+
+            const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            const timestamp = backup.createdAt.replace(/[:.]/g, '-');
+            link.href = url;
+            link.download = `educonnect-backup-${timestamp}.json`;
+            document.body.append(link);
+            link.click();
+            link.remove();
+            window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+            if (status) {
+                status.textContent = Object.keys(invalidJsonValues).length
+                    ? 'Backup baixado. Alguns valores foram preservados como texto por não serem JSON válido.'
+                    : 'Backup baixado com sucesso.';
+            }
+        } catch (error) {
+            console.error('EduConnect: não foi possível gerar o backup dos dados.', error);
+            if (status) status.textContent = 'Não foi possível gerar o backup. Tente novamente.';
         }
     }
 
@@ -252,6 +319,7 @@
         const notificationsDialog = document.getElementById('notifications-dialog');
         const settingsDialog = document.getElementById('settings-dialog');
         const themeToggle = document.getElementById('dashboard-theme-toggle');
+        const downloadBackupButton = document.getElementById('download-backup-button');
 
         function applyTheme(enabled) {
             document.body.classList.toggle('secretaria-dark', enabled);
@@ -288,6 +356,7 @@
             }
         });
         settingsButton?.addEventListener('click', () => settingsDialog?.showModal());
+        downloadBackupButton?.addEventListener('click', downloadBackup);
         themeToggle?.addEventListener('change', () => {
             applyTheme(themeToggle.checked);
             backend.write(THEME_KEY, themeToggle.checked);
